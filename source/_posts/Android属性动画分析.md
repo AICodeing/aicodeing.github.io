@@ -14,7 +14,7 @@ Android 动画分三类:
 `View Animation` : 只有基本的 `缩放`，`平移`，`旋转`，`渐变`，通过对 `Canvas` 操作来实现。只在绘制层做了动画假象，实际属性并未改变  
 `ValueAnimator`:属性动画，可以实现更平滑的动画和对属性的变更。
 
-我将从以下几个方面分析 属性动画的实现原理  
+我将从以下几个方面分析 属性动画的实现原理:   
 1. 通过常用 `ObjectAnimator.of..` 方法切入,深入分析 `PropertyValueHolder`,`Property`,`Keyframe`的实现原理和作用。    
 2. 通过对属性动画的启动方式的解析 代入 Android 新的渲染方式(黄油计划)  
 3. 属性动画其他常用API的使用  
