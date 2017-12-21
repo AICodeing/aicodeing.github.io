@@ -217,12 +217,12 @@ public void setValues(PropertyValuesHolder... values) {
 2.将 `PropertyValuesHolder `数组按照属性名为key，`PropertyValuesHolder `为值保存至map中，并标记为初始化` mInitialized = false`,在下一篇文章中会提到何时将标记位`mInitialized `置为 `true`
 
 到目前为止我们已经分析完了 `ObjectAnimator.ofInt`方法。  
-其中有几个为解释到的类:  
+其中有几个未解释到的类:  
 1.PropertyValuesHolder  
 2.Keyframe
 
 ### PropertyValuesHolder
-由前面的分析我们简略的知道 `PropertyValuesHolder ` 持有了 `Property`或`mPropertyName`,以及持有 关键帧。  
+由前面的分析我们大致知道 `PropertyValuesHolder ` 持有了 `Property`或`mPropertyName`,以及持有 关键帧。  
 除此之外，它还有 属性`mSetter`,`mGetter`,`mEvaluator`
 ```java
 Method mSetter = null;
@@ -288,18 +288,18 @@ void setAnimatedValue(Object target) {
 `calculateValue `方法就是用于计算这些值。计算又用到了`Keyframes`，下面分析关键帧相关的API。到此为止我们理解了 `PropertyValuesHolder `的作用
 
 总结一下：  
-1.持有 `Property` 用于获取更新属性的能力。  
-2.持有 `mPropertyName` 通过反射获取get set 方法，获取更新属性的能力  
+1.持有 `Property` 用于获取,更新属性的能力。  
+2.持有 `mPropertyName` 通过反射获取`get` , `set` 方法，获取更新属性的能力  
 3.计算属性的值  
 4.更新属性    
 所以 `PropertyValuesHolder`就是控制动画对象属性的关键。所以也很容易理解，为什么所有的属性动画的value都转化成`PropertyValuesHolder `来操作.
 
 ### Keyframe
-下面我们在详细了解下何为关键帧，它是如何运作的。  
+下面我们在详细了解下何为关键帧，它是如何运作的?    
 先看几个关于`关键帧`的类 `Keyframe`,`Keyframes` 以及它们的子类  
-`Keyframe`顾名思义就是记录关键帧数据,他默认有`三个`实现类`IntKeyframe`,`FloatKeyframe`,`ObjectKeyframe`,当然我们也能`继承Keyframe`实现自己的关键帧类型。不过大部分情况，提供的这三种方式已经够用了。  
+`Keyframe`顾名思义就是记录关键帧数据,他默认有`三个`实现类`IntKeyframe`,`FloatKeyframe`,`ObjectKeyframe`,当然我们也能继承`Keyframe`实现自己的关键帧类型。不过大部分情况，提供的这三种方式已经够用了。  
 `Keyframe` 有三个重要的`属性值`:  
-1.`mHasValue` 用于记录关键帧是否初始化了值，以 子类`IntKeyframe`为例，它有两个构造方法:
+1.`mHasValue` 用于记录关键帧是否初始化了值，以 子类 **IntKeyframe** 为例，它有两个构造方法:
 
 ```java
 IntKeyframe(float fraction, int value) {
@@ -420,15 +420,17 @@ Keyframe prevKeyframe = mFirstKeyframe;
 通过`fraction`查找符合`fraction < nextKeyframe.getFraction()`的第一帧，然后计算 `fraction`在前一帧到当前帧范围内的位置，例如查找到符合条件的当前帧 fraction =0.5;前一帧fraction = 0.2, 动画当前的 fraction =0.3，那么新的 intervalFraction = 1/3f。然后拿着这个值给估值器计算属性值。
 
 到目前为止我们知道了，关键帧的作用如下:  
-1.保存每个关键帧的值
-2.保存每个关键帧的 fraction
+1.保存每个关键帧的值  
+2.保存每个关键帧的 fraction  
 3.通过动画类传入的 fraction，利用估值器计算出 真正的属性值。
 
 那么剩下的就是如何将这些计算出来的`属性值`设置到对应的`Target`上了。这个问题我们下一篇分析动画的启动原理时会再分析。
 
 ### 回顾
 1.以`ObjectAnimator.ofInt`为切入点 分析 ObjectAnimator对象的创建  
-2.属性名称`propertyName`和`Property`的作用:propertyName 用于拼接 get/set方法，获得控制属性的能力，Property 利用自己的 `get`和`set` 方法直接控制属性。  
+2.属性名称`propertyName`和`Property`的作用:  
+	propertyName 用于拼接 get/set方法，获得控制属性的能力;
+	Property 利用自己的`get`和`set`方法直接控制属性。
 3. `PropertyValuesHolder`的作用:通过 propertyName 或 Property 获取更新属性的能力;根据动画时间流逝比计算属性的值;更新属性值到对应的`Target`上  
 4. 关键帧 `keyframe`用于保存动画的每一个关键数据帧，个数由传入的 value 个数决定,系数 fraction 由 value 传入顺序决定。  
 5. `keyframes`以及它的子类`KeyframeSet`的作用:利用估值器和 fraction 计算出应该更新到 `Target`上的属性值。
