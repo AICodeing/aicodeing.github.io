@@ -1,6 +1,6 @@
 ---
 title: 深入理解Android属性动画的实现(动画启动)-2
-date: 2017-12-21 11:46:13
+date: 2017-12-21 21:46:13
 tags:
 	- Android
 	- 动画
@@ -744,7 +744,7 @@ void setAnimatedValue(Object target) {
 
 简言之，`Choreographer`就是一个消息处理器，根据 `vsync`垂直同步信号 来处理三种支持类型的回调。
 
-至于 `Android黄油计划(Project Butter)` `Choreographer`只是其中一个重要的特性。还有其他方便的优化。例如 引入了`三重缓冲`和 JNI层的`vsync`。至于 `vsync`的好处以及和 该计划之前 的Android的渲染相比 请参考[Android 4.4 Graphic系统详解（2） VSYNC的生成](http://blog.csdn.net/michaelcao1980/article/details/43233765) 这篇优质文章。在这里也对该篇文章的愿作者致敬。
+至于 `Android黄油计划(Project Butter)` `Choreographer`只是其中一个重要的特性。还有其他方便的优化。例如 引入了`三重缓冲`和 JNI层的`vsync`。至于 `vsync`的好处以及和 该计划之前 的Android的渲染相比 请参考[Android 4.4 Graphic系统详解（2） VSYNC的生成](http://blog.csdn.net/michaelcao1980/article/details/43233765) 这篇优质文章。在这里也对该篇文章的原作者致敬。
 
 
 
