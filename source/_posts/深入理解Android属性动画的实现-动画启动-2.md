@@ -30,6 +30,8 @@ public void start() {
 `AnimationHandler.getInstance().autoCancelBasedOn(this)` cancel 相同Target和相同属性的动画  
 AnimationHandler 实例在线程局部单例。`autoCancelBasedOn(this)`会遍历 `AnimationHandler `实例持有的所有未完成的 `ValueAnimator`实例，cancel 掉符合条件的动画。
 
+<!-- more -->
+
 紧接着 `super.start()` 调用了`ValueAnimator.start()`  
 
 ```java
