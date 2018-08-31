@@ -64,13 +64,13 @@ hexo deploy
 
 ## 发布文章  
 
-1.如果本地没有仓库请`clone`仓库，并且切换到`source`分支。 
-```
+1.如果本地没有仓库请`clone`仓库，并且切换到`source`分支。  
+```sh
 git clone https://github.com/xxx/xxx.github.io.git  
-git branch source
-```  
+git branch source 
+```
 
-2.`Setup`本地环境
+2.`Setup`本地环境  
 在项目目录运行如下命令安装依赖和初始化环境。  
 ```sh
 npm install
@@ -87,13 +87,13 @@ hexo generate --watch
 ```
 5.发布源码   
 编辑文章完成以后运行如下命令发布源码到`Github`仓库  
-```
+```sh
 git add .
 git commit -m "add new post"
 git push origin source
 ```
 6.发布文章  
-```
+```sh
 hexo generate --deploy
 ```
 
