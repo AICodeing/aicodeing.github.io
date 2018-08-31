@@ -46,7 +46,6 @@ comments: true
 	  branch: master
  
 8.关联`Github`仓库，并把源码推送到远程，因为`master`是留给生成文件的，所以发布到了非`master`分支。  
-
 ```sh
 git init
 git remote add origin [origin]
@@ -54,7 +53,7 @@ git checkout -b source
 git add .
 git commit -m "init blog"
 git push -u origin source
-```  
+```
 
 9.发布博客
 直接运行如下命令发布博客，该命令会自动发布内容到`master`分支  
