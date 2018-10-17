@@ -14,7 +14,7 @@ PAC的配置规则语法和GFWlist 相同，即[adblock](https://adblockplus.org
 
 下面我引用 `adblock`的示例来做说明。
 
-#### 匹配地址中的一部分内容(通配符匹配)  
+#### 1. 匹配地址中的一部分内容(通配符匹配)  
 比如我们想匹配以下地址:
 
 - http://example.com/banner/foo/img
@@ -35,7 +35,7 @@ __`/banner/*/img^`__
 
 符合 `^`  表明 地址必须在这里结束，或者后面跟着的是 `/`，或是参数字符，例如`?`。  
 
-#### 匹配绝对地址  
+#### 2. 匹配绝对地址  
  
 比如我就像匹配地址:  
 
@@ -49,7 +49,7 @@ __`|http://www.baidu.com|`__
 
 - http://www.baidu.com/logo.jpg
 
-#### 匹配开头或结尾  
+#### 3. 匹配开头或结尾  
 
 比如我想匹配以 `http://example.com` 开头的网址,例如:  
 
@@ -69,7 +69,7 @@ __`|http://example.com`__
 那么匹配规则为:  
 __`example.com|`__  
 
-#### 通过域名匹配  
+#### 4. 通过域名匹配  
 比如我想匹配所有来自 `ads.example.com` 这个域名的网址  
 
 - http://ads.example.com/foo.gif
@@ -83,7 +83,7 @@ __`example.com|`__
 
 那么匹配规则为: __`||ads.example.com^`__ 
 
-#### 高级匹配规则  
+#### 5. 高级匹配规则  
 
 假如我有这样的需求:
 
@@ -97,7 +97,7 @@ __`||example.com^$script,image,domain=example.com|~foo.example.com`__
 
 那么 地址 `http://ads.example.com/foo.gif` 就能被匹配上。
 
-#### 排除在规则之外  
+#### 6. 排除在规则之外  
 
 比如我不想让 `http://ads.example.com/notbanner/1.png`通过匹配
 但是希望 `http://ads.example.com/notbanner/`下的所有 js 文件通过匹配
@@ -124,7 +124,7 @@ __`@@||example.com^$document`__
 
 ![](/img/ss/ss_1.jpg "")
 
-![](/img/ss/ss_2,jpg "")
+![](/img/ss/ss_2.jpg "")
 
 配置完之后最好点击一下 `从GFW List 更新PAC` 按钮。
 
