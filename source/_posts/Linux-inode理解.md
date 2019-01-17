@@ -62,9 +62,9 @@ Change: Tue Jan 15 18:37:29 2019
 ➜  test stat -s src.txt
 st_dev=16777220 st_ino=8625061903 st_mode=0100644 st_nlink=2 st_uid=502 st_gid=20 st_rdev=0 st_size=4 st_atime=1547548596 st_mtime=1547548449 st_ctime=1547548649 st_birthtime=1547545866 st_blksize=4096 st_blocks=8 st_flags=0
 ➜  test
-``` 
-
-可以得到更多信息，如果了解更多请访问 [linux-stat]('https://linux.die.net/man/2/stat')
+```
+   
+可以得到更多信息，如果了解更多请访问 [linux-stat]('https://linux.die.net/man/2/stat')   
 
 ```shell
 st_dev: 文件所在的 device ID
@@ -77,9 +77,10 @@ st_blksize: 每个 block 的大小，一般情况下是4KB
 st_blocks: number of 512B blocks allocated, 以 512B 为单位分配给文件的个数,用 st_size/512B 就得到 st_blocks，
 当 st_size 小于一个 block的大小，即文件大小小于默认的4KB时 实际还是分配一个 block，st_blocks = 1个blocksize/512B,
 在该例子中，src.txt 大小是4B ，但是需要占用一个 block 也就是 4KB的实际存储空间，计算得到的st_blocks = 8
+
 ```
 
- 还可以使用命令`ll -i` 查看文件的 inode  
+还可以使用命令`ll -i` 查看文件的 inode  
  
  ```shell
  ➜  test ll -i
@@ -88,7 +89,9 @@ total 0
 ➜  test
  ```
  `8625061903 ` 就是 文件 `src.txt`的 inode编码,而权限后面的 `1`是该文件的链接数，也即是 `硬链接数`。  
+  
 ### inode的使用  
+
 一个文件在创建的时候就会分配一个 inode节点，以一个简单的例子来说明，如何访问一个文件?  
 要打开一个文件，需要要找到这个文件占用的 block 块。首先会找到文件所在的目录，在linux文件系统中，目录也是一个文件，__目录文件的内容就是该目录下的文件名与 inode的映射表，即一个个的目录项__。当访问一个文件的时候首先查询到上一级目录，在 Linux 文件系统中 每一个目录中都有 `.`和`../`两个目录   
 
