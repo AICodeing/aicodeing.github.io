@@ -53,6 +53,7 @@ Modify: Tue Jan 15 18:34:09 2019
 Change: Tue Jan 15 18:37:29 2019
 ➜  test
 ```
+
 通过 `stat -x file`命令(Mac Os 下) 可以得到 文件的 详细信息，`Inode: 8625061903` 指明 该文件的 `inode`号是 `8625061903`  
 
 通过`stat -s file`命令:  
@@ -62,9 +63,10 @@ Change: Tue Jan 15 18:37:29 2019
 st_dev=16777220 st_ino=8625061903 st_mode=0100644 st_nlink=2 st_uid=502 st_gid=20 st_rdev=0 st_size=4 st_atime=1547548596 st_mtime=1547548449 st_ctime=1547548649 st_birthtime=1547545866 st_blksize=4096 st_blocks=8 st_flags=0
 ➜  test
 ``` 
+
 可以得到更多信息，如果了解更多请访问 [linux-stat]('https://linux.die.net/man/2/stat')
-  
-```
+
+```shell
 st_dev: 文件所在的 device ID
 st_ino: 文件的 inode 号
 st_mode: 文件的类型，如 常规文件，文件夹，字符设备文件，块文件 等等
