@@ -1,5 +1,5 @@
 ---
-title: Android进程间通信-Binder
+title: Android进程间通信-Binder之印象
 date: 2019-03-16 13:26:34
 tags:
 	- Android
