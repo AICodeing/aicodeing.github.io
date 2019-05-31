@@ -11,20 +11,20 @@ comments: ture
 
 前两天项目中使用了 `android jetpak`中的`lifecyle-process`组件，帮助我们管理生命周期，接入后发现不需要任何初始化操作，它的源码也比较简单，就4个文件，发现它使用`ContentProvider`的装载特性来做自动初始化操作。联想到多年前在做插件化时遇到`ContentProvider` 需要提前处理的情况。才发现，`Google`也会`投机取巧`啦。  本文我们就分析一下`ContentProvider`的装载流程。  
 
-### 1.ContentProvider 启动装载的场景  
+### 1. ContentProvider 启动装载的场景  
 
 先把结论抛出来,触发 `ContentProvider`装载的几个场景有:  
  
  * 进程启动，初始化Application时
  * 三方应用通过`ContentResolver`调用`ContentProvider`的相关功能时
 
- 我们先跟踪一下 进程启动时的场景  
+我们先跟踪一下 进程启动时的场景  
  
 ### 2. ContentProvider 进程启动装载  
 
 我们都知道 `Android`进程启动需要给定一个入口类，而每个程序的进程入口类就是`ActivityThread`。  
 
-_我们基于android-28，也就是Android P_  
+_我们基于`android-28`，也就是`Android P`_  
 
 `ActivityThread`的入口函数为`main`  
 
@@ -567,7 +567,7 @@ public final @Nullable Uri insert(@RequiresPermission.Write @NonNull Uri url,
                     resolveUserIdFromAuthority(auth), true);
         }
 ```
-mMainThread 就是 ActivityThread 对象  
+`mMainThread` 就是 `ActivityThread` 对象  
 
 ```java
 public final IContentProvider acquireProvider(
@@ -610,10 +610,10 @@ public final IContentProvider acquireProvider(
 这个方法 首先支持在本进程空间内查询 `ConentProvider`,其实就是从前面分析中提到的 `mProviderMap`中获取，在 随进程启动时装载的`Provider` 被放在`mProviderMap`中，这时就能直接访问使用了。  但也有可能需要查询不到,出现这种情况的情景如下:  
 
 * 请求的`Provider`需要独立进程允许，但是该进程还未启动，所以 `Provider` 未被装载。
-* 请求的`Provider`是第三方程序的，需要通过AMS 获得。
+* 请求的`Provider`是第三方程序的，需要通过`AMS` 获得。
 * 请求的`Provider`是系统进程所有的，比如媒体库的`Provider`,这也需要AMS提供
 
-不管是以上三种情况的哪一种，都会进入到AMS， 我们选一种最长路径的情况做分析  
+不管是以上三种情况的哪一种，都会进入到`AMS`， 我们选一种最长路径的情况做分析  
 <mark>__假设我们请求的`Provider`是一个第三方APP的，但是这个App 还没有运行。__</mark>  
 
 ```java
@@ -664,8 +664,8 @@ private ContentProviderHolder getContentProviderImpl(IApplicationThread caller,
 }
 ```
 
-首先AMS 从 `mProviderMap`中获取，前面分析随进程启动而装载的Provider 在自己进程装载完成后会通过`publishContentProviders`将 `Provider`列表保持在AMS中，其实就是保存在AMS的`mProviderMap`中。  
-根据我们的假设 Provider 所在的进程还未启动，所以 `mProviderMap `中是查询不到的  
+首先AMS 从 `mProviderMap`中获取，前面分析随进程启动而装载的Provider 在自己进程装载完成后会通过`publishContentProviders`将 `Provider`列表保持在`AMS`中，其实就是保存在AMS的`mProviderMap`中。  
+根据我们的假设 `Provider` 所在的进程还未启动，所以 `mProviderMap `中是查询不到的  
 
 ```java
 if (!providerRunning) {
@@ -733,12 +733,12 @@ if (!providerRunning) {
 
 从上诉代码中得知:
 
-1. 当目标 Provider 未装载运行时，会通过PMS 获取Provider信息，为装载做准备
-2. 检测目标 Provider 的进程是否在运行
-3. 如果目标进程已经运行，会自己通知目标进程去装载指定的Provider
+1. 当目标 `Provider` 未装载运行时，会通过`PMS` 获取`Provider`信息，为装载做准备
+2. 检测目标 `Provider` 的进程是否在运行
+3. 如果目标进程已经运行，会自己通知目标进程去装载指定的`Provider`
 4. 如果目标进程未运行，会先启动进程
 
-当是情况`3`时， 代码最终会执行进入 ActivityThread.installContentProviders(Context context, List<ProviderInfo> providers) 中，这个方法在分析 随进程启动时装载Provider 中已经介绍过。  
+当是情况`3`时， 代码最终会执行进入 ActivityThread.installContentProviders(Context context, List<ProviderInfo> providers) 中，这个方法在分析 随进程启动时装载`Provider` 中已经介绍过。  
 
 当是情况`4`时，会执行 AMS 的 `startProcessLocked`方法  
 
@@ -1041,7 +1041,7 @@ private static Process.ProcessStartResult zygoteSendArgsAndGetResult(
 4. 在 Client 通过`ContentResolver`调用`Provider`时 首先到调用者的进程空间中去查询，如果存在直接返回使用; 如果不存在，通知AMS 去获取。如果AMS中直接有保持的实例，直接返回实例，否则AMS去装载Provider。
 5. AMS 去装载时有区分是否目标进程已经存在还是未存在; 如果已经存在，直接调用 目标进程的`scheduleInstallProvider`方法去装载；如果目标进程不存在，同 `zygote` 进程去启动进程,进而 `Provider` 随着进程启动而装载。
 6. 还需要注意的是，如果`Provider`是设置了 `singleUser `属性，会被多个用户共享。
-7. 如第`4`条。如果通过`AMS` 获取到了别的进程的 `Provider`实例，需要在自己的进程空间保留一份引用，方便下次调用时，直接返回，而不再需要通过AMS获取。
+7. 如第`4`条。如果通过`AMS` 获取到了别的进程的 `Provider`实例，需要在自己的进程空间保留一份引用，方便下次调用时，直接返回，而不再需要通过`AMS`获取。
 
 
 
