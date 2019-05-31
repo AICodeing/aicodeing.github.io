@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Binder,Parcel," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="我们知道在 Android上常用的两种对象序列化工具是Serializable和Parcelable。尤其我们做和Binder相关的数据传输时，选择的都是Parcelable数据。Parcelable其实就是一个接口，约定，如果一个对象希望使用Parcelable方式将数据序列化到内存中，必须实现 Parcelable">
+<meta name="keywords" content="Android,Binder,Parcel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-Binder通信的数据传输载体-Parcel">
+<meta property="og:url" content="http://aicodeing.github.io/Android-Binder通信的数据传输载体-Parcel/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="我们知道在 Android上常用的两种对象序列化工具是Serializable和Parcelable。尤其我们做和Binder相关的数据传输时，选择的都是Parcelable数据。Parcelable其实就是一个接口，约定，如果一个对象希望使用Parcelable方式将数据序列化到内存中，必须实现 Parcelable接口。   1public void writeToParcel(Parcel">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.286Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-Binder通信的数据传输载体-Parcel">
+<meta name="twitter:description" content="我们知道在 Android上常用的两种对象序列化工具是Serializable和Parcelable。尤其我们做和Binder相关的数据传输时，选择的都是Parcelable数据。Parcelable其实就是一个接口，约定，如果一个对象希望使用Parcelable方式将数据序列化到内存中，必须实现 Parcelable接口。   1public void writeToParcel(Parcel">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/Android-Binder通信的数据传输载体-Parcel/"/>
+
+
+
+
+
+  <title>Android-Binder通信的数据传输载体-Parcel | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Android-Binder通信的数据传输载体-Parcel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-Binder通信的数据传输载体-Parcel</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T14:09:19+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Android-Binder通信的数据传输载体-Parcel/" class="leancloud_visitors" data-flag-title="Android-Binder通信的数据传输载体-Parcel">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们知道在 Android上常用的两种对象序列化工具是<code>Serializable</code>和<code>Parcelable</code>。尤其我们做和<code>Binder</code>相关的数据传输时，选择的都是<code>Parcelable</code>数据。<code>Parcelable</code>其实就是一个接口，约定，如果一个对象希望使用<code>Parcelable</code>方式将数据序列化到内存中，必须实现 <code>Parcelable</code>接口。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel dest, @WriteFlags <span class="keyword">int</span> flags)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>接口的一个核心方法就是 <code>writeToParcel</code>，其实就是调用<code>Parcel</code>提供的一系列方法，将数据序列化到<code>Parcel</code>中。   </p>
+<h4 id="Parcel"><a href="#Parcel" class="headerlink" title="Parcel"></a>Parcel</h4><p><code>Parcel</code>是一种数据的载体，用于承载Binder相关的通信数据，数据可以是原始类型的，也可以是对象的引用。  </p>
+<p><code>Parcel</code>常用的方法有:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">writeByte(<span class="keyword">byte</span> val) <span class="comment">//写入一个byte</span></span><br><span class="line">readByte()<span class="comment">//读取一个byte</span></span><br><span class="line">writeBoolean(<span class="keyword">boolean</span> val)</span><br><span class="line">readBoolean()</span><br><span class="line">writeInt(<span class="keyword">int</span> val)</span><br><span class="line">readInt()</span><br><span class="line">writeLong(<span class="keyword">long</span> val)</span><br><span class="line">readLong()</span><br><span class="line">writeFloat(<span class="keyword">float</span> val)</span><br><span class="line">readFloat()</span><br><span class="line">writeDouble(<span class="keyword">double</span> val)</span><br><span class="line">readDouble()</span><br><span class="line">writeString(String val)</span><br><span class="line">readString()</span><br></pre></td></tr></table></figure>
+<p>这些方法都是成对匹配使用的，即在数据封装端，调用相应的writexxx方法，在解封端使用readxxx方法。  </p>
+<p>以上列举的操作数据类型是原始数据类型，和String，还可以写入其他类型:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeValue</span><span class="params">(Object v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (v == <span class="keyword">null</span>) &#123;</span><br><span class="line">            writeInt(VAL_NULL);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">            writeInt(VAL_STRING);</span><br><span class="line">            writeString((String) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Integer) &#123;</span><br><span class="line">            writeInt(VAL_INTEGER);</span><br><span class="line">            writeInt((Integer) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Map) &#123;</span><br><span class="line">            writeInt(VAL_MAP);</span><br><span class="line">            writeMap((Map) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Bundle) &#123;</span><br><span class="line">            <span class="comment">// Must be before Parcelable</span></span><br><span class="line">            writeInt(VAL_BUNDLE);</span><br><span class="line">            writeBundle((Bundle) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> PersistableBundle) &#123;</span><br><span class="line">            writeInt(VAL_PERSISTABLEBUNDLE);</span><br><span class="line">            writePersistableBundle((PersistableBundle) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Parcelable) &#123;</span><br><span class="line">            <span class="comment">// types will be written.</span></span><br><span class="line">            writeInt(VAL_PARCELABLE);</span><br><span class="line">            writeParcelable((Parcelable) v, <span class="number">0</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Short) &#123;</span><br><span class="line">            writeInt(VAL_SHORT);</span><br><span class="line">            writeInt(((Short) v).intValue());</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Long) &#123;</span><br><span class="line">            writeInt(VAL_LONG);</span><br><span class="line">            writeLong((Long) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Float) &#123;</span><br><span class="line">            writeInt(VAL_FLOAT);</span><br><span class="line">            writeFloat((Float) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Double) &#123;</span><br><span class="line">            writeInt(VAL_DOUBLE);</span><br><span class="line">            writeDouble((Double) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Boolean) &#123;</span><br><span class="line">            writeInt(VAL_BOOLEAN);</span><br><span class="line">            writeInt((Boolean) v ? <span class="number">1</span> : <span class="number">0</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> CharSequence) &#123;</span><br><span class="line">            <span class="comment">// Must be after String</span></span><br><span class="line">            writeInt(VAL_CHARSEQUENCE);</span><br><span class="line">            writeCharSequence((CharSequence) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> List) &#123;</span><br><span class="line">            writeInt(VAL_LIST);</span><br><span class="line">            writeList((List) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> SparseArray) &#123;</span><br><span class="line">            writeInt(VAL_SPARSEARRAY);</span><br><span class="line">            writeSparseArray((SparseArray) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> <span class="keyword">boolean</span>[]) &#123;</span><br><span class="line">            writeInt(VAL_BOOLEANARRAY);</span><br><span class="line">            writeBooleanArray((<span class="keyword">boolean</span>[]) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> <span class="keyword">byte</span>[]) &#123;</span><br><span class="line">            writeInt(VAL_BYTEARRAY);</span><br><span class="line">            writeByteArray((<span class="keyword">byte</span>[]) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> String[]) &#123;</span><br><span class="line">            writeInt(VAL_STRINGARRAY);</span><br><span class="line">            writeStringArray((String[]) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> CharSequence[]) &#123;</span><br><span class="line">            <span class="comment">// Must be after String[] and before Object[]</span></span><br><span class="line">            writeInt(VAL_CHARSEQUENCEARRAY);</span><br><span class="line">            writeCharSequenceArray((CharSequence[]) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> IBinder) &#123;</span><br><span class="line">            writeInt(VAL_IBINDER);</span><br><span class="line">            writeStrongBinder((IBinder) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Parcelable[]) &#123;</span><br><span class="line">            writeInt(VAL_PARCELABLEARRAY);</span><br><span class="line">            writeParcelableArray((Parcelable[]) v, <span class="number">0</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> <span class="keyword">int</span>[]) &#123;</span><br><span class="line">            writeInt(VAL_INTARRAY);</span><br><span class="line">            writeIntArray((<span class="keyword">int</span>[]) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> <span class="keyword">long</span>[]) &#123;</span><br><span class="line">            writeInt(VAL_LONGARRAY);</span><br><span class="line">            writeLongArray((<span class="keyword">long</span>[]) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Byte) &#123;</span><br><span class="line">            writeInt(VAL_BYTE);</span><br><span class="line">            writeInt((Byte) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Size) &#123;</span><br><span class="line">            writeInt(VAL_SIZE);</span><br><span class="line">            writeSize((Size) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> SizeF) &#123;</span><br><span class="line">            writeInt(VAL_SIZEF);</span><br><span class="line">            writeSizeF((SizeF) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> <span class="keyword">double</span>[]) &#123;</span><br><span class="line">            writeInt(VAL_DOUBLEARRAY);</span><br><span class="line">            writeDoubleArray((<span class="keyword">double</span>[]) v);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Class&lt;?&gt; clazz = v.getClass();</span><br><span class="line">            <span class="keyword">if</span> (clazz.isArray() &amp;&amp; clazz.getComponentType() == Object.class) &#123;</span><br><span class="line">                writeInt(VAL_OBJECTARRAY);</span><br><span class="line">                writeArray((Object[]) v);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Serializable) &#123;</span><br><span class="line">                <span class="comment">// Must be last</span></span><br><span class="line">                writeInt(VAL_SERIALIZABLE);</span><br><span class="line">                writeSerializable((Serializable) v);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Parcel: unable to marshal value "</span> + v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>可见<code>Parcel</code>还支持多种 <code>Object</code>类型。</p>
+<p>但是大部分情况下，封装端写入的对象和 解封端获得的对象不是同一个了，而是将对象中的数据复制过去一份，相当于是新 clone 了一个对象。那有没办法使用原来的对象呢？  </p>
+<p>答案是可以的，不过是间接的，这类对象我们称之为<code>Active Objects</code>。Parcel 写入的是他们的特殊标记引用。这类对象常见的有以下两种:  </p>
+<ol>
+<li>Binder。Binder 是Android系统中IPC的核心通信机制，它还是一个对象，Parcel 可以通过<code>writeStrongBinder(IBinder val)</code>写入Binder对象，解封端读取的是原Binder对象的一个特殊代理类(BinderProxy),但是最终的操作还是被原Binder对象响应，所以可以间接的认为将Binder对象传递了过去。  </li>
+<li>FileDescriptor 。FD 是Linux中的文件描述符，可以通过Parcel 的<code>writeFileDescriptor(FileDescriptor val)</code>方法写入</li>
+</ol>
+<p>不管是 Binder 还是 FileDescriptor 接收端的对象仍然会基于和原对象相同的操作，所以可以认为是 <code>Active Object</code>。  </p>
+<h4 id="Parcel-写入数据分析"><a href="#Parcel-写入数据分析" class="headerlink" title="Parcel 写入数据分析"></a>Parcel 写入数据分析</h4><p>我们基于 <code>Parcel</code>写入<code>String</code> 来做一个源码分析  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeString</span><span class="params">(String val)</span> </span>&#123;</span><br><span class="line">        mReadWriteHelper.writeString(<span class="keyword">this</span>, val);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadWriteHelper</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> ReadWriteHelper DEFAULT = <span class="keyword">new</span> ReadWriteHelper();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeString</span><span class="params">(Parcel p, String s)</span> </span>&#123;</span><br><span class="line">            nativeWriteString(p.mNativePtr, s);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">readString</span><span class="params">(Parcel p)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> nativeReadString(p.mNativePtr);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>可见 <code>Parcel</code> 有 <code>native</code> 代码的实现  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Parcel</span><span class="params">(<span class="keyword">long</span> nativePtr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_RECYCLE) &#123;</span><br><span class="line">            mStack = <span class="keyword">new</span> RuntimeException();</span><br><span class="line">        &#125;</span><br><span class="line">        init(nativePtr);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">long</span> nativePtr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nativePtr != <span class="number">0</span>) &#123;</span><br><span class="line">            mNativePtr = nativePtr;</span><br><span class="line">            mOwnsNativeParcelObject = <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mNativePtr = nativeCreate();<span class="comment">//调用native代码，获得指针</span></span><br><span class="line">            mOwnsNativeParcelObject = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>nativeCreate()</code>定义在<code>framework/base/cor/jni/android_os_Parcel.cpp</code>文件中  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> JNINativeMethod gParcelMethods[] = &#123;</span><br><span class="line">    ...</span><br><span class="line">   </span><br><span class="line">    &#123;<span class="string">"nativeWriteInt"</span>,            <span class="string">"(II)V"</span>, (<span class="keyword">void</span>*)android_os_Parcel_writeInt&#125;,</span><br><span class="line">    &#123;<span class="string">"nativeWriteString"</span>,         <span class="string">"(ILjava/lang/String;)V"</span>, (<span class="keyword">void</span>*)android_os_Parcel_writeString&#125;,</span><br><span class="line">    &#123;<span class="string">"nativeWriteStrongBinder"</span>,   <span class="string">"(ILandroid/os/IBinder;)V"</span>, (<span class="keyword">void</span>*)android_os_Parcel_writeStrongBinder&#125;,</span><br><span class="line">    &#123;<span class="string">"nativeWriteFileDescriptor"</span>, <span class="string">"(ILjava/io/FileDescriptor;)V"</span>, (<span class="keyword">void</span>*)android_os_Parcel_writeFileDescriptor&#125;,</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    &#123;<span class="string">"nativeReadInt"</span>,             <span class="string">"(I)I"</span>, (<span class="keyword">void</span>*)android_os_Parcel_readInt&#125;,</span><br><span class="line">    &#123;<span class="string">"nativeReadLong"</span>,            <span class="string">"(I)J"</span>, (<span class="keyword">void</span>*)android_os_Parcel_readLong&#125;,</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">"nativeCreate"</span>,              <span class="string">"()I"</span>, (<span class="keyword">void</span>*)android_os_Parcel_create&#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在<code>android_os_Parcel.cpp</code>中定义了native和java的方法映射。所以native层执行的方法是<code>android_os_Parcel_create()</code>  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> jint <span class="title">android_os_Parcel_create</span><span class="params">(JNIEnv* env, jclass clazz)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parcel* parcel = <span class="keyword">new</span> Parcel();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jint&gt;(parcel);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以Java层的<code>mNativePtr</code>变量实际上是native层的一个<code>Parcel(C++)</code>对象  </p>
+<p><code>Parcel.cpp</code>代码位置<code>frameworks/native/libs/binder/Parcel.cpp</code><br>从源码位置上就能看出来，<code>Parcel</code>就是用来辅助Binder通信的。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Parcel::Parcel()</span><br><span class="line">&#123;</span><br><span class="line">    initState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Parcel::initState()</span><br><span class="line">&#123;</span><br><span class="line">    mError = NO_ERROR;</span><br><span class="line">    mData = <span class="number">0</span>;</span><br><span class="line">    mDataSize = <span class="number">0</span>;</span><br><span class="line">    mDataCapacity = <span class="number">0</span>;</span><br><span class="line">    mDataPos = <span class="number">0</span>;</span><br><span class="line">    ALOGV(<span class="string">"initState Setting data size of %p to %d\n"</span>, <span class="keyword">this</span>, mDataSize);</span><br><span class="line">    ALOGV(<span class="string">"initState Setting data pos of %p to %d\n"</span>, <span class="keyword">this</span>, mDataPos);</span><br><span class="line">    mObjects = <span class="literal">NULL</span>;</span><br><span class="line">    mObjectsSize = <span class="number">0</span>;</span><br><span class="line">    mObjectsCapacity = <span class="number">0</span>;</span><br><span class="line">    mNextObjectHint = <span class="number">0</span>;</span><br><span class="line">    mHasFds = <span class="literal">false</span>;</span><br><span class="line">    mFdsKnown = <span class="literal">true</span>;</span><br><span class="line">    mAllowFds = <span class="literal">true</span>;</span><br><span class="line">    mOwner = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Parcel 对象初始化的过程中只是简单的初始化了各个成员变量，并没有分配内存。Parcel 遵循的是动态扩展的原则，只有在真正需要的时候才会申请内存，避免了资源浪费。  </p>
+<p>Parcel对象初始化的这些变量定义在<code>`frameworks/native/libs/binder/Parcel.h</code>文件中，我们来看看它们的含义  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span>            mError;</span><br><span class="line">  <span class="keyword">uint8_t</span>*            mData;<span class="comment">//Parcel中存储的数据内容，它是一个8位 uint8_t类型的指针</span></span><br><span class="line">  <span class="keyword">size_t</span>              mDataSize;<span class="comment">//Parcel 中已经存储的数据大小</span></span><br><span class="line">  <span class="keyword">size_t</span>              mDataCapacity;<span class="comment">//最大容量</span></span><br><span class="line">  <span class="keyword">mutable</span> <span class="keyword">size_t</span>      mDataPos;<span class="comment">//当前数据存储到哪了？</span></span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+<p>我们看看 如何往<code>Parcel</code>中写入数据，以 写入String 为例:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeString</span><span class="params">(String val)</span> </span>&#123;</span><br><span class="line">       mReadWriteHelper.writeString(<span class="keyword">this</span>, val);</span><br><span class="line">   &#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeString</span><span class="params">(Parcel p, String s)</span> </span>&#123;</span><br><span class="line">           nativeWriteString(p.mNativePtr, s);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p>执行的是<code>android_os_Parcel.cpp</code>中的<code>android_os_Parcel_writeString</code>方法  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">android_os_Parcel_writeString</span><span class="params">(JNIEnv* env, jclass clazz, jint nativePtr, jstring val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parcel* parcel = <span class="keyword">reinterpret_cast</span>&lt;Parcel*&gt;(nativePtr);</span><br><span class="line">    <span class="keyword">if</span> (parcel != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">status_t</span> err = NO_MEMORY;</span><br><span class="line">        <span class="keyword">if</span> (val) &#123;</span><br><span class="line">            <span class="keyword">const</span> jchar* str = env-&gt;GetStringCritical(val, <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span> (str) &#123;</span><br><span class="line">                err = parcel-&gt;writeString16(str, env-&gt;GetStringLength(val));</span><br><span class="line">                env-&gt;ReleaseStringCritical(val, str);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            err = parcel-&gt;writeString16(<span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (err != NO_ERROR) &#123;</span><br><span class="line">            signalExceptionForError(env, clazz, err);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先将指针<code>mNativePtr</code>转成Native 层的Parcel对象；然后将Java成的String转成Native层的字符串；调用 Parcel对象的<code>writeString16</code>方法入,这时候已经进入 <code>Parcel.cpp</code>中，我们看看 它的<code>writeString16</code>方法    </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> Parcel::writeString16(<span class="keyword">const</span> String16&amp; str)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> writeString16(str.<span class="built_in">string</span>(), str.size());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">status_t</span> Parcel::writeString16(<span class="keyword">const</span> <span class="keyword">char16_t</span>* str, <span class="keyword">size_t</span> len)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="literal">NULL</span>) <span class="keyword">return</span> writeInt32(<span class="number">-1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">status_t</span> err = writeInt32(len);<span class="comment">//写入数据长度</span></span><br><span class="line">    <span class="keyword">if</span> (err == NO_ERROR) &#123;</span><br><span class="line">        len *= <span class="keyword">sizeof</span>(<span class="keyword">char16_t</span>);<span class="comment">//len * 单位大小 得到占用的空间大小</span></span><br><span class="line">        <span class="keyword">uint8_t</span>* data = (<span class="keyword">uint8_t</span>*)writeInplace(len+<span class="keyword">sizeof</span>(<span class="keyword">char16_t</span>));</span><br><span class="line">        <span class="keyword">if</span> (data) &#123;</span><br><span class="line">            <span class="built_in">memcpy</span>(data, str, len);</span><br><span class="line">            *<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">char16_t</span>*&gt;(data+len) = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">return</span> NO_ERROR;</span><br><span class="line">        &#125;</span><br><span class="line">        err = mError;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>writeString16</code>方法首先通过<code>writeInt32</code>写入字符串的长度  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> Parcel::writeInt32(<span class="keyword">int32_t</span> val)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> writeAligned(val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//模板类</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">status_t</span> <span class="title">Parcel</span>:</span>:writeAligned(T val) &#123;</span><br><span class="line">    COMPILE_TIME_ASSERT_FUNCTION_SCOPE(PAD_SIZE(<span class="keyword">sizeof</span>(T)) == <span class="keyword">sizeof</span>(T));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((mDataPos+<span class="keyword">sizeof</span>(val)) &lt;= mDataCapacity) &#123;<span class="comment">//如果容量够</span></span><br><span class="line">restart_write:</span><br><span class="line">        *<span class="keyword">reinterpret_cast</span>&lt;T*&gt;(mData+mDataPos) = val;<span class="comment">//保存val</span></span><br><span class="line">        <span class="keyword">return</span> finishWrite(<span class="keyword">sizeof</span>(val));<span class="comment">//修正mDataPos和mDataSize</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">status_t</span> err = growData(<span class="keyword">sizeof</span>(val));<span class="comment">//数据超过Parcel的存储容量，需要扩容</span></span><br><span class="line">    <span class="keyword">if</span> (err == NO_ERROR) <span class="keyword">goto</span> restart_write;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写入String size 调用的是一个模板类，泛型T是int类型，首先判断是否容量充足，如果充足直接写入，否则扩容。  </p>
+<p>回到 <code>writeString16</code>方法，继续写入一个 String 字符串。<code>len *= sizeof(char16_t);</code>计算一共需要占用多少字节,然后使用<code>writeInplace</code>计算复制数据的目标地址，如果一切顺利，后面会调用<code>memcpy</code>真正的将字符串拷贝进去。  </p>
+<p>我们分析一下<code>writeInplace</code>  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span>* Parcel::writeInplace(<span class="keyword">size_t</span> len)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">size_t</span> padded = PAD_SIZE(len);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sanity check for integer overflow</span></span><br><span class="line">    <span class="keyword">if</span> (mDataPos+padded &lt; mDataPos) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((mDataPos+padded) &lt;= mDataCapacity) &#123;</span><br><span class="line">restart_write:</span><br><span class="line">        <span class="keyword">uint8_t</span>* <span class="keyword">const</span> data = mData+mDataPos;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Need to pad at end?</span></span><br><span class="line">        <span class="keyword">if</span> (padded != len) &#123;<span class="comment">//需要尾部填充</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> BYTE_ORDER == BIG_ENDIAN</span></span><br><span class="line">            <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">uint32_t</span> mask[<span class="number">4</span>] = &#123;</span><br><span class="line">                <span class="number">0x00000000</span>, <span class="number">0xffffff00</span>, <span class="number">0xffff0000</span>, <span class="number">0xff000000</span></span><br><span class="line">            &#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> BYTE_ORDER == LITTLE_ENDIAN</span></span><br><span class="line">            <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">uint32_t</span> mask[<span class="number">4</span>] = &#123;</span><br><span class="line">                <span class="number">0x00000000</span>, <span class="number">0x00ffffff</span>, <span class="number">0x0000ffff</span>, <span class="number">0x000000ff</span></span><br><span class="line">            &#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">          </span><br><span class="line">            *<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">uint32_t</span>*&gt;(data+padded<span class="number">-4</span>) &amp;= mask[padded-len];<span class="comment">//填充尾部</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        finishWrite(padded);<span class="comment">//修正mDataPos和mDataSize</span></span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">status_t</span> err = growData(padded);<span class="comment">//容量不足，扩容</span></span><br><span class="line">    <span class="keyword">if</span> (err == NO_ERROR) <span class="keyword">goto</span> restart_write;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define PAD_SIZE(s) (((s)+3)&amp;~3)</span><br></pre></td></tr></table></figure>
+<p><code>PAD_SIZE</code>以4字节对齐，即每一份占4字节。如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">len =1 padded = 4 </span><br><span class="line">len =4 padded = 4 </span><br><span class="line">len =5 padded = 8</span><br><span class="line">len =8 padded = 8</span><br><span class="line">len =9 padded = 12</span><br></pre></td></tr></table></figure>
+<p>回到<code>writeInplace</code>方法，如果 <code>padded != len</code>说明写入的数据长度不是4字节的整数倍，所以需要在空余的尾部填充一些 <code>mask</code>数据，这里填充的字节序有两种:<code>BIG_ENDIAN</code>和<code>LITTLE_ENDIAN</code>,他们的填充字段不同。</p>
+<p>该方法中同样考虑了 容量不足时使用<code>growData</code>方法扩容。 </p>
+<p>再次回到<code>writeString16</code>方法中   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (data) &#123;</span><br><span class="line">           memcpy(data, str, len);</span><br><span class="line">           *reinterpret_cast&lt;char16_t*&gt;(data+len) = 0;</span><br><span class="line">           return NO_ERROR;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p>有了拷贝的目标地址，然后系统调用<code>memcpy</code>将 字符串 <code>str</code>拷贝到目标地址中；<br>在最后写入结束标记<code>0</code>。 至此，写入一个String 操作完成。  </p>
+<p>总结一下写入String 操作:  </p>
+<ol>
+<li>Java成的<code>Parcel.writeString</code>最终调用<code>Parcel.cpp</code>中的<code>writeString16</code>方法</li>
+<li>首先写入一个4直接的Int值，表示 String的长度</li>
+<li>通过 <code>writeInplace</code>函数计算 要写入的目标地址，注意，这里以4字节为单位进行分配</li>
+<li>如果空间不足，使用函数<code>growData</code>进行扩容，中间会设计到调用<code>continueWrite</code>函数做老数据拷贝</li>
+<li>获得目标地址后，使用<code>memcpy</code>函数进行拷贝</li>
+<li>最后写入结束标记<code>0</code></li>
+</ol>
+<h4 id="Parcel-读数据分析"><a href="#Parcel-读数据分析" class="headerlink" title="Parcel 读数据分析"></a>Parcel 读数据分析</h4><p>上面分析了往Parcel 中写一个String，这里配对分析一下<code>readString</code><br>readString 也是经过natice 层处理的，最终调用到<code>android_os_Parcel.cpp</code>中  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> jstring <span class="title">android_os_Parcel_readString</span><span class="params">(JNIEnv* env, jclass clazz, jint nativePtr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parcel* parcel = <span class="keyword">reinterpret_cast</span>&lt;Parcel*&gt;(nativePtr);</span><br><span class="line">    <span class="keyword">if</span> (parcel != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">size_t</span> len;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char16_t</span>* str = parcel-&gt;readString16Inplace(&amp;len);</span><br><span class="line">        <span class="keyword">if</span> (str) &#123;</span><br><span class="line">            <span class="keyword">return</span> env-&gt;NewString(str, len);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>又调用了<code>Parcel.cpp</code>中的<code>readString16Inplace</code>方法  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char16_t</span>* Parcel::readString16Inplace(<span class="keyword">size_t</span>* outLen) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int32_t</span> size = readInt32();<span class="comment">//首先读出String的大小</span></span><br><span class="line">    <span class="comment">// watch for potential int overflow from size+1</span></span><br><span class="line">    <span class="keyword">if</span> (size &gt;= <span class="number">0</span> &amp;&amp; size &lt; INT32_MAX) &#123;</span><br><span class="line">        *outLen = size;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char16_t</span>* str = (<span class="keyword">const</span> <span class="keyword">char16_t</span>*)readInplace((size+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">char16_t</span>));<span class="comment">//</span></span><br><span class="line">        <span class="keyword">if</span> (str != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *outLen = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先 readInt，读出String 的大小；然后通过<code>readInplace</code>获取到字符串的起始地址；<br>最后 new 一个Java层的字符串对象返回。</p>
+<p>这里以 String的写入和读取为例做的分析，其他类型数据的写入和读取也都类似，就不一一分析了。至于 <code>Active Object</code>的写入和读取，在之后的Binder 分析文章中会有具体分析。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Binder/" rel="tag"># Binder</a>
+          
+            <a href="/tags/Parcel/" rel="tag"># Parcel</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android-智能指针/" rel="next" title="Android-智能指针">
+                <i class="fa fa-chevron-left"></i> Android-智能指针
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android-ContentProvider的装置流程/" rel="prev" title="Android-ContentProvider的装载流程">
+                Android-ContentProvider的装载流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Parcel"><span class="nav-number">1.</span> <span class="nav-text">Parcel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parcel-写入数据分析"><span class="nav-number">2.</span> <span class="nav-text">Parcel 写入数据分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parcel-读数据分析"><span class="nav-number">3.</span> <span class="nav-text">Parcel 读数据分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'Android-Binder通信的数据传输载体-Parcel/';
+        var commenthub_url = 'http://aicodeing.github.io/Android-Binder通信的数据传输载体-Parcel/';
+        var commenthub_title = 'Android-Binder通信的数据传输载体-Parcel';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

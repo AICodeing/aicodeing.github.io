@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SS,Proxy,GoogleCloud," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="GoogleCloud 目前有免费300$方案，该教程利用GoogleCloud 平台搭建 Shadowsocks服务。 1. 注册GoogleCloud账户并登陆登陆地址 https://console.cloud.google.com 账户建立过程忽略。 2. 配置项目进入 GoogleCloud 的后台。再开始搭">
+<meta name="keywords" content="SS,Proxy,GoogleCloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在GoogleCloud上搭建SS代理服务">
+<meta property="og:url" content="http://aicodeing.github.io/ss-work-in-googlecloud/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="GoogleCloud 目前有免费300$方案，该教程利用GoogleCloud 平台搭建 Shadowsocks服务。 1. 注册GoogleCloud账户并登陆登陆地址 https://console.cloud.google.com 账户建立过程忽略。 2. 配置项目进入 GoogleCloud 的后台。再开始搭建 SS服务之前需要先有一个项目如果已经有项目，直接选择，如果没有，按照下图新创">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_1.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_2.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_3.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_4.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_5.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_6_create_vm.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_6_vm_created.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_7_create_fire_wall.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_7_begin_create_fire_rules.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_7_fire_rules_created.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_8_ip.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_8_begin_static_ip.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_8_static_ip_ok.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_9_ssh_vm.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_9_link_vm.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_9_login_vm_ok.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_10_reset_root_pwd.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_10_enter_root.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_10_finish_ss_config.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss_server/step_10_review_ss_config.jpg">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在GoogleCloud上搭建SS代理服务">
+<meta name="twitter:description" content="GoogleCloud 目前有免费300$方案，该教程利用GoogleCloud 平台搭建 Shadowsocks服务。 1. 注册GoogleCloud账户并登陆登陆地址 https://console.cloud.google.com 账户建立过程忽略。 2. 配置项目进入 GoogleCloud 的后台。再开始搭建 SS服务之前需要先有一个项目如果已经有项目，直接选择，如果没有，按照下图新创">
+<meta name="twitter:image" content="http://aicodeing.github.io/img/ss_server/step_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/ss-work-in-googlecloud/"/>
+
+
+
+
+
+  <title>在GoogleCloud上搭建SS代理服务 | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/ss-work-in-googlecloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在GoogleCloud上搭建SS代理服务</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-26T14:11:54+08:00">
+                2018-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/ss-work-in-googlecloud/" class="leancloud_visitors" data-flag-title="在GoogleCloud上搭建SS代理服务">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>GoogleCloud 目前有免费300$方案，该教程利用<code>GoogleCloud</code> 平台搭建 <code>Shadowsocks</code>服务。</p>
+<h4 id="1-注册GoogleCloud账户并登陆"><a href="#1-注册GoogleCloud账户并登陆" class="headerlink" title="1. 注册GoogleCloud账户并登陆"></a>1. 注册GoogleCloud账户并登陆</h4><p>登陆地址 <a href="https://console.cloud.google.com" target="_blank" rel="noopener">https://console.cloud.google.com</a></p>
+<p>账户建立过程忽略。</p>
+<h4 id="2-配置项目"><a href="#2-配置项目" class="headerlink" title="2. 配置项目"></a>2. 配置项目</h4><p>进入 GoogleCloud 的后台。再开始搭建 <code>SS</code>服务之前需要先有一个<code>项目</code>如果已经有项目，直接选择，如果没有，按照下图新创建一个项目.</p>
+<p>点击 顶部的 <code>Select a project</code><br><img src="/img/ss_server/step_1.jpg" alt=""><br><img src="/img/ss_server/step_2.jpg" alt=""><br><img src="/img/ss_server/step_3.jpg" alt="">  </p>
+<p>项目创建完成之后，选择刚才创建的项目 然后 通过菜单栏选择 <code>Compute Engine</code>，然后进入到创建虚拟机实例 步骤。</p>
+<h4 id="3-创建VM实例"><a href="#3-创建VM实例" class="headerlink" title="3. 创建VM实例"></a>3. 创建VM实例</h4><p><img src="/img/ss_server/step_4.jpg" alt=""><br><img src="/img/ss_server/step_5.jpg" alt=""> </p>
+<p>创建虚拟机实例需要注意几个配置，具体看下图 红线部分</p>
+<p> <img src="/img/ss_server/step_6_create_vm.jpg" alt=""> </p>
+<p> <strong><code>vm</code>的名字:</strong> 可以随便起一个。</p>
+<p> <strong>区域选择:</strong> 根据需求选择，一般原则是选择比较近的，例如 图示中选择的新加坡节点。</p>
+<p> <strong>机器类型:</strong> 这个看需求，不过一般情况下 最低配置就能满足。</p>
+<p> <strong>操作系统:</strong> 根据自己的情况，比如我习惯 Ubuntu 系统，就选择了 Ubuntu 18.0.4LTS</p>
+<p> 剩下的默认配置就行。</p>
+<p> <img src="/img/ss_server/step_6_vm_created.jpg" alt=""> </p>
+<p> <code>VM</code>创建完成之后，然后先搁置起来，先去配置一些网络设置。</p>
+<h4 id="4-网络设置"><a href="#4-网络设置" class="headerlink" title="4.网络设置"></a>4.网络设置</h4><h5 id="创建防火墙规则"><a href="#创建防火墙规则" class="headerlink" title="创建防火墙规则"></a>创建防火墙规则</h5><p>从左侧导航菜单选择 <code>VPC网络</code>-&gt;<code>防火墙规则</code></p>
+<p><img src="/img/ss_server/step_7_create_fire_wall.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_7_begin_create_fire_rules.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_7_fire_rules_created.jpg" alt=""></p>
+<p><strong>防火墙名字:</strong> 这个随便起，见名之意即可</p>
+<p><strong>流量方向:</strong> 选择入站</p>
+<p><strong>目标:</strong> 选择 <code>网络中的所有实例</code></p>
+<p><strong>来源IP地址范围:</strong> <code>0.0.0.0/0</code></p>
+<p><strong>协议和端口:</strong> 全部允许</p>
+<p>然后点击创建按钮完成防火墙配置。</p>
+<h5 id="设置静态IP"><a href="#设置静态IP" class="headerlink" title="设置静态IP"></a>设置静态IP</h5><p>从左侧导航菜单选择<code>VPC网络</code>-&gt; <code>外部IP地址</code></p>
+<p><img src="/img/ss_server/step_8_ip.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_8_begin_static_ip.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_8_static_ip_ok.jpg" alt=""></p>
+<p>静态IP 名称: 随便起一个，图例中是 <code>proxy-ip</code></p>
+<p>区域选择: 一定要选择你创建<code>VM</code>时 选择的区域和 <code>vm实例</code></p>
+<h4 id="5-登陆-VM-实例，安装-SS-服务"><a href="#5-登陆-VM-实例，安装-SS-服务" class="headerlink" title="5. 登陆 VM 实例，安装 SS 服务"></a>5. 登陆 VM 实例，安装 SS 服务</h4><p>进入 <code>VM</code> 实例 页面，通过 <code>SSH</code> 登陆 服务器</p>
+<p><img src="/img/ss_server/step_9_ssh_vm.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_9_link_vm.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_9_login_vm_ok.jpg" alt=""></p>
+<p>如图所示，成功登陆服务器。</p>
+<p>由于 <code>SS 服务</code> 需要在 <code>root</code> 用户下登陆，下面我们修改一下 服务器的<code>root</code> 密码</p>
+<p><img src="/img/ss_server/step_10_reset_root_pwd.jpg" alt=""></p>
+<p>输入命令:</p>
+<p><code>sudo passwd root</code>  </p>
+<p>然后设置 新的<code>root</code> 密码。<br>设置完之后 输入 命令:</p>
+<p><code>su</code></p>
+<p>然后输入密码进入 <code>root</code> 用户下</p>
+<p><img src="/img/ss_server/step_10_enter_root.jpg" alt=""></p>
+<p>以上步骤完成之后就开始我们的安装 操作了，执行如下命令:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate -O shadowsocks-go.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-go.sh</span><br><span class="line">chmod +x shadowsocks-go.sh</span><br><span class="line">./shadowsocks-go.sh 2&gt;&amp;1 | tee shadowsocks-go.log</span><br></pre></td></tr></table></figure>
+<p>然后会让你配置一些信息，如图：</p>
+<p><img src="/img/ss_server/step_10_finish_ss_config.jpg" alt=""></p>
+<p>设置的密码即为你 <code>Shadowsocks</code>软件上需要填写的密码</p>
+<p>端口号对应 你 <code>Shadowsocks</code>软件上需要填写的端口号</p>
+<p>加密方式我们选择默认 <code>aes-256-cfb</code>即可。</p>
+<p>一切配置完成之后，点击回车按钮，会自动安装服务，待服务安装完毕，会出现如下界面：</p>
+<p><img src="/img/ss_server/step_10_review_ss_config.jpg" alt=""></p>
+<p>这些就是你在 <code>SS</code>软件上需要填写的信息。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SS/" rel="tag"># SS</a>
+          
+            <a href="/tags/Proxy/" rel="tag"># Proxy</a>
+          
+            <a href="/tags/GoogleCloud/" rel="tag"># GoogleCloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Shadowsocks自定义PAC规则/" rel="next" title="Shadowsocks自定义PAC规则">
+                <i class="fa fa-chevron-left"></i> Shadowsocks自定义PAC规则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Linux-inode理解/" rel="prev" title="Linux inode理解">
+                Linux inode理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-注册GoogleCloud账户并登陆"><span class="nav-number">1.</span> <span class="nav-text">1. 注册GoogleCloud账户并登陆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-配置项目"><span class="nav-number">2.</span> <span class="nav-text">2. 配置项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建VM实例"><span class="nav-number">3.</span> <span class="nav-text">3. 创建VM实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-网络设置"><span class="nav-number">4.</span> <span class="nav-text">4.网络设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建防火墙规则"><span class="nav-number">4.1.</span> <span class="nav-text">创建防火墙规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置静态IP"><span class="nav-number">4.2.</span> <span class="nav-text">设置静态IP</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-登陆-VM-实例，安装-SS-服务"><span class="nav-number">5.</span> <span class="nav-text">5. 登陆 VM 实例，安装 SS 服务</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'ss-work-in-googlecloud/';
+        var commenthub_url = 'http://aicodeing.github.io/ss-work-in-googlecloud/';
+        var commenthub_title = '在GoogleCloud上搭建SS代理服务';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

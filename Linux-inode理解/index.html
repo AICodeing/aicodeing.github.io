@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="inode在Linux 文件系统中具有灵魂级作用，我们就谈一下对inode的理解。首先了解一下Linux的文件系统。  EXT4 文件系统Linux 基于ext4 文件系统，简单来说 它将存储划分成一组组大小相同的逻辑块，这样做的好处是减少了文件管理的开销，按照 整数个 基础逻辑块来分配存储大小方便高效，而且利于提高大">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux inode理解">
+<meta property="og:url" content="http://aicodeing.github.io/Linux-inode理解/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="inode在Linux 文件系统中具有灵魂级作用，我们就谈一下对inode的理解。首先了解一下Linux的文件系统。  EXT4 文件系统Linux 基于ext4 文件系统，简单来说 它将存储划分成一组组大小相同的逻辑块，这样做的好处是减少了文件管理的开销，按照 整数个 基础逻辑块来分配存储大小方便高效，而且利于提高大文件的传输效率，一个文件所占用的块可以是连续的，也可以是非连续的。而为了标记这些">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://aicodeing.github.io/img/inode/inode_1.jpg">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.296Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux inode理解">
+<meta name="twitter:description" content="inode在Linux 文件系统中具有灵魂级作用，我们就谈一下对inode的理解。首先了解一下Linux的文件系统。  EXT4 文件系统Linux 基于ext4 文件系统，简单来说 它将存储划分成一组组大小相同的逻辑块，这样做的好处是减少了文件管理的开销，按照 整数个 基础逻辑块来分配存储大小方便高效，而且利于提高大文件的传输效率，一个文件所占用的块可以是连续的，也可以是非连续的。而为了标记这些">
+<meta name="twitter:image" content="http://aicodeing.github.io/img/inode/inode_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/Linux-inode理解/"/>
+
+
+
+
+
+  <title>Linux inode理解 | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Linux-inode理解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux inode理解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-15T16:50:05+08:00">
+                2019-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Linux-inode理解/" class="leancloud_visitors" data-flag-title="Linux inode理解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>inode</code>在<code>Linux</code> 文件系统中具有灵魂级作用，我们就谈一下对<code>inode</code>的理解。<br>首先了解一下<code>Linux</code>的文件系统。 </p>
+<h3 id="EXT4-文件系统"><a href="#EXT4-文件系统" class="headerlink" title="EXT4 文件系统"></a>EXT4 文件系统</h3><p>Linux 基于ext4 文件系统，简单来说 它将存储划分成一组组大小相同的逻辑块，这样做的好处是减少了文件管理的开销，按照 <strong>整数个</strong> <code>基础逻辑块</code>来分配存储大小方便高效，而且利于提高大文件的传输效率，一个文件所占用的块可以是连续的，也可以是非连续的。而为了标记这些逻辑块的引用，文件系统中还引入了 <code>inode</code>。<br><code>inode</code>是linux 文件系统中的数据索引标记符。 如下图:<br> <img src="/img/inode/inode_1.jpg" alt=""></p>
+<p> <code>Linux</code>的文件系统被分为了两部分，一部分是 <code>inode</code>区，一部分是 <code>block</code>区，一个<code>inode</code> 的默认大小为 128Byte，当然，不同的Linux 发行版本可能大小定义不同，inode的大小在文件系统被格式化之后就无法更改了，格式化前可以指定inode大小。<code>inode</code>用来记录:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">文件的权限(r,w,x)</span><br><span class="line">文件的所有者和属组</span><br><span class="line">文件的大小</span><br><span class="line">文件的状态改变时间（ctime）</span><br><span class="line">文件的最近一次读取时间（atime）</span><br><span class="line">文件的最近一次修改时间（mtime</span><br><span class="line">文件的数据真正保存的 block 编号。</span><br></pre></td></tr></table></figure>
+<p>每个文件需要占用一个 <code>inode</code>。而<code>inode</code> 中是不记录文件的名称的，文件名称记录在文件所在目录的<code>block</code>块中。<br> <code>block</code>块的大小可以是1KB、2KB、4KB，一般默认往往是4KB，包含了连续8个扇区，每个扇区存储512个字节。</p>
+<p><code>inode</code>就告诉了文件位于哪个“块”，于是系统就会从这个“block块”开始读取内容。如果一个 block 放不下数据，则可以占用多个 block。例如，有一个 10KB 的文件需要存储，则会占用 3 个 block，虽然最后一个 block 不能占满，但也不能再放入其他文件的数据。这 3 个 block 有可能是连续的，也有可能是分散的。</p>
+<h3 id="查看文件的inode"><a href="#查看文件的inode" class="headerlink" title="查看文件的inode"></a>查看文件的inode</h3><p>我们可以使用 <code>stat</code> 命令来查看文件的 <code>inode</code> 信息</p>
+<p>在 test 目录下创建一个 <code>src.txt</code> 文件  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  test touch src.txt</span><br><span class="line">➜  test ll -l</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test stat -x src.txt</span><br><span class="line">  File: "src.txt"</span><br><span class="line">  Size: 4            FileType: Regular File</span><br><span class="line">  Mode: (0644/-rw-r--r--)         Uid: (  502/ wangwei)  Gid: (   20/   staff)</span><br><span class="line">Device: 1,4   Inode: 8625061903    Links: 2</span><br><span class="line">Access: Tue Jan 15 18:36:36 2019</span><br><span class="line">Modify: Tue Jan 15 18:34:09 2019</span><br><span class="line">Change: Tue Jan 15 18:37:29 2019</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p>通过 <code>stat -x file</code>命令(Mac Os 下) 可以得到 文件的 详细信息，<code>Inode: 8625061903</code> 指明 该文件的 <code>inode</code>号是 <code>8625061903</code>  </p>
+<p>通过<code>stat -s file</code>命令:  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  test stat -s src.txt</span><br><span class="line">st_dev=16777220 st_ino=8625061903 st_mode=0100644 st_nlink=2 st_uid=502 st_gid=20 st_rdev=0 st_size=4 st_atime=1547548596 st_mtime=1547548449 st_ctime=1547548649 st_birthtime=1547545866 st_blksize=4096 st_blocks=8 st_flags=0</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p>可以得到更多信息，如果了解更多请访问 <a href="&#39;https://linux.die.net/man/2/stat&#39;">linux-stat</a>   </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">st_dev: 文件所在的 device ID</span><br><span class="line">st_ino: 文件的 inode 号</span><br><span class="line">st_mode: 文件的类型，如 常规文件，文件夹，字符设备文件，块文件 等等</span><br><span class="line">st_nlink：文件的硬链接个数，如果为0 就可以被删除了</span><br><span class="line">st_rdev: 设备号的意思，只有字符特殊设备和块特殊设备才会有st_rdev值。此值包含实际设备的设备号</span><br><span class="line">st_size: 文件占用的字节大小 ,单位字节</span><br><span class="line">st_blksize: 每个 block 的大小，一般情况下是4KB</span><br><span class="line">st_blocks: number of 512B blocks allocated, 以 512B 为单位分配给文件的个数,用 st_size/512B 就得到 st_blocks，</span><br><span class="line">当 st_size 小于一个 block的大小，即文件大小小于默认的4KB时 实际还是分配一个 block，st_blocks = 1个blocksize/512B,</span><br><span class="line">在该例子中，src.txt 大小是4B ，但是需要占用一个 block 也就是 4KB的实际存储空间，计算得到的st_blocks = 8</span><br></pre></td></tr></table></figure>
+<p>还可以使用命令<code>ll -i</code> 查看文件的 inode  </p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> <code>8625061903</code> 就是 文件 <code>src.txt</code>的 inode编码,而权限后面的 <code>1</code>是该文件的链接数，也即是 <code>硬链接数</code>。  </p>
+<h3 id="inode的使用"><a href="#inode的使用" class="headerlink" title="inode的使用"></a>inode的使用</h3><p>一个文件在创建的时候就会分配一个 inode节点，以一个简单的例子来说明，如何访问一个文件?<br>要打开一个文件，需要要找到这个文件占用的 block 块。首先会找到文件所在的目录，在linux文件系统中，目录也是一个文件，<strong>目录文件的内容就是该目录下的文件名与 inode的映射表，即一个个的目录项</strong>。当访问一个文件的时候首先查询到上一级目录，在 Linux 文件系统中 每一个目录中都有 <code>.</code>和<code>../</code>两个目录   </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -ai</span><br><span class="line">total 16</span><br><span class="line">8625052613 drwxr-xr-x   4 wangwei  staff   128B  1 15 17:51 .</span><br><span class="line">   8475120 drwxr-xr-x+ 85 wangwei  staff   2.7K  1 15 18:13 ..</span><br><span class="line">8625053037 -rw-r--r--@  1 wangwei  staff   6.0K  1 15 15:39 .DS_Store</span><br><span class="line">8625061903 -rw-r--r--   1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> <strong><code>.</code></strong> 目录代表当前目录的 <strong>硬连接</strong> ；<strong><code>..</code></strong> 代表着上级目录的 <strong>硬链接</strong><br> 示例中的 8625052613 就是当前test 目录的inode编号，8475120 是上级目录的编号。因此也说明了，任何一个目录的硬链接总数，总是等于 2 加上它的子目录和子文件总数,即使是一个空文件夹，它的硬链接数也是2。  </p>
+<p>文件系统根据 父目录的目录项找到 需要打开文件的inode 节点，通过读 inode 节点找到需要打开的 block，载入 block块中的数据，即完成了打开文件的操作，当然通过 inode 做了权限判断，如果无权访问该文件，不需要访问 block块，通过目录项找到 inode 节点就能读出权限信息。  </p>
+<h3 id="inode的链接数"><a href="#inode的链接数" class="headerlink" title="inode的链接数"></a>inode的链接数</h3><p>通过 <code>ll -i</code>命令可以查看文件的 inode 信息，inode 信息中有一个 <strong>链接数</strong></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br></pre></td></tr></table></figure>
+<p> <code>-rw-r--r--</code> 后面的 <strong>1</strong> 表示 src.txt 文件当前有一个引用，当 链接数变成0 则释放 inode，释放block 块的数据内容。 </p>
+<p> 对 inode 链接数 的影响 来自 前面多次提到的 <strong>硬链接</strong> </p>
+<h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><p>我们常见的软连接 通过 <code>ln</code>命令生成。同样，硬链接也是通过<code>ln</code>命令生成。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test ln src.txt hard.txt</span><br><span class="line">➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     0B  1 15 17:51 hard.txt</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> 示例中 创建了一个硬链接 <code>hard.txt</code>， 这个文件 的 <code>inode</code> 和 <code>src.txt</code> 是一样的，说明在目录项中 这两个文件名都指向 同一个<code>inode</code>，<code>inode</code> 指向一个 <code>block</code>，这就说明 这两个文件共用一个 <code>block 块</code>，不管修改哪个文件，另一个文件也会被修改。</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> ➜  test echo 111 &gt; src.txt</span><br><span class="line">➜  test cat src.txt</span><br><span class="line">111</span><br><span class="line">➜  test cat hard.txt</span><br><span class="line">111</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> 示例中我们向 <strong><code>src.txt</code></strong> 文件写入了 <strong><code>111</code></strong> 字符，查看发现 <code>hard.txt</code> 也做了同样的修改。</p>
+<p>那么两个文件指向同一个<code>block</code>，那占用的空间肯定也就是一份了，有意思的事情来了  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -h</span><br><span class="line">total 8 // 8个 以512B为单位的存储占用 即 8*512B = 4KB</span><br><span class="line">-rw-r--r--  1 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test ln src.txt hard.txt</span><br><span class="line">➜  test ll -h</span><br><span class="line">total 16 // 16个 以512B为单位的存储占用 即 16*512B = 8KB</span><br><span class="line">-rw-r--r--  2 wangwei  staff     4B  1 15 18:34 hard.txt</span><br><span class="line">-rw-r--r--  2 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p><strong>查看存储占用，发现 硬链接 导致了 存储的翻倍了。这个不符合原理啊!!!</strong><br>其实这是这个<strong><code>ll –h</code></strong> 或者 <strong><code>ls –h</code></strong> 命令进行统计文件总大小的时候并不是从磁盘进行统计的，而是根据文件属性中的大小叠加得来的。而硬链接的文件属性中的大小就是就是inode号对应的数据块的大小，所以total中进行统计就把各个文件属性中的大小加起来作为总和，这种统计是不标准，也不具有代表性的，正真的查看某个文件夹占用磁盘空间大小命令是：du –h   这个命令是从磁盘上进行统计，不会被文件的属性中大小影响，所以更准确。</p>
+<p>所以得出结论: <strong>硬链接并不占用磁盘空间！</strong>  </p>
+<p>那么我们常见的软连接呢?</p>
+<h3 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h3><p>软连接的创建方式和 硬链接的创建方式类似，都是使用 <code>ln</code> 命令，只是需要加上 <code>-s</code> 标记要创建软连接。软连接就相当于<code>windows系统</code> 上的快捷方式，只是指向一个文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -i</span><br><span class="line">total 16</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 hard.txt</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test ln -s src.txt soft.txt</span><br><span class="line">➜  test ll -i</span><br><span class="line">total 16</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 hard.txt</span><br><span class="line">8625064180 lrwxr-xr-x  1 wangwei  staff     7B  1 15 18:48 soft.txt -&gt; src.txt</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p>创建一个 软连接， <code>soft.txt</code> 发现它的<code>inode</code>是全新的。</p>
+<p><strong>软链接</strong> 和 <strong>硬链接</strong> 在原理上最主要的不同在于: <strong>硬链接不会建立自己的 inode 索引和 block（数据块），而是直接指向源文件的 inode 信息和 block，所以硬链接和源文件的 inode 号是一致的；而软链接会真正建立自己的 inode 索引和 block，所以软链接和源文件的 inode 号是不一致的，而且在软链接的 block 中，写的不是真正的数据，而仅仅是源文件的文件名及 inode 号。</strong></p>
+<p>既然软连接分配了新的<code>inode</code>，也就是占用了新的<code>block</code>，那肯定会占用存储空间，由于软连接的<code>block</code> 存储的是 真正文件的路径和<code>inode号</code>，所以占用的空间是极小的。</p>
+<p><strong>此外，硬链接是共享 <code>inode</code>的，而 <code>inode</code> 是同一个文件系统上的唯一标记，所以 硬链接是不能跨文件系统的，而软连接是新的<code>inode</code>，所以是可以跨文件系统的。</strong></p>
+<h3 id="文件操作对-inode-的影响"><a href="#文件操作对-inode-的影响" class="headerlink" title="文件操作对 inode 的影响"></a>文件操作对 <code>inode</code> 的影响</h3><h4 id="cp-命令"><a href="#cp-命令" class="headerlink" title="cp 命令"></a><code>cp</code> 命令</h4><p><code>cp</code> 命令是拷贝一个新文件，分配新的<code>inode</code>，必然导致分配新的<code>block</code>。所以会占用一份新的存储空间。<code>cp</code>命令执行的内部操作如下:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.分配一个未被使用的 inode 号，在 inode 表中新添一个项目</span><br><span class="line">2.在目录中新建一个目录项，并指向步骤 1 中的 inode</span><br><span class="line">3.把数据拷贝到新block中</span><br></pre></td></tr></table></figure>
+<h4 id="rm-命令"><a href="#rm-命令" class="headerlink" title="rm 命令"></a><code>rm</code> 命令</h4><p><code>rm</code> 会删除指定的文件，所做的操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.减少待删除文件名所对应的 inode 的链接数量，如果链接数变为0，则释放 inode。同时block块标记为可用状态。</span><br><span class="line">2.删除文件目录中的对应目录项。</span><br></pre></td></tr></table></figure>
+<h4 id="mv-命令"><a href="#mv-命令" class="headerlink" title="mv 命令"></a><code>mv</code> 命令</h4><p>如果 源文件和目标文件在 <strong><code>同一个文件系统</code></strong> 中，会复用<code>inode</code> 内部操作如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.在目标文件的目录中新建目录项</span><br><span class="line">2.删除源文件的目录中的目录项</span><br><span class="line">3.目标文件名会指向源文件名的 inode。因此该操作对 inode 没有影响（除了时间戳），对数据的位置也没有影响，不移动任何数据。</span><br></pre></td></tr></table></figure>
+<p>所以在同一文件系统下，移动命令不会涉及到数据真正移动。</p>
+<p>如果在 <strong><code>不同的文件系统</code></strong> 中，其实就是相当于 拷贝一份新数据到 目标目标，然后删除 源文件。<br>这个过程会设计到 源文件 <code>inode</code> 的释放和 新 <code>inode</code> 的生成，还有数据拷贝，执行了<code>IO</code> 操作。</p>
+<h3 id="inode-的场景利用"><a href="#inode-的场景利用" class="headerlink" title="inode 的场景利用"></a>inode 的场景利用</h3><p><code>inode</code> 中携带者文件的很多信息，我们可以通过充分利用 <code>inode</code> 的特性实现高效的文件访问操作，如果 文件权限的修改，文件的极速扫描，快速查找大文件，删除顽固文件，通过<code>inode</code>号来识别文件。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/ss-work-in-googlecloud/" rel="next" title="在GoogleCloud上搭建SS代理服务">
+                <i class="fa fa-chevron-left"></i> 在GoogleCloud上搭建SS代理服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Linux-信号机制/" rel="prev" title="Linux-信号机制">
+                Linux-信号机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXT4-文件系统"><span class="nav-number">1.</span> <span class="nav-text">EXT4 文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看文件的inode"><span class="nav-number">2.</span> <span class="nav-text">查看文件的inode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inode的使用"><span class="nav-number">3.</span> <span class="nav-text">inode的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inode的链接数"><span class="nav-number">4.</span> <span class="nav-text">inode的链接数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬链接"><span class="nav-number">5.</span> <span class="nav-text">硬链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软连接"><span class="nav-number">6.</span> <span class="nav-text">软连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作对-inode-的影响"><span class="nav-number">7.</span> <span class="nav-text">文件操作对 inode 的影响</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cp-命令"><span class="nav-number">7.1.</span> <span class="nav-text">cp 命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm-命令"><span class="nav-number">7.2.</span> <span class="nav-text">rm 命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv-命令"><span class="nav-number">7.3.</span> <span class="nav-text">mv 命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inode-的场景利用"><span class="nav-number">8.</span> <span class="nav-text">inode 的场景利用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'Linux-inode理解/';
+        var commenthub_url = 'http://aicodeing.github.io/Linux-inode理解/';
+        var commenthub_title = 'Linux inode理解';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

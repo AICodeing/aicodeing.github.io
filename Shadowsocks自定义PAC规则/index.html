@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SS,PAC," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="科学上网，SS是一大利器。它的实现原理 就是墙外一台服务器，墙内一台服务器(也就是我们的客户端)，两台服务器之间加密通讯，防火墙因为无法判定用户访问的网站是否在防火墙列表，所以放行,这样就可以通过墙外服务器做代理啦。但我们知道，任何网站都通过墙外服务器是不明智的，例如我们访问baidu.com，百度在国内架设了很多服务">
+<meta name="keywords" content="SS,PAC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shadowsocks自定义PAC规则">
+<meta property="og:url" content="http://aicodeing.github.io/Shadowsocks自定义PAC规则/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="科学上网，SS是一大利器。它的实现原理 就是墙外一台服务器，墙内一台服务器(也就是我们的客户端)，两台服务器之间加密通讯，防火墙因为无法判定用户访问的网站是否在防火墙列表，所以放行,这样就可以通过墙外服务器做代理啦。但我们知道，任何网站都通过墙外服务器是不明智的，例如我们访问baidu.com，百度在国内架设了很多服务器，一般都是就近访问的，如果也通过代理到国外绕一圈，得不偿失。所以就需要一个忽略">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss/ss_1.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/ss/ss_2.jpg">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shadowsocks自定义PAC规则">
+<meta name="twitter:description" content="科学上网，SS是一大利器。它的实现原理 就是墙外一台服务器，墙内一台服务器(也就是我们的客户端)，两台服务器之间加密通讯，防火墙因为无法判定用户访问的网站是否在防火墙列表，所以放行,这样就可以通过墙外服务器做代理啦。但我们知道，任何网站都通过墙外服务器是不明智的，例如我们访问baidu.com，百度在国内架设了很多服务器，一般都是就近访问的，如果也通过代理到国外绕一圈，得不偿失。所以就需要一个忽略">
+<meta name="twitter:image" content="http://aicodeing.github.io/img/ss/ss_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/Shadowsocks自定义PAC规则/"/>
+
+
+
+
+
+  <title>Shadowsocks自定义PAC规则 | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Shadowsocks自定义PAC规则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Shadowsocks自定义PAC规则</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-17T11:14:28+08:00">
+                2018-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Shadowsocks自定义PAC规则/" class="leancloud_visitors" data-flag-title="Shadowsocks自定义PAC规则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>科学上网，SS是一大利器。它的实现原理 就是墙外一台服务器，墙内一台服务器(也就是我们的客户端)，两台服务器之间加密通讯，防火墙因为无法判定用户访问的网站是否在防火墙列表，所以放行,这样就可以通过墙外服务器做代理啦。但我们知道，任何网站都通过墙外服务器是<code>不明智的</code>，例如我们访问<code>baidu.com</code>，百度在国内架设了很多服务器，一般都是就近访问的，如果也通过代理到国外绕一圈，得不偿失。所以就需要一个忽略列表，或者一个需要走代理的列表，而PAC 规则就是来实现这个的。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>PAC的配置规则语法和GFWlist 相同，即<a href="https://adblockplus.org/en/filter-cheatsheet" target="_blank" rel="noopener">adblock</a>   </p>
+<p>下面我引用 <code>adblock</code>的示例来做说明。</p>
+<h4 id="1-匹配地址中的一部分内容-通配符匹配"><a href="#1-匹配地址中的一部分内容-通配符匹配" class="headerlink" title="1. 匹配地址中的一部分内容(通配符匹配)"></a>1. 匹配地址中的一部分内容(通配符匹配)</h4><p>比如我们想匹配以下地址:</p>
+<ul>
+<li><a href="http://example.com/banner/foo/img" target="_blank" rel="noopener">http://example.com/banner/foo/img</a></li>
+</ul>
+<ul>
+<li><a href="http://example.com/banner/foo/bar/img?param" target="_blank" rel="noopener">http://example.com/banner/foo/bar/img?param</a></li>
+</ul>
+<ul>
+<li><a href="http://example.com/banner//img/foo" target="_blank" rel="noopener">http://example.com/banner//img/foo</a></li>
+</ul>
+<p>但是不想匹配这些地址:</p>
+<ul>
+<li><a href="http://example.com/banner/img" target="_blank" rel="noopener">http://example.com/banner/img</a></li>
+<li><a href="http://example.com/banner/foo/imgraph" target="_blank" rel="noopener">http://example.com/banner/foo/imgraph</a></li>
+<li><a href="http://example.com/banner/foo/img.gif" target="_blank" rel="noopener">http://example.com/banner/foo/img.gif</a></li>
+</ul>
+<p>那么我们可以写这样的匹配规则:  </p>
+<p><strong><code>/banner/*/img^</code></strong>  </p>
+<p>通配符<code>*</code> 表明中间可以是任意路径或字符，但是必须要有,如果没有，就必须出现两个<code>/</code> 如<code>http://example.com/banner//img/foo</code>  </p>
+<p>符合 <code>^</code>  表明 地址必须在这里结束，或者后面跟着的是 <code>/</code>，或是参数字符，例如<code>?</code>。  </p>
+<h4 id="2-匹配绝对地址"><a href="#2-匹配绝对地址" class="headerlink" title="2. 匹配绝对地址"></a>2. 匹配绝对地址</h4><p>比如我就像匹配地址:  </p>
+<ul>
+<li><a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a></li>
+</ul>
+<p>那么匹配规则可以这样:  </p>
+<p><strong><code>|http://www.baidu.com|</code></strong>  </p>
+<p>在该规则下 以下地址就无法匹配:  </p>
+<ul>
+<li><a href="http://www.baidu.com/logo.jpg" target="_blank" rel="noopener">http://www.baidu.com/logo.jpg</a></li>
+</ul>
+<h4 id="3-匹配开头或结尾"><a href="#3-匹配开头或结尾" class="headerlink" title="3. 匹配开头或结尾"></a>3. 匹配开头或结尾</h4><p>比如我想匹配以 <code>http://example.com</code> 开头的网址,例如:  </p>
+<ul>
+<li><a href="http://example.com/index.html" target="_blank" rel="noopener">http://example.com/index.html</a></li>
+<li><a href="http://example.com/us/index.html" target="_blank" rel="noopener">http://example.com/us/index.html</a></li>
+</ul>
+<p>那么匹配规则为:   </p>
+<p><strong><code>|http://example.com</code></strong>  </p>
+<p>如果匹配以 <code>example.com</code>结尾的网址,例如:  </p>
+<ul>
+<li><a href="http://sandbox.example.com" target="_blank" rel="noopener">http://sandbox.example.com</a></li>
+<li><a href="http://www.example.com" target="_blank" rel="noopener">http://www.example.com</a></li>
+<li><a href="http://www.beta.example.com" target="_blank" rel="noopener">http://www.beta.example.com</a></li>
+</ul>
+<p>那么匹配规则为:<br><strong><code>example.com|</code></strong>  </p>
+<h4 id="4-通过域名匹配"><a href="#4-通过域名匹配" class="headerlink" title="4. 通过域名匹配"></a>4. 通过域名匹配</h4><p>比如我想匹配所有来自 <code>ads.example.com</code> 这个域名的网址  </p>
+<ul>
+<li><a href="http://ads.example.com/foo.gif" target="_blank" rel="noopener">http://ads.example.com/foo.gif</a></li>
+<li><a href="http://server1.ads.example.com/foo.gif" target="_blank" rel="noopener">http://server1.ads.example.com/foo.gif</a></li>
+<li><a href="https://ads.example.com:8000/" target="_blank" rel="noopener">https://ads.example.com:8000/</a></li>
+</ul>
+<p>而不想匹配:  </p>
+<ul>
+<li><a href="http://ads.example.com.ua/foo.gif" target="_blank" rel="noopener">http://ads.example.com.ua/foo.gif</a></li>
+<li><a href="http://example.com/redirect/http://ads.example.com/" target="_blank" rel="noopener">http://example.com/redirect/http://ads.example.com/</a></li>
+</ul>
+<p>那么匹配规则为: <strong><code>||ads.example.com^</code></strong> </p>
+<h4 id="5-高级匹配规则"><a href="#5-高级匹配规则" class="headerlink" title="5. 高级匹配规则"></a>5. 高级匹配规则</h4><p>假如我有这样的需求:</p>
+<ol>
+<li>我只匹配来自 example.com 这个域名或其子域名的地址;</li>
+<li>但不匹配 foo.example.com 这个子域名已经它的子域名</li>
+<li>只匹配 图片或js文件的请求地址</li>
+</ol>
+<p>那么这个匹配规则为:</p>
+<p><strong><code>||example.com^$script,image,domain=example.com|~foo.example.com</code></strong>  </p>
+<p>那么 地址 <code>http://ads.example.com/foo.gif</code> 就能被匹配上。</p>
+<h4 id="6-排除在规则之外"><a href="#6-排除在规则之外" class="headerlink" title="6. 排除在规则之外"></a>6. 排除在规则之外</h4><p>比如我不想让 <code>http://ads.example.com/notbanner/1.png</code>通过匹配<br>但是希望 <code>http://ads.example.com/notbanner/</code>下的所有 js 文件通过匹配</p>
+<p>那么匹配规则:  </p>
+<p><strong><code>@@||ads.example.com/notbanner^$~script</code></strong></p>
+<h5 id="排除整个网站的网址"><a href="#排除整个网站的网址" class="headerlink" title="排除整个网站的网址"></a>排除整个网站的网址</h5><p>比如要排除 所有 域名<code>example.com</code>的网站</p>
+<p>那么匹配规则如下:  </p>
+<p><strong><code>@@||example.com^$document</code></strong></p>
+<p>假如我们想注释掉一个规则是否支持呢？<br>答案是<strong>肯定的</strong>。  </p>
+<p>例如: <code>!|http://example.com</code>  </p>
+<h3 id="SS-中编辑"><a href="#SS-中编辑" class="headerlink" title="SS 中编辑"></a>SS 中编辑</h3><p>下面 我以 <code>ShadowsocksX-NG</code>-1.8.2 版本为例来说明一下如何编辑自定义<code>PAC规则</code></p>
+<p><img src="/img/ss/ss_1.jpg" alt=""></p>
+<p><img src="/img/ss/ss_2.jpg" alt=""></p>
+<p>配置完之后最好点击一下 <code>从GFW List 更新PAC</code> 按钮。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SS/" rel="tag"># SS</a>
+          
+            <a href="/tags/PAC/" rel="tag"># PAC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/KMP-算法及模式匹配/" rel="next" title="KMP 算法及模式匹配">
+                <i class="fa fa-chevron-left"></i> KMP 算法及模式匹配
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ss-work-in-googlecloud/" rel="prev" title="在GoogleCloud上搭建SS代理服务">
+                在GoogleCloud上搭建SS代理服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-匹配地址中的一部分内容-通配符匹配"><span class="nav-number">1.1.</span> <span class="nav-text">1. 匹配地址中的一部分内容(通配符匹配)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-匹配绝对地址"><span class="nav-number">1.2.</span> <span class="nav-text">2. 匹配绝对地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-匹配开头或结尾"><span class="nav-number">1.3.</span> <span class="nav-text">3. 匹配开头或结尾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-通过域名匹配"><span class="nav-number">1.4.</span> <span class="nav-text">4. 通过域名匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-高级匹配规则"><span class="nav-number">1.5.</span> <span class="nav-text">5. 高级匹配规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-排除在规则之外"><span class="nav-number">1.6.</span> <span class="nav-text">6. 排除在规则之外</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#排除整个网站的网址"><span class="nav-number">1.6.1.</span> <span class="nav-text">排除整个网站的网址</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SS-中编辑"><span class="nav-number">2.</span> <span class="nav-text">SS 中编辑</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'Shadowsocks自定义PAC规则/';
+        var commenthub_url = 'http://aicodeing.github.io/Shadowsocks自定义PAC规则/';
+        var commenthub_title = 'Shadowsocks自定义PAC规则';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

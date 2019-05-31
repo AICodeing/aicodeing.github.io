@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Dalvik,ART," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="熟悉 Android的都知道， Android 应用程序的开发 通常采用 Java语言进行开发，不同于 Java 的是，Java 环境编译后的生成的是 .class文件，而 Android 的 可执行文件是 .dex文件(Dalvik Executable)，它是 .class文件经过 工具dx处理后的文件格式，可被 ">
+<meta name="keywords" content="Android,Dalvik,ART">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-Dalvik And ART">
+<meta property="og:url" content="http://aicodeing.github.io/Android-Dalvik-And-ART/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="熟悉 Android的都知道， Android 应用程序的开发 通常采用 Java语言进行开发，不同于 Java 的是，Java 环境编译后的生成的是 .class文件，而 Android 的 可执行文件是 .dex文件(Dalvik Executable)，它是 .class文件经过 工具dx处理后的文件格式，可被 Dalvik虚拟机直接运行(目前 都转为使用更先进的d8编译器来处理 .clas">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://aicodeing.github.io/img/art/art-jit-arch.png">
+<meta property="og:image" content="http://aicodeing.github.io/img/art/jit-workflow.png">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-Dalvik And ART">
+<meta name="twitter:description" content="熟悉 Android的都知道， Android 应用程序的开发 通常采用 Java语言进行开发，不同于 Java 的是，Java 环境编译后的生成的是 .class文件，而 Android 的 可执行文件是 .dex文件(Dalvik Executable)，它是 .class文件经过 工具dx处理后的文件格式，可被 Dalvik虚拟机直接运行(目前 都转为使用更先进的d8编译器来处理 .clas">
+<meta name="twitter:image" content="http://aicodeing.github.io/img/art/art-jit-arch.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/Android-Dalvik-And-ART/"/>
+
+
+
+
+
+  <title>Android-Dalvik And ART | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Android-Dalvik-And-ART/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-Dalvik And ART</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T12:01:56+08:00">
+                2019-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Android-Dalvik-And-ART/" class="leancloud_visitors" data-flag-title="Android-Dalvik And ART">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>熟悉 <code>Android</code>的都知道， <code>Android</code> 应用程序的开发 通常采用 <code>Java</code>语言进行开发，不同于 <code>Java</code> 的是，<code>Java</code> 环境编译后的生成的是 <code>.class</code>文件，而 Android 的 可执行文件是 <code>.dex</code>文件(Dalvik Executable)，它是 <code>.class</code>文件经过 工具<code>dx</code>处理后的文件格式，可被 <code>Dalvik</code>虚拟机直接运行(目前 都转为使用更先进的<code>d8</code>编译器来处理 <code>.class</code>文件来生成 <code>.dex</code>文件)。执行这些 <code>dex</code>文件的 运行环境就是 <code>Dalvik</code>，后来Google 推出了更先进的 <code>ART</code>。  </p>
+<p><code>ART</code>和<code>Dalvik</code>是服务于Android应用和Android系统服务的.<code>Dalvik</code>在Android项目一开始的时候就被引入，而<code>ART</code>在<code>Android4.4</code>的时候被引入，并对开发人员可见，在<code>Android 5.0</code>的时候，<code>ART</code>虚拟机这个是成为默认的虚拟机。 <code>ART</code>的推出就是为了替代<code>Dalvik</code>虚拟机来获得更好的性能的。<code>ART</code>和 <code>Dalvik</code>都支持运行 <code>dex</code>字节码，因此为 <code>Dalvik</code>开发的应用程序，也可以直接被 <code>ART</code>虚拟机运行(当然有一些Dalvik的技术特性不被支持了，比如 显示的调用<code>System.gc()</code>，具体可参考<a href="https://developer.android.com/guide/practices/verifying-apps-art.html" target="_blank" rel="noopener">Verifying App Behavior on the Android Runtime (ART)</a>)。  </p>
+<h3 id="ART-的新特性"><a href="#ART-的新特性" class="headerlink" title="ART 的新特性"></a>ART 的新特性</h3><h4 id="AOT编译-–-Ahead-of-time-AOT-compilation"><a href="#AOT编译-–-Ahead-of-time-AOT-compilation" class="headerlink" title="AOT编译 – Ahead-of-time (AOT) compilation"></a>AOT编译 – Ahead-of-time (AOT) compilation</h4><p>ART引入了提前（AOT）编译，可以提高应用程序性能。 ART还具有比Dalvik更严格的安装时间验证。<br>在安装App时，ART使用设备上的<code>dex2oat</code>工具编译应用程序。此实用程序接受<code>DEX</code>文件作为输入，并为目标设备生成已编译的应用程序可执行文件<code>.oat</code>,由于<code>Dalvik</code>虚拟机使用了这么多年，整个系统中可能很多地方硬编码使用了<code>.odex</code>文件，为了无缝的替换<code>Dalvik</code>虚拟机，通过<code>dex2oat</code>生成的 <code>.oat</code>文件在有些地方可能会命名为<code>.odex</code>。<br>例如/data/app/{pkg}/oat/{cpuType}下,在我的手机上是<code>/data/app/{pkg}-xxx/oat/arm64/</code>，目录下的文件是以 <code>.odex</code>结尾。<br>虽然名字是<code>.odex</code>,但是不同于通过<code>dex2opt</code>生成的<code>.odex</code>文件。<code>dex2oat</code>输出的<code>.odex</code>文件其实就是 <code>.oat</code>文件，是 elf文件格式，里面包含着本地机器码。<br><mark>由于是针对 当前设备的，所以生成的可执行文件不能被别的机器使用。</mark>  </p>
+<p>随便说一下，<code>/data/app/{pkg}/oat/{cpuType}</code> 目录下 可能还包含<code>.art</code>和 <code>.vdex</code>文件。 <code>.vdex</code> 这是<code>Android8</code>引入的，它存储是 app 安装时执行 <code>dex2oat</code>经过验证后的dex文件，以后可以使用<code>.vdex</code>文件，避免再次验证Dex文件的合法性。<br><code>.art</code>文件 主要存储apk 启动的热点函数相关地址的记录，方便寻址相关；该文件不会在程序安装时就生成，而是运行了一段时间后，收集到了足够过的JIT热点方法信息，会再次进行<code>dex2oat</code>，将热点方法编译成<code>native code</code>,这就是<code>.art</code>文件的作用。</p>
+<h4 id="改进GC机制"><a href="#改进GC机制" class="headerlink" title="改进GC机制"></a>改进GC机制</h4><p>参考之前的<a href="/JVM-垃圾收集器/">JVM-垃圾收集器</a>一文，JVM 的垃圾收集器往 并发收集方向前进，同样，为了尽量减少GC对 用户进程的卡顿影响，改进的GC机制也采用了并行收集和并发处理。  </p>
+<p><code>ART</code>虚拟机 默认使用的垃圾收集器是 <code>CMS</code>收集器，我们知道 <code>CMS</code>收集器采用的是<code>标记-清除</code>算法，没有<code>内存-整理</code>，所以 当 Android 应用程序进入后台后 缓存状态时，虚拟机会执行 <code>堆内存压缩整理</code>，减少内存碎片的产生。</p>
+<p>除了垃圾收集器的升级换代，针对内存的分配方面，<code>ART</code>也引入了全新的 基于 位图的内存分配器，称为RosAlloc（插槽分配器)。这个新的分配器具有分片锁定，针对小内存分配，增加了 <code>Thread Local</code>的 buffers，提高 小内存的分配性能。</p>
+<h4 id="开发和调试改进"><a href="#开发和调试改进" class="headerlink" title="开发和调试改进"></a>开发和调试改进</h4><p>ART提供了许多功能来改进应用程序开发和调试。比如:  </p>
+<ul>
+<li>支持 <code>采样分析</code></li>
+<li>增加更多的 虚拟机调试功能，比如可以通过<code>ART</code>知道 一个给定的 Class 有多少个实例，已经对象的引用状态</li>
+<li>改进了异常和崩溃报告中的诊断细节</li>
+</ul>
+<h4 id="ART的JIT编译器"><a href="#ART的JIT编译器" class="headerlink" title="ART的JIT编译器"></a>ART的JIT编译器</h4><p>我们知道 在 <code>Android 2.2</code> 的时候，为了提升 <code>Dalvik</code>的性能，引入了<code>JIT（Just-In-Time ）</code>技术。这是一种在 运行时 编译 频繁使用的 Class，成为 <code>native code</code> 机器码，提升 效率，免得在程序运行期间 每次都重新翻译成 机器码的尴尬。但是这个性能提升也不是绝对的，比如 Class 中的大部分代码执行较少，那么JIT编译花费的时间不一定少于执行dex的时间。所以 <code>JIT</code>不对所有dex代码进行编译，而是只编译执行次数较多的dex为本地机器码。而且，<code>JIT</code>将 dex 字节码编译成native code 是发生在程序运行期间的，而且生成的 <code>native code</code> 也不是一劳永逸的，下次运行，还是需要重新执行<code>JIT</code> 过程。</p>
+<p>使用过早期Nexus5 搭配 Android5.0的人可能知道，安装一个App，简直是龟速，其实就是安装的时候如果全量编译成机器码很耗时，为了照顾安装效率，就取消了全量编译，这时候再引入 <code>JIT</code> 就很有意义了，针对比较热门的代码，使用<code>JIT</code>编译成 native code，<br>所以在 <code>ART</code> 中实现了 <code>JIT</code>编译器是很有必要的，在Android7.0中重新引入了<code>ART</code>下的<code>JIT</code>技术。  </p>
+<p>以下是 <code>JIT</code>在 <code>ART</code>系统中的结构示意图</p>
+<p><img src="/img/art/art-jit-arch.png" alt=""></p>
+<p>可以看出，如果 <code>ART</code> 虚拟机 面对 非 <code>oat</code>可执行文件时，还是有必要的。</p>
+<p>以下是 <code>JIT</code>的工作流程示意图:  </p>
+<p><img src="/img/art/jit-workflow.png" alt=""></p>
+<p><code>JIT</code>是运行时编译，是动态编译，<code>AOT</code>可以被认为是静态编译，二者配合和互补，在效率做平衡。</p>
+<p>当然也可以不适用 <code>JIT</code>，可以通过以下命令禁止: </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adb root</span><br><span class="line">adb shell stop</span><br><span class="line">adb shell setprop dalvik.vm.usejit false</span><br><span class="line">adb shell start</span><br></pre></td></tr></table></figure>
+<p><a href="https://source.android.com/devices/tech/dalvik" target="_blank" rel="noopener">参考</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Dalvik/" rel="tag"># Dalvik</a>
+          
+            <a href="/tags/ART/" rel="tag"># ART</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Linux-SharedMemory/" rel="next" title="Linux-共享内存(Shared Memory)">
+                <i class="fa fa-chevron-left"></i> Linux-共享内存(Shared Memory)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android-Dex-File/" rel="prev" title="Android-Dex File">
+                Android-Dex File <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ART-的新特性"><span class="nav-number">1.</span> <span class="nav-text">ART 的新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AOT编译-–-Ahead-of-time-AOT-compilation"><span class="nav-number">1.1.</span> <span class="nav-text">AOT编译 – Ahead-of-time (AOT) compilation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改进GC机制"><span class="nav-number">1.2.</span> <span class="nav-text">改进GC机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开发和调试改进"><span class="nav-number">1.3.</span> <span class="nav-text">开发和调试改进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ART的JIT编译器"><span class="nav-number">1.4.</span> <span class="nav-text">ART的JIT编译器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'Android-Dalvik-And-ART/';
+        var commenthub_url = 'http://aicodeing.github.io/Android-Dalvik-And-ART/';
+        var commenthub_title = 'Android-Dalvik And ART';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

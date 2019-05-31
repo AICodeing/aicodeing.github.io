@@ -1,0 +1,2810 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="As a blog, included a variety of technical articles">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AICoding Technical Blog">
+<meta property="og:url" content="http://aicodeing.github.io/page/2/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="As a blog, included a variety of technical articles">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AICoding Technical Blog">
+<meta name="twitter:description" content="As a blog, included a variety of technical articles">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/page/2/"/>
+
+
+
+
+
+  <title>AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/JVM-GC的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/JVM-GC的实现/" itemprop="url">JVM-GC Roots的枚举</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T10:14:22+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/JVM-GC的实现/" class="leancloud_visitors" data-flag-title="JVM-GC Roots的枚举">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 前面一篇文章 <a href="/JVM-垃圾回收算法/">JVM-垃圾回收算法</a> 介绍了，目前的垃圾回收算法 都是用 <strong><code>可达性分析算法</code></strong> 来进行标记; 可达性分析从 <code>GC Roots</code> 对象节点查找引用链，而 <code>GC Roots</code> 对象 主要包含以下几种:  </p>
+<ul>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区中静态变量引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>Native方法栈中JNI引用的对象</li>
+</ul>
+<p>换句话说，    GC Roots     对象主要是全局性的引用(如，常量或 <code>static</code> 属性)和 执行栈帧中的 <code>Local 变量</code>。然而，这些地方是很庞大的，如果 全部枚举出 这些符合条件的<code>GC Roots</code> 对象节点，需要耗费很多的时间，这样势必导致用户线程卡顿时间较长，影响体验。  </p>
+<p><code>GC Roots</code> 的枚举是GC 开始的第一步，在枚举 根节点的过程中，就会 <code>Stop the world</code> 。那么我们的目的就是尽量减少 用户线程的 <code>Stop</code> 时间</p>
+<h2 id="枚举GC-Roots-对象"><a href="#枚举GC-Roots-对象" class="headerlink" title="枚举GC Roots 对象"></a>枚举GC Roots 对象</h2><p>既然枚举 <code>GC Roots</code> 对象比较 耗时，那有没有更好的办法呢？  </p>
+<p>其实虚拟机在执行的过程中是肯定知道 哪些地方存放着对象引用的。在 <code>HotSpot</code> 的实现中，使用一组称为 <code>OopMap</code>的数据结构来达到这个目的的。当类加载完成的时候，<code>HotSpot</code> 就能计算出 <code>GC Roots</code> 引用,然后保存到 <code>OopMap</code> 数据结构中。当GC在扫描的时候，就可以直接使用这些信息了。</p>
+<p><strong>问题:</strong><br>在 <code>OopMap</code>的协助下，虚拟机可以快速准确的完成 <code>GC Roots</code> 的枚举，能导致 引用关系变化的指令很多，如果为每一条指令都生成对应的<code>OopMap</code>，那就会需要大量的额外空间，这样GC的空间成本就会变得很高。  </p>
+<h2 id="Safe-Point"><a href="#Safe-Point" class="headerlink" title="Safe Point"></a>Safe Point</h2><p>目前 的 HotSpot 其实只是在 <code>特定的指令位置</code>记录 引用信息，这个特定的位置就成为 <strong><code>安全点</code></strong>，即程序执行时并非在所有的地方都能停顿下来开始GC的，只有在 到达 <code>安全点</code> 时 才能暂停，等待 GC 线程的执行。安全点我们称为 <code>SafePoint</code>,它的选定 既不能太少 导致 GC 线程等待的时间太长，也不能太多，导致频繁的检测 GC 状态，增大运行时的负荷。  </p>
+<p><code>SafePoint</code> 的选定基本上是以程序 <strong>是否具有让程序长时间执行的特征</strong> 为标准进行选定的。<code>长时间执行</code> 的最明显的特征就是 指令序列复用，例如 方法调用，循环跳转，异常跳转等。所以 具有这些功能 的指令才会产生 <code>SafePoint</code>。  </p>
+<h3 id="SafePoint-的同步"><a href="#SafePoint-的同步" class="headerlink" title="SafePoint 的同步"></a>SafePoint 的同步</h3><p>当发生GC的时候，如何让 所有的线程跑到最近的 <code>SafePoint</code> 呢? </p>
+<ul>
+<li>抢先式中断</li>
+<li>主动式中断</li>
+</ul>
+<p><mark>抢先式中断</mark> 不需要线程的执行代码主动去配合GC，在 GC 发生的时候，首先把所有线程全部中断，如果发现 线程中断的地方不在 <code>SafePoint</code>，就恢复该线程，让其跑到最近的 <code>SafePoint</code>上 再 停止。</p>
+<p>抢先式 中断的一个问题就是 GC 过程需要干预用户线程的执行，目前虚拟机很少使用这种方式。</p>
+<p><mark>主动式中断</mark> 不直接对线程进行操作，仅仅是简单的设置一个标志，各线程执行时主动去轮询这个标志，发现中断标志为 true 时 就自动中断挂起。所以 <strong>轮询标志的位置 和 安全点 是重合的</strong> 。由于创建对象需要分配内存时，由于容易引起GC，所以在 <strong>分配内存的指令地方</strong> ，也会设置中断标志。</p>
+<h2 id="Safe-Region"><a href="#Safe-Region" class="headerlink" title="Safe Region"></a>Safe Region</h2><p>在用户线程执行的时候，肯定会进入 <code>SafePoint</code>，但如果用户现在目前在 <code>sleep</code> 就没法在 GC的时候跑到 安全点。对于这种情况，引入了 <code>Safe Region</code> 来解决。  </p>
+<p><code>Safe Region</code> 是指 在一段代码片段之中，引用关系不会发生变化。在这个区域中的任何地方都可以开始GC，并且 GC 也是安全的。在线程执行到 <code>Safe Region</code> 的时候，首先标识自己已经进入了 <code>Safe Region</code>， 当这段时间<code>JVM</code> 要发起GC时，就不需要管 线程的状态了。只有在线程执行要离开 <code>Safe Region</code> 的时候，线程才需要检查自己是否已经完成了GC 过程。如果完成了，就继续执行，如果没有完成，就等待，直到收到 可以离开 <code>Safe Region</code>的信号为止。  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>GC Roots</code> 对象节点的枚举是 GC 过程的第一步，为了尽快实现对 <code>GC Roots</code> 节点的枚举，引入了 <code>OopMap</code> 数据结构来存储 <code>GC Roots</code> 引用信息。为了减少不必要的 <code>Oop Map</code> 开销，使用了 <code>Safe Point</code>概念，为了解决 <code>SafePoint</code>的缺点，又引入了 <code>Safe Region</code> 概念。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/JVM-垃圾回收算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/JVM-垃圾回收算法/" itemprop="url">JVM-垃圾回收算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-14T18:18:05+08:00">
+                2019-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/JVM-垃圾回收算法/" class="leancloud_visitors" data-flag-title="JVM-垃圾回收算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>垃圾回收是Java 语言的一个重要特征，在Java 内存堆里面存放着JAVA 世界中几乎所有的对象实例，垃圾收集器在对堆内存就行回收前，第一件事就是要确定对象该不该被回收。那么垃圾收集器是如何判断一个对象是否需要被回收呢？  </p>
+<h2 id="垃圾回收-标记算法"><a href="#垃圾回收-标记算法" class="headerlink" title="垃圾回收-标记算法"></a>垃圾回收-标记算法</h2><p>如何判断是否需要被回收呢？ 有几类算法:  </p>
+<h4 id="1-引用计数器算法"><a href="#1-引用计数器算法" class="headerlink" title="1.引用计数器算法"></a>1.引用计数器算法</h4><p>大家最常提到的就是 给每个对象添加一个引用计数器，当增加一个引用的时候，计数器 <code>+1</code>，如果引用失效后，计数器 <code>-1</code>。<br>这种 计数方法看似效率很高，但是也有很严重的问题，所以目前 没有一个JVM 使用该算法。<br>主要原因就是 它 无法解决<strong><code>循环引用</code></strong>的问题。</p>
+<h4 id="2-可达性分析算法"><a href="#2-可达性分析算法" class="headerlink" title="2.可达性分析算法"></a>2.可达性分析算法</h4><p>可达性分析就是通过定义一系列的 <code>GC Roots</code>对象，作为起始点，从这些起始节点往下搜索，而搜索经过的路径成为<code>引用链(Reference Chain)</code>，当一个对象到 <code>GC Roots</code> 没有任何引用链相连接，也就是从 <code>GC Roots 对象</code> 到这个对象不可达时，就说明该对象是不可用的，需要被回收。  </p>
+<p>那么，哪些对象可以作为 <code>GC Roots 对象</code>呢？ 一般包括以下几种:</p>
+<ul>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区中静态变量引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>Native方法栈中JNI引用的对象</li>
+</ul>
+<p>为什么是这些对象呢？通过同性不难发现，他们的存活时间比较久，或者局部存活较久。</p>
+<p>不管是通过 计数器算法还是可达性分析算法，来决定一个对象是否存活，都是针对的 <code>强引用类型</code>, <code>Java</code> 中还有其他引用类型，某些引用对象，即使通过垃圾回收算法判断不需要回收，但也有可能被GC回收。  </p>
+<h2 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h2><p>Java 虚拟机中引用类型分为 <code>强引用(Strong Reference)</code>,<code>软引用 Soft Reference</code>,<code>弱引用 Weak Reference</code>,<code>虚引用Phantom Reference</code>。这四种引用类型的强度依次递减。  </p>
+<ul>
+<li><strong>强引用</strong>，就是写代码中常用的 如 <code>Object o = new Object()</code>类型的引用。只有引用还存在，垃圾回收器就永远不会回收被引用的对象。  </li>
+<li><strong>软引用</strong>，是用来描述对象有用，但是也并不是必须的，在适当的时候，可以被回收，一般是在内存不足的时候，会触发 软引用对象的回收，但有<strong>一个特殊的就是 <code>Android 平台</code> 上，只要<code>GC</code> 经过，就会回收掉 软引用，并不会等到内存不足时</strong>。</li>
+<li><strong>弱引用</strong>，也是来描述它是非必需的，但是它比 软引用更弱，被 弱引用引用的对象只能生存到下次GC发生之前。无论当前内存是否充足，都会回收掉弱引用关联的对象，它的声明周期是，从弱引用对象的建立，到 GC 来临之间的时间。</li>
+<li><strong>虚引用</strong>，它也成为 <strong>幽灵引用</strong> ，它是最弱的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间带来影响，我们也无法通过虚引用来获取一个对象实例。那么虚引用的使用场景是什么呢？唯一的使用场景就是在对象被回收时，收到一个系统通知。</li>
+</ul>
+<p><strong>问题：如果一个对象在 回收算法中被认为是需要回收的对象,是否意味着一定会被回收呢？</strong></p>
+<p>如果一个对象在经过<code>可达性分析算法</code>分析后发现没有与 <code>GC Roots</code>相连的引用链，那么它将会被标记并且进行一次 <mark>筛选</mark>。怎么筛选呢？ 其实就是筛选 有没有必要执行对象的 <code>finalize()</code>方法。当对象没有覆盖 <code>finalize()</code>方法，或者 <code>finalize()</code>方法已经在之前被 虚拟机调用过了，那这个对象就认为没有必要执行 <code>finalize()</code>,那这个对象就可以直接被回收了。<br>如果 通过 <code>筛选</code>，需要执行<code>finalize()</code>方法呢？其实虚拟机会把该对象放置在一个 队列之中，并且稍后会由虚拟机创建一个优先级很低的 <code>Finalizer 线程</code>去<code>执行</code>它。但这个执行并不会承诺一定等待<code>finalize()</code>方法执行完毕，因为如果在 <code>finalize()</code>方法中做耗时的操作将会影响队列中其他 对象的<code>finalize()</code>方法执行。但是我们可以在 <code>finalize()</code>方法中把 对象本身与 <code>GC Roots</code>关联上，这样在 GC 做第二次标记的时候，该对象将从 <code>即将回收</code>的集合中移除。如果没有做上述的关联操作，这个对象就会被立刻回收掉了。</p>
+<p>我们知道，<code>JVM</code> 将内存 划分为几大块:<code>堆内存</code>,<code>方法区</code>,<code>虚拟机栈</code>,<code>Native栈</code>,<code>程序计数器</code>，那么刚才所说的 回收都只是在 <code>堆内存</code>这个分区上;  </p>
+<p><strong>问题: 方法区也被称为永久代，这个区域是否存在垃圾回收机制呢？</strong>  </p>
+<p>其实 Java 虚拟机规范中确实不要钱虚拟机在方法区进行回收，由于方法区的对象生命周期很长，而且 在 堆内存进行垃圾回收就能回收 大部分空间，那的确就没有必要在方法区进行垃圾回收了，但在 方法区 也是可以做垃圾回收的，一般回收的内容是: <code>废弃的常量</code>，和<code>无用的类</code>。  </p>
+<p><strong>回收废弃的常量</strong> 和回收 <code>Java 堆</code>中的对象差不多，比如回收 常量池中的字符串 <code>“abc”</code>，如果当前系统中没有任何<code>String</code>对象引用常量池中的 <code>&quot;abc&quot;</code> 常量，也没有其他地方应用了这个字面量，如果需要执行方法区的垃圾回收的话，就可以把 <code>“abc”</code> 常量从常量池中清理掉。因为在 编译期就知道 常量池中的常量有没有被引用，所以 判断 一个常量字符串有没有被应用，也很容易。  </p>
+<p><strong>回收类呢？</strong> 判断一个类 有用无用，分几个方面:</p>
+<ul>
+<li>该类所有的实例都已经被回收，在Java的堆内存中不存在该类的任何实例</li>
+<li>加载该类的<code>ClassLoader</code>已经被回收或不存在</li>
+<li>该类对应的 <code>java.lang.Class</code>对象没有任何地方被引用，无法在任何地方通过反射访问该类。</li>
+</ul>
+<p>只有满足 以上条件，就可以回收 方法区 中的类。</p>
+<p>__刚谈了 <code>堆内存</code>和 <code>方法区</code>中对象 <mark>是否需要回收的问题，那么下面我们谈一下 如何回收的。</mark></p>
+<h2 id="垃圾回收-回收算法"><a href="#垃圾回收-回收算法" class="headerlink" title="垃圾回收-回收算法"></a>垃圾回收-回收算法</h2><h3 id="1-标记-清除算法"><a href="#1-标记-清除算法" class="headerlink" title="1.标记-清除算法"></a>1.标记-清除算法</h3><p>这是最基础的收集算法，它分为 <code>标记</code>和<code>清除</code>两部分。在前面已经谈过 <code>标记</code>算法了。<br>这种最基础的 <code>标记-清除</code>算法，通过 标记 来确定，对象是否需要被回收，通过清除 来将对象占用的内存回收，那么显而易见，这个最基础的算法有两个很严重的问题:  </p>
+<ul>
+<li>效率低，标记过程是一个比较耗时的过程，同样沿着标记链，清除对应的内存区域，效率也不高</li>
+<li>空间碎片化，直接清除对象占用的内存，会导致 产生大量的不连续的内存碎片，当碎片化很严重的时候，如果需要再分配大块内存，由于没有大块的内存可分配了，还是会触发 <code>GC</code>，但是同样无法解决问题.  </li>
+</ul>
+<p><img src="/img/jvm_gc/gc-mem_mark_sweep.jpg" alt="">  </p>
+<h3 id="2-复制算法"><a href="#2-复制算法" class="headerlink" title="2.复制算法"></a>2.复制算法</h3><p>该算法是 <code>标记-清除</code>算法的改进版, 它将内存按容量划分成大小相等的两块内存，每次只使用其中的一块。当一块内存用完了，就将还存活的对象复制到 另一块内存上，然后把之前的一块内存全部清理掉。这样每次都是对整个半区的内存进行回收，避免了内存的碎片化，而且新内存的申请，可以顺序分配，该实现方式简单，高效。<br>但很容易也发现，这种 算法的缺点是 ：<code>太浪费</code>,只能使用内存的<code>50%</code>。</p>
+<h3 id="3-改进版的复制算法"><a href="#3-改进版的复制算法" class="headerlink" title="3.改进版的复制算法"></a>3.改进版的复制算法</h3><p>据调查，目前的商业虚拟机都是采用 这种算法来回收<code>新生代内存区</code>,IBM 研究表明，新生代中的对象 98% 都是 <code>&#39;朝生夕死&#39;</code>，所以并不需要按 <code>1:1</code>来划分内存空间。而是将内存分为一块较大的<code>Eden空间</code>和两块较小的<code>Survivor空间</code>，当回收时，将 <code>Eden</code> 和 <code>Survivor</code> 区(我们称为 <strong>Survivor From</strong>)中还存活的对象一次性复制到另一块 Survivor 空间(称为 <strong>Survivor To</strong>)上，最后清理掉 <code>Eden 和 Survivor From 空间</code>。 <code>HotSpot</code> 虚拟机默认 <code>Eden 和 Survivor</code> 的大小比例是 <code>8:1</code> 。改进后的这种复制算法，空间利用率达到了90%，只有10%的内存会被浪费掉。  </p>
+<p>很明显，只要采用 类似的<code>复制算法</code>,就会有一个问题，如果 内存中存活的对象 很多呢，而不是 IBM 研究的 98%的可以释放呢？由于 <code>Survivor To</code> 的空间较小，不足以 存放 所有存活的对象。这样就无法达到回收效果。这就需要依赖其他内存，比如 存放在 老年代。(老年代的任务就是存放 <strong>大内存对象</strong>,<em><em>一般是超过 Survivor 的大小</em></em>, <strong>对象的年龄达到了老年标准的对象,也即声明周期长的对象</strong>, <strong>Survivor To 存储不下的对象</strong>)  </p>
+<p><strong>一直在介绍的是 新生代 的回收算法，那么老年代肯定也需要做垃圾回收的。</strong></p>
+<p>简单说明一下，老年代 由于对象声明周期比较长，比较问题，所以 触发GC的次数不会很频繁，老年代的 GC我们成为 <code>MajorGC</code>，新生代的GC 我们称为 <code>MinorGC</code>。在进行<code>MajorGC</code> 前 一般都会进行一次<code>MinorGC</code>，使得新生代的对象晋升到老年代，在 老年代空间不够的时候，才触发MajorGC。  </p>
+<p>前面提到 目前的商业 虚拟机 新生代的 <code>MinorGC</code> 采用的都是 复制算法，而 老年代的 <code>MajorGC</code> 采用的是 容易产生 内存碎片的<code>标记-清除</code>算法。<code>MajorGC</code>的耗时比较长，因为为了解决 碎片化内存问题，每次 <code>标记-清除</code>后，都会进行<code>合并整理</code>内存。</p>
+<p>如果老年代 也装不下了，就会抛出 <code>OOM</code> 异常了。</p>
+<h3 id="4-标记-整理算法"><a href="#4-标记-整理算法" class="headerlink" title="4.标记-整理算法"></a>4.标记-整理算法</h3><p>在刚才介绍 老年代 <code>MajorGC</code>时 提到了，<code>MajorGC</code> 采用的的 <code>标记-清除</code> + <code>内存的合并整理</code>。这其实就是 <code>标记-整理</code>算法。<br>标记-整理 算法就是在 标记-清除后，让所有存活的内存对象都向一端移动，然后直接清理掉端边界 以外的内存，标记-整理算法 如图:  </p>
+<p><img src="/img/jvm_gc/gc-mem-arrange.jpg" alt=""> </p>
+<h2 id="综上"><a href="#综上" class="headerlink" title="综上"></a>综上</h2><p>通过前面的分析，我们发现没有一种算法是完美无缺的，我们只需要利用各种算法的优缺点，分情况使用，最大化各种算法的优点。<br>所以目前的商业虚拟机的垃圾回收算法 综合来说就是 <strong><code>分代收集算法</code></strong>。这种算法不是新的收集算法思路，而是综合各种算法的优点，根据对象存活周期的不同，将内存划分成几块，不同的块 使用不同的回收算法。</p>
+<p>目前 商业虚拟机一般的做法是把内存划分为新生代，老年代:</p>
+<ul>
+<li>新生代 使用 <code>标记-复制算法</code></li>
+<li>老年代使用 <code>标记-整理算法</code></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Linux-信号机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-信号机制/" itemprop="url">Linux-信号机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-12T10:27:38+08:00">
+                2019-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Linux-信号机制/" class="leancloud_visitors" data-flag-title="Linux-信号机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><code>Linux</code>系统中 <code>信号机制</code>是进程间通信的其中一种方法，全称为<code>软中断信号</code>，也被称为<code>软中断</code>。不过 信号本质上是在软件层面上对硬件中断机制的一种模拟。<br>与Linux 系统中其他进程间通信方式(pipe，Shared Memory，Android系统的Binder)相比，信号所能传递的信息比较少，也比较粗糙，只是一个数字。但它也有自己的优点，由于传递的信息量少，所以更便于管理和使用，可以用于系统管理相关的任务，例如通知进程的终结，中止，恢复。  </p>
+<p>每一个信号用一个证书常量宏来表示，以 <code>SIG</code>来开头,一下是常见的信号量。  </p>
+<h2 id="常见的信号量类型"><a href="#常见的信号量类型" class="headerlink" title="常见的信号量类型"></a>常见的信号量类型</h2><table>
+<thead>
+<tr>
+<th>信号量</th>
+<th>Value</th>
+<th>Desc</th>
+<th>demo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIGABRT</td>
+<td>6</td>
+<td>进程发生错误或者调用了abort()</td>
+<td>如在C库函数strlen，如果发生异常会调用abort()</td>
+</tr>
+<tr>
+<td>SIGBUS</td>
+<td>7</td>
+<td>不存在的物理地址，硬件错误</td>
+<td>例如系统错误或硬件出错</td>
+</tr>
+<tr>
+<td>SIGFPE</td>
+<td>8</td>
+<td>浮点数运算错误</td>
+<td>如除0操作，余0，整数溢出等</td>
+</tr>
+<tr>
+<td>SIGILL</td>
+<td>4</td>
+<td>非法指令</td>
+<td>损坏的可执行文件或者代码区损坏</td>
+</tr>
+<tr>
+<td>SIGSEGV</td>
+<td>11</td>
+<td>段地址错误</td>
+<td>空指针，访问不存在的地址空间，访问内核区，对只读空间进行写操作，栈溢出，数组越界，野指针</td>
+</tr>
+<tr>
+<td>SIGPIPE</td>
+<td>13</td>
+<td>管道错误，往没有reader的管道中写操作</td>
+<td>Linux 中的Socket，如果连接中断了，还继续写的情况下就会触发signal(SIGPIPE,SIG_IGN);</td>
+</tr>
+<tr>
+<td>SIGHUP</td>
+<td>1</td>
+<td>终端挂起或控制进程终止。</td>
+<td>当用户退出Shell时，由该进程启动的所有进程都会收到这个信号，默认动作为终止进程</td>
+</tr>
+<tr>
+<td>SIGINT</td>
+<td>2</td>
+<td>键盘中断</td>
+<td>当用户按下<ctrl+c>组合键时，用户终端向正在运行中的由该终端启动的程序发出此信号。默认动作为终止进程。</ctrl+c></td>
+</tr>
+<tr>
+<td>SIGQUIT</td>
+<td>3</td>
+<td>键盘退出键被按下</td>
+<td>当用户按下<ctrl+d>或<ctrl+\>组合键时，用户终端向正在运行中的由该终端启动的程序发出此信号。默认动作为退出程序。</ctrl+\></ctrl+d></td>
+</tr>
+<tr>
+<td>SIGKILL</td>
+<td>9</td>
+<td>无条件终止进程.进程接收到该信号会立即终止，不进行清理和暂存工作。该信号不能被忽略、处理和阻塞，它向系统管理员提供了可以杀死任何进程的方法。</td>
+<td>系统管理员无条件杀死任何进行</td>
+</tr>
+<tr>
+<td>SIGALRM</td>
+<td>14</td>
+<td>定时器超时，默认动作为终止进程</td>
+<td>–</td>
+</tr>
+<tr>
+<td>SIGTERM</td>
+<td>15</td>
+<td>程序结束信号，可以由 kill 命令产生。与SIGKILL不同的是，SIGTERM 信号可以被阻塞和终止，以便程序在退出前可以保存工作或清理临时文件等</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p>还可以通过<code>kill -l</code> 命令查看系统支持的所有信号: </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">kill</span> -l</span></span><br><span class="line">1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL</span><br><span class="line">5) SIGTRAP      6) SIGABRT      7) SIGBUS       8) SIGFPE</span><br><span class="line">9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2</span><br><span class="line">13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT</span><br><span class="line">17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP</span><br><span class="line">21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU</span><br><span class="line">25) SIGXFSZ     26) SIGVTALRM   27) SIGPROF     28) SIGWINCH</span><br><span class="line">29) SIGIO       30) SIGPWR      31) SIGSYS      34) SIGRTMIN</span><br><span class="line">35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3  38) SIGRTMIN+4</span><br><span class="line">39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8</span><br><span class="line">43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12</span><br><span class="line">47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14</span><br><span class="line">51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10</span><br><span class="line">55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7  58) SIGRTMAX-6</span><br><span class="line">59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2</span><br><span class="line">63) SIGRTMAX-1  64) SIGRTMAX</span><br></pre></td></tr></table></figure>
+<p><strong>注意:不同的Linux发行版支持的信号可能不同。</strong>  </p>
+<p>每一种信号都会有一个默认的动作，默认动作就是脚本或程序接收到该信号后所作出的默认操作。常见的默认动作有终止进程，退出程序，忽略信号，重启进程等等。</p>
+<h2 id="信号的种类"><a href="#信号的种类" class="headerlink" title="信号的种类"></a>信号的种类</h2><p>可以从两个不同的分类角度对信号进行分类：（1）可靠性方面：可靠信号与不可靠信号；（2）与时间的关系上：实时信号与非实时信号。 </p>
+<h4 id="不可靠信号与可靠信号"><a href="#不可靠信号与可靠信号" class="headerlink" title="不可靠信号与可靠信号"></a>不可靠信号与可靠信号</h4><h4 id="不可靠信号"><a href="#不可靠信号" class="headerlink" title="不可靠信号"></a>不可靠信号</h4><p>Linux信号机制基本上是从Unix系统中继承过来的。早期Unix系统中的信号机制比较简单和原始，后来在实践中暴露出一些问题，因此，把那些建立在早期机制上的信号叫做”不可靠信号”，信号值小于SIGRTMIN(Red hat 7.2中，SIGRTMIN=32，SIGRTMAX=63)的信号都是不可靠信号。这就是”不可靠信号”的来源。<br>它的主要问题是:  </p>
+<ul>
+<li>进程每次处理信号后，就将对信号的响应设置为默认动作。在某些情况下，将导致对信号的错误处理；因此，用户如果不希望这样的操作，那么就要在信号处理函数结尾再一次调用signal()，重新安装该信号。  </li>
+<li>信号可能丢失</li>
+</ul>
+<p>早期unix下的不可靠信号主要指的是进程可能对信号做出错误的反应以及信号可能丢失。</p>
+<p>Linux支持不可靠信号，但是对不可靠信号机制做了改进：在调用完信号处理函数后，不必重新调用该信号的安装函数（信号安装函数是在可靠机制上的实现）。因此，Linux下的不可靠信号问题主要指的是<mark>信号可能丢失</mark>。  </p>
+<h4 id="可靠信号"><a href="#可靠信号" class="headerlink" title="可靠信号"></a>可靠信号</h4><p>随着时间的发展，实践证明了有必要对信号的原始机制加以改进和扩充。所以，后来出现的各种Unix版本分别在这方面进行了研究，力图实现”可靠信号”。  </p>
+<p>由于原来定义的信号已有许多应用，不好再做改动，最终只好又新增加了一些信号，并在一开始就把它们定义为可靠信号，这些信号支持排队，不会丢失。  </p>
+<p>同时，信号的发送和安装也出现了新版本：<code>信号发送函数sigqueue()</code>及<code>信号安装函数sigaction()</code>。</p>
+<p>信号值位于<code>SIGRTMIN</code>和<code>SIGRTMAX</code>之间的信号都是可靠信号，可靠信号克服了信号可能丢失的问题。Linux在支持新版本的信号安装函数<code>sigation（）</code>以及信号发送函数<code>sigqueue()</code>的同时，仍然支持早期的<code>signal（）信号安装函数</code>，支持<code>信号发送函数kill()</code>。</p>
+<p><strong><mark>注意:</mark></strong>:<br>不要有这样的误解：由<code>sigqueue()</code>发送、<code>sigaction</code>安装的信号就是可靠的。事实上，可靠信号是指后来添加的新信号（信号值位于<code>SIGRTMIN及SIGRTMAX</code>之间）；不可靠信号是信号值小于<code>SIGRTMIN</code>的信号。信号的可靠与不可靠只与信号值有关，与信号的发送及安装函数无关。<br>目前linux中的signal()是通过sigation()函数实现的，因此，即使通过signal（）安装的信号，在信号处理函数的结尾也不必再调用一次信号安装函数。同时，由signal()安装的实时信号支持排队，同样不会丢失。  </p>
+<p>对于目前linux的两个信号安装函数:<code>signal()及sigaction()</code>来说，它们都不能把<code>SIGRTMIN</code>以前的信号变成可靠信号（都不支持排队，仍有可能丢失，仍然是不可靠信号），而且对<code>SIGRTMIN</code>以后的信号都支持排队。这两个函数的最大区别在于，经过<code>sigaction</code>安装的信号都能传递信息给信号处理函数（对所有信号这一点都成立），而经过<code>signal</code>安装的信号却不能向信号处理函数传递信息。对于信号发送函数来说也是一样的。</p>
+<h4 id="实时信号与非实时信号"><a href="#实时信号与非实时信号" class="headerlink" title="实时信号与非实时信号"></a>实时信号与非实时信号</h4><p>早期Unix系统只定义了32种信号，每个信号有了确定的用途及含义，并且每种信号都有各自的缺省动作。如按键盘的<code>CTRL ^C</code>时，会产生<code>SIGINT</code>信号，对该信号的默认反应就是进程终止。之后的信号 都表示 实时信号，等同于前面阐述的<code>可靠信号</code>。这保证了发送的多个实时信号都被接收。实时信号是<code>POSIX标准</code>的一部分，可用于应用进程。</p>
+<p><strong>非实时信号都不支持排队，都是不可靠信号；实时信号都支持排队，都是可靠信号。</strong></p>
+<h2 id="信号机制"><a href="#信号机制" class="headerlink" title="信号机制"></a>信号机制</h2><h4 id="信号的接收"><a href="#信号的接收" class="headerlink" title="信号的接收"></a>信号的接收</h4><p>信号的接收工作是由内核来实现的，当内核接收到信号后，会将其放到对应进程的信号队列中，同时向进程发送一个中断，使其陷入内核态。<br><mark>这个时候</mark>，虽然进程进入了内核态，但信号还没有被处理，可能在排队。</p>
+<h4 id="信号的检测"><a href="#信号的检测" class="headerlink" title="信号的检测"></a>信号的检测</h4><p>进程陷入内核态后，有两种场景会对信号进行检测： </p>
+<ul>
+<li>进程从内核态返回到用户态前进行信号检测</li>
+<li>进程在内核态中，从睡眠状态被唤醒的时候进行信号检测</li>
+</ul>
+<p>当发现有新信号时，便会进入下一步，信号的处理。  </p>
+<h4 id="信号的处理"><a href="#信号的处理" class="headerlink" title="信号的处理"></a>信号的处理</h4><p><code>信号处理函数</code>是运行在用户态的，调用处理函数前，内核会将当前内核栈的内容备份拷贝到用户栈上，并且修改指令寄存器（eip）将其指向信号处理函数。  </p>
+<p>接下来进程返回到用户态中，执行相应的<code>信号处理函数</code>。  </p>
+<p>信号处理函数执行完成后，还需要返回内核态，检查是否还有其它信号未处理。如果所有信号都处理完成，就会将内核栈恢复（从用户栈的备份拷贝回来），同时恢复指令寄存器（eip）将其指向中断前的运行位置，最后回到用户态继续执行进程。  </p>
+<p><mark>注意: 如果自定义信号处理函数，需要提前注册 信号处理函数</mark>  </p>
+<h2 id="信号处理函数注册"><a href="#信号处理函数注册" class="headerlink" title="信号处理函数注册"></a>信号处理函数注册</h2><p>如果进程处理某一个信号，那么久需要在进程中注册(安装)该信号。 信号安装主要用来确定信号值及进程针对该信号值的动作之间的映射关系。即进程要处理哪个信号，该信号传递给进程时，进程执行的操作。</p>
+<p>Linux 主要有两个函数实现信号的注册安装: <code>signal()</code>.<code>sigaction()</code>其中前者 在可靠信号系统调用的基础上实现，是库函数。它只有<code>两个参数</code>，不支持信号传递信息，主要是用于<code>前32种非实时信号的安装</code>; 而<code>sigaction()</code>是较新的函数（由两个系统调用实现：<code>sys_signal</code>以及<code>sys_rt_sigaction</code>），有三个参数，支持信号传递信息，主要用来与 <code>sigqueue() 系统调用</code>配合使用，当然，<code>sigaction()</code>同样支持非实时信号的安装。<code>sigaction()优于signal()</code>主要体现在支持信号带有参数。  </p>
+<h4 id="signal"><a href="#signal" class="headerlink" title="signal()"></a>signal()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">void (*signal(int signum, void (*handler))(int)))(int);</span><br></pre></td></tr></table></figure>
+<p><code>第一个参数</code>指定信号的值，<code>第二个参数</code>指定针对前面信号值的处理，可以忽略该信号（参数设为<code>SIG_IGN</code>）; 可以采用<code>系统默认方式</code>处理信号(参数设为<code>SIG_DFL</code>)；也可以自己实现处理方式(<code>参数指定一个函数地址</code>)。<br>如果signal()调用成功，返回最后一次为安装信号signum而调用signal()时的handler值；失败则返回SIG_ERR。  </p>
+<h4 id="sigaction"><a href="#sigaction" class="headerlink" title="sigaction()"></a>sigaction()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">int sigaction(int signum,const struct sigaction *act,struct sigaction *oldact));</span><br></pre></td></tr></table></figure>
+<p><code>sigaction函数</code>用于改变进程接收到特定信号后的行为。<br>该函数的<code>第一个参数</code>为信号的值，可以为除<code>SIGKILL及SIGSTOP</code>外的任何一个特定有效的信号（<strong>为这两个信号定义自己的处理函数，将导致信号安装错误</strong>）。<br><code>第二个参数</code>是指向结构    <code>sigaction</code>的一个实例的指针，在<code>结构sigaction</code>的实例中，指定了对特定信号的处理，可以为空，进程会以缺省方式对信号处理；<br><code>第三个参数oldact</code>指向的对象用来保存原来对相应信号的处理，可指定oldact为NULL。如果把第二、第三个参数都设为NULL，那么该函数可用于检查信号的有效性。  </p>
+<p>第二个参数最为重要，其中包含了对指定信号的处理、信号所传递的信息、信号处理函数执行过程中应屏蔽掉哪些函数等等。  </p>
+<p><code>sigaction</code>结构定义:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct sigaction &#123;</span><br><span class="line">         union&#123;</span><br><span class="line">           __sighandler_t _sa_handler;</span><br><span class="line">           void (*_sa_sigaction)(int,struct siginfo *, void *)；</span><br><span class="line">           &#125;_u</span><br><span class="line">                    sigset_t sa_mask；</span><br><span class="line">                   unsigned long sa_flags； </span><br><span class="line">                 void (*sa_restorer)(void)；</span><br><span class="line">                 &#125;</span><br></pre></td></tr></table></figure>
+<p>其中，sa_restorer，已过时，POSIX不支持它，不应再被使用。</p>
+<p>联合数据结构中的两个元素 <strong><code>_sa_handler</code></strong> 以及 <strong><code>*_sa_sigaction</code></strong> 指定信号关联函数，即用户指定的信号处理函数。除了可以是用户自定义的处理函数外，还可以为<code>SIG_DFL</code>(采用缺省的处理方式)，也可以为<code>SIG_IGN</code>（忽略信号）。   </p>
+<p>由 <strong><code>_sa_handler</code></strong> 指定的处理函数只有一个参数,即信号值，所以信号不能传递除信号值之外的任何信息； 由<strong><code>_sa_sigaction</code></strong>是指定的信号处理函数带有三个参数，是为实时信号而设的（当然同样支持非实时信号），它指定一个3参数信号处理函数。<br>第一个参数为信号值，第三个参数没有使用（posix没有规范使用该参数的标准），第二个参数是指向siginfo_t结构的指针，结构中包含信号携带的数据值，参数所指向的结构如下:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">siginfo_t &#123;</span><br><span class="line">                 int      si_signo;  /* 信号值，对所有信号有意义*/</span><br><span class="line">                 int      si_errno;  /* errno值，对所有信号有意义*/</span><br><span class="line">                 int      si_code;   /* 信号产生的原因，对所有信号有意义*/</span><br><span class="line">       union&#123;          /* 联合数据结构，不同成员适应不同信号 */  </span><br><span class="line">         //确保分配足够大的存储空间</span><br><span class="line">         int _pad[SI_PAD_SIZE];</span><br><span class="line">         //对SIGKILL有意义的结构</span><br><span class="line">         struct&#123;</span><br><span class="line">             ...</span><br><span class="line">             &#125;...</span><br><span class="line">           ... ...</span><br><span class="line">           ... ...          </span><br><span class="line">         //对SIGILL, SIGFPE, SIGSEGV, SIGBUS有意义的结构</span><br><span class="line">             struct&#123;</span><br><span class="line">             ...</span><br><span class="line">             &#125;...</span><br><span class="line">           ... ...</span><br><span class="line">           &#125;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p><mark>注：</mark>为了更便于阅读，在说明问题时常把该结构表示为：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">siginfo_t &#123;</span><br><span class="line">int      si_signo;  /* 信号值，对所有信号有意义*/</span><br><span class="line">int      si_errno;  /* errno值，对所有信号有意义*/</span><br><span class="line">int      si_code;   /* 信号产生的原因，对所有信号有意义*/</span><br><span class="line">pid_t    si_pid;    /* 发送信号的进程ID,对kill(2),实时信号以及SIGCHLD有意义 */</span><br><span class="line">uid_t    si_uid;    /* 发送信号进程的真实用户ID，对kill(2),实时信号以及SIGCHLD有意义 */</span><br><span class="line">int      si_status; /* 退出状态，对SIGCHLD有意义*/</span><br><span class="line">clock_t  si_utime;  /* 用户消耗的时间，对SIGCHLD有意义 */</span><br><span class="line">clock_t  si_stime;  /* 内核消耗的时间，对SIGCHLD有意义 */</span><br><span class="line">sigval_t si_value;  /* 信号值，对所有实时有意义，是一个联合数据结构，</span><br><span class="line">                          /*可以为一个整数（由si_int标示，也可以为一个指针，由si_ptr标示）*/</span><br><span class="line">     </span><br><span class="line">void *   si_addr;   /* 触发fault的内存地址，对SIGILL,SIGFPE,SIGSEGV,SIGBUS 信号有意义*/</span><br><span class="line">int      si_band;   /* 对SIGPOLL信号有意义 */</span><br><span class="line">int      si_fd;     /* 对SIGPOLL信号有意义 */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>siginfo_t</code>结构中的联合数据成员确保该结构适应所有的信号，比如对于实时信号来说，则实际采用下面的结构形式: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">	int si_signo;</span><br><span class="line">	int si_errno;           </span><br><span class="line">	int si_code;            </span><br><span class="line">	union sigval si_value;</span><br><span class="line">&#125; siginfo_t;</span><br></pre></td></tr></table></figure>
+<p>sigval 也是一个联合数据结构:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">union sigval &#123;</span><br><span class="line">    int sival_int;      </span><br><span class="line">    void *sival_ptr;    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>采用联合数据结构，说明<code>siginfo_t</code>结构中的si_value要么持有一个4字节的整数值，要么持有一个指针，这就构成了与信号相关的数据。  </p>
+<p>在后面 分析 <code>sigqueue发送信号</code> sigqueue的第三个参数就是<code>sigval</code>联合数据结构,当调用sigqueue时，该数据结构中的数据就将拷贝到信号处理函数的第二个参数中。这样，在发送信号同时，就可以让信号传递一些附加信息。信号可以传递信息对程序开发是非常有意义的。</p>
+<p>信号参数的传递过程 如下: </p>
+<p>调用 sigqueue(pid_t pid, int sig, const union sigval val)<br>—&gt;  信号进入队列, 进程进入内核态<br>—&gt; 内核接收到 信号之后 ,准备数据，把携带的<code>sigvall</code>结构类型的参数 拷贝到 安装信号时 结构体<code>sigaction</code>中的 <code>si_value</code> 。<br>—&gt; 使进程进入用户态，拷贝数据到用户态，执行信号处理程序<br>—&gt; sigaction 中定义的 handler(int,struct siginfo <em>, void </em>）</p>
+<p><strong>这就成功的把参数传递到了 信号处理程序。</strong><br><img src="/img/sig/sig_install.gif" alt="">  </p>
+<h2 id="信号的发送"><a href="#信号的发送" class="headerlink" title="信号的发送"></a>信号的发送</h2><p>发送信号的主要函数有:<code>kill()</code>、<code>raise()</code>、 <code>sigqueue()</code>、<code>alarm()</code>、<code>setitimer()</code> 以及 <code>abort()</code>  </p>
+<h4 id="kill"><a href="#kill" class="headerlink" title="kill()"></a>kill()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt; </span><br><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">int kill(pid_t pid,int signo)</span><br></pre></td></tr></table></figure>
+<p>参数 pid:  </p>
+<table>
+<thead>
+<tr>
+<th>pid的值</th>
+<th>信号的接收进程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pid&gt;0</td>
+<td>进程ID为pid的进程接收</td>
+</tr>
+<tr>
+<td>pid=0</td>
+<td>同一个进程组的所有进程</td>
+</tr>
+<tr>
+<td>pid&lt;0 但 pid!=-1</td>
+<td>进程组ID为 -pid的所有进程</td>
+</tr>
+<tr>
+<td>pid=-1</td>
+<td>除发送进程自身外，所有进程ID大于1的进程</td>
+</tr>
+</tbody>
+</table>
+<p>参数 signo:  </p>
+<p><code>sinno</code>是信号值，当为0时（即空信号），实际不发送任何信号，但照常进行错误检查，因此，可用于检查目标进程是否存在。以及当前进程是否具有向目标发送信号的权限（root权限的进程可以向任何进程发送信号，非root权限的进程只能向属于同一个session或者同一个用户的进程发送信号）。</p>
+<p><code>Kill()</code>最常用于pid&gt;0时的信号发送，调用成功返回 0； 否则，返回 -1。 注：对于<code>pid&lt;0</code>时的情况，对于哪些进程将接受信号，各种版本说法不一，其实很简单，参阅内核源码<code>kernal/signal.c</code>即可，上表中的规则是参考<code>red hat 7.2</code>。  </p>
+<h4 id="raise"><a href="#raise" class="headerlink" title="raise()"></a>raise()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">int raise(int signo)</span><br></pre></td></tr></table></figure>
+<p>向进程本身发送信号，参数为即将发送的信号值。调用成功返回 0；否则，返回 -1。  </p>
+<h4 id="sigqueue"><a href="#sigqueue" class="headerlink" title="sigqueue()"></a>sigqueue()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt; </span><br><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">int sigqueue(pid_t pid, int sig, const union sigval val)</span><br></pre></td></tr></table></figure>
+<p>调用成功返回 0；否则，返回 -1。<br><code>sigqueue()</code>是比较新的发送信号系统调用，主要是针对实时信号提出的（当然也支持前32种），支持信号带有参数，与函数<code>sigaction()</code>配合使用。  </p>
+<p><code>sigqueue</code>的第一个参数是指定接收信号的进程ID，第二个参数确定即将发送的信号，第三个参数是一个联合数据结构<code>union sigval</code>，指定了信号传递的参数，即通常所说的<code>4字节值</code>。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef union sigval &#123;</span><br><span class="line">    int  sival_int;</span><br><span class="line">    void *sival_ptr;</span><br><span class="line">&#125;sigval_t;</span><br></pre></td></tr></table></figure>
+<p>如前面分析，该数据结构 最后会被传递到 信号处理程序<code>handler</code>的第二个参数(<code>struct siginfo *</code>)中。</p>
+<p><code>sigqueue()</code>比<code>kill()</code>传递了更多的附加信息，但<code>sigqueue()</code>只能向一个进程发送信号，而不能发送信号给一个进程组。如果<code>signo=0</code>，将会执行错误检查，但实际上不发送任何信号，0值信号可用于检查pid的有效性以及当前进程是否有权限向目标进程发送信号。  </p>
+<p>在调用<code>sigqueue</code>时，<code>sigval_t</code>指定的信息会拷贝到<code>3参数信号处理函数</code>（3参数信号处理函数指的是信号处理函数由<code>sigaction</code>安装，并设定了<code>sa_sigaction</code>指针)的<code>siginfo_t</code>结构中，这样信号处理函数就可以处理这些信息了。</p>
+<p><strong>注：</strong> <code>sigqueue（）</code>发送非实时信号时，第三个参数包含的信息仍然能够传递给信号处理函数； <code>sigqueue（）</code>发送非实时信号时，仍然不支持排队，即在信号处理函数执行过程中到来的所有相同信号，都被合并为一个信号。  </p>
+<h4 id="alarm"><a href="#alarm" class="headerlink" title="alarm()"></a>alarm()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt; </span><br><span class="line">unsigned int alarm(unsigned int seconds)</span><br></pre></td></tr></table></figure>
+<p>专门为SIGALRM信号而设，在指定的时间seconds秒后，将向进程本身发送SIGALRM信号，又称为闹钟时间。进程调用alarm后，任何以前的alarm()调用都将无效。如果参数seconds为零，那么进程内将不再包含任何闹钟时间。<br>返回值，如果调用alarm（）前，进程中已经设置了闹钟时间，则返回上一个闹钟时间的剩余时间，否则返回0。</p>
+<h4 id="setitimer"><a href="#setitimer" class="headerlink" title="setitimer()"></a>setitimer()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/time.h&gt; </span><br><span class="line">int setitimer(int which, const struct itimerval *value, struct itimerval *ovalue));</span><br></pre></td></tr></table></figure>
+<p>setitimer()比alarm功能强大，支持3种类型的定时器:  </p>
+<ul>
+<li>ITIMER_REAL：    设定绝对时间；经过指定的时间后，内核将发送SIGALRM信号给本进程;</li>
+<li>ITIMER_VIRTUAL 设定程序执行时间；经过指定的时间后，内核将发送SIGVTALRM信号给本进程;</li>
+<li>ITIMER_PROF 设定进程执行以及内核因本进程而消耗的时间和，经过指定的时间后，内核将发送ITIMER_VIRTUAL信号给本进程;</li>
+</ul>
+<p>setitimer()第一个参数which指定定时器类型（上面三种之一）；第二个参数是结构itimerval的一个实例，结构itimerval形式见附录1。第三个参数可不做处理。  </p>
+<p>setitimer()调用成功返回0，否则返回-1。  </p>
+<h4 id="abort"><a href="#abort" class="headerlink" title="abort()"></a>abort()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt; </span><br><span class="line">void abort(void);</span><br></pre></td></tr></table></figure>
+<p>向进程发送SIGABORT信号，默认情况下进程会异常退出，当然可定义自己的信号处理函数。即使SIGABORT被进程设置为阻塞信号，调用abort()后，SIGABORT仍然能被进程接收。<br>该函数无返回值。</p>
+<h2 id="信号机制的系统调用"><a href="#信号机制的系统调用" class="headerlink" title="信号机制的系统调用"></a>信号机制的系统调用</h2><p>信号处理函数运行在用户态，当遇到系统调用、中断或是异常的情况时，程序会进入内核态。信号涉及到了这两种状态之间的转换。</p>
+<p><img src="/img/sig/sig_interrupt.jpg" alt=""></p>
+<p>学习参考:<br><a href="https://www.ibm.com/developerworks/cn/linux/l-ipc/part2/index1.html" target="_blank" rel="noopener">IBM-Linux信号上</a><br><a href="https://mp.weixin.qq.com/s/g-WzYF3wWAljok1XjPoo7w?" target="_blank" rel="noopener">Android平台Native代码的崩溃捕获机制及实现</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Linux-inode理解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux-inode理解/" itemprop="url">Linux inode理解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-15T16:50:05+08:00">
+                2019-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Linux-inode理解/" class="leancloud_visitors" data-flag-title="Linux inode理解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><code>inode</code>在<code>Linux</code> 文件系统中具有灵魂级作用，我们就谈一下对<code>inode</code>的理解。<br>首先了解一下<code>Linux</code>的文件系统。 </p>
+<h3 id="EXT4-文件系统"><a href="#EXT4-文件系统" class="headerlink" title="EXT4 文件系统"></a>EXT4 文件系统</h3><p>Linux 基于ext4 文件系统，简单来说 它将存储划分成一组组大小相同的逻辑块，这样做的好处是减少了文件管理的开销，按照 <strong>整数个</strong> <code>基础逻辑块</code>来分配存储大小方便高效，而且利于提高大文件的传输效率，一个文件所占用的块可以是连续的，也可以是非连续的。而为了标记这些逻辑块的引用，文件系统中还引入了 <code>inode</code>。<br><code>inode</code>是linux 文件系统中的数据索引标记符。 如下图:<br> <img src="/img/inode/inode_1.jpg" alt=""></p>
+<p> <code>Linux</code>的文件系统被分为了两部分，一部分是 <code>inode</code>区，一部分是 <code>block</code>区，一个<code>inode</code> 的默认大小为 128Byte，当然，不同的Linux 发行版本可能大小定义不同，inode的大小在文件系统被格式化之后就无法更改了，格式化前可以指定inode大小。<code>inode</code>用来记录:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">文件的权限(r,w,x)</span><br><span class="line">文件的所有者和属组</span><br><span class="line">文件的大小</span><br><span class="line">文件的状态改变时间（ctime）</span><br><span class="line">文件的最近一次读取时间（atime）</span><br><span class="line">文件的最近一次修改时间（mtime</span><br><span class="line">文件的数据真正保存的 block 编号。</span><br></pre></td></tr></table></figure>
+<p>每个文件需要占用一个 <code>inode</code>。而<code>inode</code> 中是不记录文件的名称的，文件名称记录在文件所在目录的<code>block</code>块中。<br> <code>block</code>块的大小可以是1KB、2KB、4KB，一般默认往往是4KB，包含了连续8个扇区，每个扇区存储512个字节。</p>
+<p><code>inode</code>就告诉了文件位于哪个“块”，于是系统就会从这个“block块”开始读取内容。如果一个 block 放不下数据，则可以占用多个 block。例如，有一个 10KB 的文件需要存储，则会占用 3 个 block，虽然最后一个 block 不能占满，但也不能再放入其他文件的数据。这 3 个 block 有可能是连续的，也有可能是分散的。</p>
+<h3 id="查看文件的inode"><a href="#查看文件的inode" class="headerlink" title="查看文件的inode"></a>查看文件的inode</h3><p>我们可以使用 <code>stat</code> 命令来查看文件的 <code>inode</code> 信息</p>
+<p>在 test 目录下创建一个 <code>src.txt</code> 文件  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  test touch src.txt</span><br><span class="line">➜  test ll -l</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test stat -x src.txt</span><br><span class="line">  File: "src.txt"</span><br><span class="line">  Size: 4            FileType: Regular File</span><br><span class="line">  Mode: (0644/-rw-r--r--)         Uid: (  502/ wangwei)  Gid: (   20/   staff)</span><br><span class="line">Device: 1,4   Inode: 8625061903    Links: 2</span><br><span class="line">Access: Tue Jan 15 18:36:36 2019</span><br><span class="line">Modify: Tue Jan 15 18:34:09 2019</span><br><span class="line">Change: Tue Jan 15 18:37:29 2019</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p>通过 <code>stat -x file</code>命令(Mac Os 下) 可以得到 文件的 详细信息，<code>Inode: 8625061903</code> 指明 该文件的 <code>inode</code>号是 <code>8625061903</code>  </p>
+<p>通过<code>stat -s file</code>命令:  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  test stat -s src.txt</span><br><span class="line">st_dev=16777220 st_ino=8625061903 st_mode=0100644 st_nlink=2 st_uid=502 st_gid=20 st_rdev=0 st_size=4 st_atime=1547548596 st_mtime=1547548449 st_ctime=1547548649 st_birthtime=1547545866 st_blksize=4096 st_blocks=8 st_flags=0</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p>可以得到更多信息，如果了解更多请访问 <a href="&#39;https://linux.die.net/man/2/stat&#39;">linux-stat</a>   </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">st_dev: 文件所在的 device ID</span><br><span class="line">st_ino: 文件的 inode 号</span><br><span class="line">st_mode: 文件的类型，如 常规文件，文件夹，字符设备文件，块文件 等等</span><br><span class="line">st_nlink：文件的硬链接个数，如果为0 就可以被删除了</span><br><span class="line">st_rdev: 设备号的意思，只有字符特殊设备和块特殊设备才会有st_rdev值。此值包含实际设备的设备号</span><br><span class="line">st_size: 文件占用的字节大小 ,单位字节</span><br><span class="line">st_blksize: 每个 block 的大小，一般情况下是4KB</span><br><span class="line">st_blocks: number of 512B blocks allocated, 以 512B 为单位分配给文件的个数,用 st_size/512B 就得到 st_blocks，</span><br><span class="line">当 st_size 小于一个 block的大小，即文件大小小于默认的4KB时 实际还是分配一个 block，st_blocks = 1个blocksize/512B,</span><br><span class="line">在该例子中，src.txt 大小是4B ，但是需要占用一个 block 也就是 4KB的实际存储空间，计算得到的st_blocks = 8</span><br></pre></td></tr></table></figure>
+<p>还可以使用命令<code>ll -i</code> 查看文件的 inode  </p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> <code>8625061903</code> 就是 文件 <code>src.txt</code>的 inode编码,而权限后面的 <code>1</code>是该文件的链接数，也即是 <code>硬链接数</code>。  </p>
+<h3 id="inode的使用"><a href="#inode的使用" class="headerlink" title="inode的使用"></a>inode的使用</h3><p>一个文件在创建的时候就会分配一个 inode节点，以一个简单的例子来说明，如何访问一个文件?<br>要打开一个文件，需要要找到这个文件占用的 block 块。首先会找到文件所在的目录，在linux文件系统中，目录也是一个文件，<strong>目录文件的内容就是该目录下的文件名与 inode的映射表，即一个个的目录项</strong>。当访问一个文件的时候首先查询到上一级目录，在 Linux 文件系统中 每一个目录中都有 <code>.</code>和<code>../</code>两个目录   </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -ai</span><br><span class="line">total 16</span><br><span class="line">8625052613 drwxr-xr-x   4 wangwei  staff   128B  1 15 17:51 .</span><br><span class="line">   8475120 drwxr-xr-x+ 85 wangwei  staff   2.7K  1 15 18:13 ..</span><br><span class="line">8625053037 -rw-r--r--@  1 wangwei  staff   6.0K  1 15 15:39 .DS_Store</span><br><span class="line">8625061903 -rw-r--r--   1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> <strong><code>.</code></strong> 目录代表当前目录的 <strong>硬连接</strong> ；<strong><code>..</code></strong> 代表着上级目录的 <strong>硬链接</strong><br> 示例中的 8625052613 就是当前test 目录的inode编号，8475120 是上级目录的编号。因此也说明了，任何一个目录的硬链接总数，总是等于 2 加上它的子目录和子文件总数,即使是一个空文件夹，它的硬链接数也是2。  </p>
+<p>文件系统根据 父目录的目录项找到 需要打开文件的inode 节点，通过读 inode 节点找到需要打开的 block，载入 block块中的数据，即完成了打开文件的操作，当然通过 inode 做了权限判断，如果无权访问该文件，不需要访问 block块，通过目录项找到 inode 节点就能读出权限信息。  </p>
+<h3 id="inode的链接数"><a href="#inode的链接数" class="headerlink" title="inode的链接数"></a>inode的链接数</h3><p>通过 <code>ll -i</code>命令可以查看文件的 inode 信息，inode 信息中有一个 <strong>链接数</strong></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br></pre></td></tr></table></figure>
+<p> <code>-rw-r--r--</code> 后面的 <strong>1</strong> 表示 src.txt 文件当前有一个引用，当 链接数变成0 则释放 inode，释放block 块的数据内容。 </p>
+<p> 对 inode 链接数 的影响 来自 前面多次提到的 <strong>硬链接</strong> </p>
+<h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><p>我们常见的软连接 通过 <code>ln</code>命令生成。同样，硬链接也是通过<code>ln</code>命令生成。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  1 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test ln src.txt hard.txt</span><br><span class="line">➜  test ll -i</span><br><span class="line">total 0</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     0B  1 15 17:51 hard.txt</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     0B  1 15 17:51 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> 示例中 创建了一个硬链接 <code>hard.txt</code>， 这个文件 的 <code>inode</code> 和 <code>src.txt</code> 是一样的，说明在目录项中 这两个文件名都指向 同一个<code>inode</code>，<code>inode</code> 指向一个 <code>block</code>，这就说明 这两个文件共用一个 <code>block 块</code>，不管修改哪个文件，另一个文件也会被修改。</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> ➜  test echo 111 &gt; src.txt</span><br><span class="line">➜  test cat src.txt</span><br><span class="line">111</span><br><span class="line">➜  test cat hard.txt</span><br><span class="line">111</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p> 示例中我们向 <strong><code>src.txt</code></strong> 文件写入了 <strong><code>111</code></strong> 字符，查看发现 <code>hard.txt</code> 也做了同样的修改。</p>
+<p>那么两个文件指向同一个<code>block</code>，那占用的空间肯定也就是一份了，有意思的事情来了  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -h</span><br><span class="line">total 8 // 8个 以512B为单位的存储占用 即 8*512B = 4KB</span><br><span class="line">-rw-r--r--  1 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test ln src.txt hard.txt</span><br><span class="line">➜  test ll -h</span><br><span class="line">total 16 // 16个 以512B为单位的存储占用 即 16*512B = 8KB</span><br><span class="line">-rw-r--r--  2 wangwei  staff     4B  1 15 18:34 hard.txt</span><br><span class="line">-rw-r--r--  2 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p><strong>查看存储占用，发现 硬链接 导致了 存储的翻倍了。这个不符合原理啊!!!</strong><br>其实这是这个<strong><code>ll –h</code></strong> 或者 <strong><code>ls –h</code></strong> 命令进行统计文件总大小的时候并不是从磁盘进行统计的，而是根据文件属性中的大小叠加得来的。而硬链接的文件属性中的大小就是就是inode号对应的数据块的大小，所以total中进行统计就把各个文件属性中的大小加起来作为总和，这种统计是不标准，也不具有代表性的，正真的查看某个文件夹占用磁盘空间大小命令是：du –h   这个命令是从磁盘上进行统计，不会被文件的属性中大小影响，所以更准确。</p>
+<p>所以得出结论: <strong>硬链接并不占用磁盘空间！</strong>  </p>
+<p>那么我们常见的软连接呢?</p>
+<h3 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h3><p>软连接的创建方式和 硬链接的创建方式类似，都是使用 <code>ln</code> 命令，只是需要加上 <code>-s</code> 标记要创建软连接。软连接就相当于<code>windows系统</code> 上的快捷方式，只是指向一个文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  test ll -i</span><br><span class="line">total 16</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 hard.txt</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test ln -s src.txt soft.txt</span><br><span class="line">➜  test ll -i</span><br><span class="line">total 16</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 hard.txt</span><br><span class="line">8625064180 lrwxr-xr-x  1 wangwei  staff     7B  1 15 18:48 soft.txt -&gt; src.txt</span><br><span class="line">8625061903 -rw-r--r--  2 wangwei  staff     4B  1 15 18:34 src.txt</span><br><span class="line">➜  test</span><br></pre></td></tr></table></figure>
+<p>创建一个 软连接， <code>soft.txt</code> 发现它的<code>inode</code>是全新的。</p>
+<p><strong>软链接</strong> 和 <strong>硬链接</strong> 在原理上最主要的不同在于: <strong>硬链接不会建立自己的 inode 索引和 block（数据块），而是直接指向源文件的 inode 信息和 block，所以硬链接和源文件的 inode 号是一致的；而软链接会真正建立自己的 inode 索引和 block，所以软链接和源文件的 inode 号是不一致的，而且在软链接的 block 中，写的不是真正的数据，而仅仅是源文件的文件名及 inode 号。</strong></p>
+<p>既然软连接分配了新的<code>inode</code>，也就是占用了新的<code>block</code>，那肯定会占用存储空间，由于软连接的<code>block</code> 存储的是 真正文件的路径和<code>inode号</code>，所以占用的空间是极小的。</p>
+<p><strong>此外，硬链接是共享 <code>inode</code>的，而 <code>inode</code> 是同一个文件系统上的唯一标记，所以 硬链接是不能跨文件系统的，而软连接是新的<code>inode</code>，所以是可以跨文件系统的。</strong></p>
+<h3 id="文件操作对-inode-的影响"><a href="#文件操作对-inode-的影响" class="headerlink" title="文件操作对 inode 的影响"></a>文件操作对 <code>inode</code> 的影响</h3><h4 id="cp-命令"><a href="#cp-命令" class="headerlink" title="cp 命令"></a><code>cp</code> 命令</h4><p><code>cp</code> 命令是拷贝一个新文件，分配新的<code>inode</code>，必然导致分配新的<code>block</code>。所以会占用一份新的存储空间。<code>cp</code>命令执行的内部操作如下:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.分配一个未被使用的 inode 号，在 inode 表中新添一个项目</span><br><span class="line">2.在目录中新建一个目录项，并指向步骤 1 中的 inode</span><br><span class="line">3.把数据拷贝到新block中</span><br></pre></td></tr></table></figure>
+<h4 id="rm-命令"><a href="#rm-命令" class="headerlink" title="rm 命令"></a><code>rm</code> 命令</h4><p><code>rm</code> 会删除指定的文件，所做的操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.减少待删除文件名所对应的 inode 的链接数量，如果链接数变为0，则释放 inode。同时block块标记为可用状态。</span><br><span class="line">2.删除文件目录中的对应目录项。</span><br></pre></td></tr></table></figure>
+<h4 id="mv-命令"><a href="#mv-命令" class="headerlink" title="mv 命令"></a><code>mv</code> 命令</h4><p>如果 源文件和目标文件在 <strong><code>同一个文件系统</code></strong> 中，会复用<code>inode</code> 内部操作如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.在目标文件的目录中新建目录项</span><br><span class="line">2.删除源文件的目录中的目录项</span><br><span class="line">3.目标文件名会指向源文件名的 inode。因此该操作对 inode 没有影响（除了时间戳），对数据的位置也没有影响，不移动任何数据。</span><br></pre></td></tr></table></figure>
+<p>所以在同一文件系统下，移动命令不会涉及到数据真正移动。</p>
+<p>如果在 <strong><code>不同的文件系统</code></strong> 中，其实就是相当于 拷贝一份新数据到 目标目标，然后删除 源文件。<br>这个过程会设计到 源文件 <code>inode</code> 的释放和 新 <code>inode</code> 的生成，还有数据拷贝，执行了<code>IO</code> 操作。</p>
+<h3 id="inode-的场景利用"><a href="#inode-的场景利用" class="headerlink" title="inode 的场景利用"></a>inode 的场景利用</h3><p><code>inode</code> 中携带者文件的很多信息，我们可以通过充分利用 <code>inode</code> 的特性实现高效的文件访问操作，如果 文件权限的修改，文件的极速扫描，快速查找大文件，删除顽固文件，通过<code>inode</code>号来识别文件。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/ss-work-in-googlecloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/ss-work-in-googlecloud/" itemprop="url">在GoogleCloud上搭建SS代理服务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-26T14:11:54+08:00">
+                2018-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/ss-work-in-googlecloud/" class="leancloud_visitors" data-flag-title="在GoogleCloud上搭建SS代理服务">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>GoogleCloud 目前有免费300$方案，该教程利用<code>GoogleCloud</code> 平台搭建 <code>Shadowsocks</code>服务。</p>
+<h4 id="1-注册GoogleCloud账户并登陆"><a href="#1-注册GoogleCloud账户并登陆" class="headerlink" title="1. 注册GoogleCloud账户并登陆"></a>1. 注册GoogleCloud账户并登陆</h4><p>登陆地址 <a href="https://console.cloud.google.com" target="_blank" rel="noopener">https://console.cloud.google.com</a></p>
+<p>账户建立过程忽略。</p>
+<h4 id="2-配置项目"><a href="#2-配置项目" class="headerlink" title="2. 配置项目"></a>2. 配置项目</h4><p>进入 GoogleCloud 的后台。再开始搭建 <code>SS</code>服务之前需要先有一个<code>项目</code>如果已经有项目，直接选择，如果没有，按照下图新创建一个项目.</p>
+<p>点击 顶部的 <code>Select a project</code><br><img src="/img/ss_server/step_1.jpg" alt=""><br><img src="/img/ss_server/step_2.jpg" alt=""><br><img src="/img/ss_server/step_3.jpg" alt="">  </p>
+<p>项目创建完成之后，选择刚才创建的项目 然后 通过菜单栏选择 <code>Compute Engine</code>，然后进入到创建虚拟机实例 步骤。</p>
+<h4 id="3-创建VM实例"><a href="#3-创建VM实例" class="headerlink" title="3. 创建VM实例"></a>3. 创建VM实例</h4><p><img src="/img/ss_server/step_4.jpg" alt=""><br><img src="/img/ss_server/step_5.jpg" alt=""> </p>
+<p>创建虚拟机实例需要注意几个配置，具体看下图 红线部分</p>
+<p> <img src="/img/ss_server/step_6_create_vm.jpg" alt=""> </p>
+<p> <strong><code>vm</code>的名字:</strong> 可以随便起一个。</p>
+<p> <strong>区域选择:</strong> 根据需求选择，一般原则是选择比较近的，例如 图示中选择的新加坡节点。</p>
+<p> <strong>机器类型:</strong> 这个看需求，不过一般情况下 最低配置就能满足。</p>
+<p> <strong>操作系统:</strong> 根据自己的情况，比如我习惯 Ubuntu 系统，就选择了 Ubuntu 18.0.4LTS</p>
+<p> 剩下的默认配置就行。</p>
+<p> <img src="/img/ss_server/step_6_vm_created.jpg" alt=""> </p>
+<p> <code>VM</code>创建完成之后，然后先搁置起来，先去配置一些网络设置。</p>
+<h4 id="4-网络设置"><a href="#4-网络设置" class="headerlink" title="4.网络设置"></a>4.网络设置</h4><h5 id="创建防火墙规则"><a href="#创建防火墙规则" class="headerlink" title="创建防火墙规则"></a>创建防火墙规则</h5><p>从左侧导航菜单选择 <code>VPC网络</code>-&gt;<code>防火墙规则</code></p>
+<p><img src="/img/ss_server/step_7_create_fire_wall.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_7_begin_create_fire_rules.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_7_fire_rules_created.jpg" alt=""></p>
+<p><strong>防火墙名字:</strong> 这个随便起，见名之意即可</p>
+<p><strong>流量方向:</strong> 选择入站</p>
+<p><strong>目标:</strong> 选择 <code>网络中的所有实例</code></p>
+<p><strong>来源IP地址范围:</strong> <code>0.0.0.0/0</code></p>
+<p><strong>协议和端口:</strong> 全部允许</p>
+<p>然后点击创建按钮完成防火墙配置。</p>
+<h5 id="设置静态IP"><a href="#设置静态IP" class="headerlink" title="设置静态IP"></a>设置静态IP</h5><p>从左侧导航菜单选择<code>VPC网络</code>-&gt; <code>外部IP地址</code></p>
+<p><img src="/img/ss_server/step_8_ip.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_8_begin_static_ip.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_8_static_ip_ok.jpg" alt=""></p>
+<p>静态IP 名称: 随便起一个，图例中是 <code>proxy-ip</code></p>
+<p>区域选择: 一定要选择你创建<code>VM</code>时 选择的区域和 <code>vm实例</code></p>
+<h4 id="5-登陆-VM-实例，安装-SS-服务"><a href="#5-登陆-VM-实例，安装-SS-服务" class="headerlink" title="5. 登陆 VM 实例，安装 SS 服务"></a>5. 登陆 VM 实例，安装 SS 服务</h4><p>进入 <code>VM</code> 实例 页面，通过 <code>SSH</code> 登陆 服务器</p>
+<p><img src="/img/ss_server/step_9_ssh_vm.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_9_link_vm.jpg" alt=""></p>
+<p><img src="/img/ss_server/step_9_login_vm_ok.jpg" alt=""></p>
+<p>如图所示，成功登陆服务器。</p>
+<p>由于 <code>SS 服务</code> 需要在 <code>root</code> 用户下登陆，下面我们修改一下 服务器的<code>root</code> 密码</p>
+<p><img src="/img/ss_server/step_10_reset_root_pwd.jpg" alt=""></p>
+<p>输入命令:</p>
+<p><code>sudo passwd root</code>  </p>
+<p>然后设置 新的<code>root</code> 密码。<br>设置完之后 输入 命令:</p>
+<p><code>su</code></p>
+<p>然后输入密码进入 <code>root</code> 用户下</p>
+<p><img src="/img/ss_server/step_10_enter_root.jpg" alt=""></p>
+<p>以上步骤完成之后就开始我们的安装 操作了，执行如下命令:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate -O shadowsocks-go.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-go.sh</span><br><span class="line">chmod +x shadowsocks-go.sh</span><br><span class="line">./shadowsocks-go.sh 2&gt;&amp;1 | tee shadowsocks-go.log</span><br></pre></td></tr></table></figure>
+<p>然后会让你配置一些信息，如图：</p>
+<p><img src="/img/ss_server/step_10_finish_ss_config.jpg" alt=""></p>
+<p>设置的密码即为你 <code>Shadowsocks</code>软件上需要填写的密码</p>
+<p>端口号对应 你 <code>Shadowsocks</code>软件上需要填写的端口号</p>
+<p>加密方式我们选择默认 <code>aes-256-cfb</code>即可。</p>
+<p>一切配置完成之后，点击回车按钮，会自动安装服务，待服务安装完毕，会出现如下界面：</p>
+<p><img src="/img/ss_server/step_10_review_ss_config.jpg" alt=""></p>
+<p>这些就是你在 <code>SS</code>软件上需要填写的信息。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Shadowsocks自定义PAC规则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Shadowsocks自定义PAC规则/" itemprop="url">Shadowsocks自定义PAC规则</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-17T11:14:28+08:00">
+                2018-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Shadowsocks自定义PAC规则/" class="leancloud_visitors" data-flag-title="Shadowsocks自定义PAC规则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>科学上网，SS是一大利器。它的实现原理 就是墙外一台服务器，墙内一台服务器(也就是我们的客户端)，两台服务器之间加密通讯，防火墙因为无法判定用户访问的网站是否在防火墙列表，所以放行,这样就可以通过墙外服务器做代理啦。但我们知道，任何网站都通过墙外服务器是<code>不明智的</code>，例如我们访问<code>baidu.com</code>，百度在国内架设了很多服务器，一般都是就近访问的，如果也通过代理到国外绕一圈，得不偿失。所以就需要一个忽略列表，或者一个需要走代理的列表，而PAC 规则就是来实现这个的。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>PAC的配置规则语法和GFWlist 相同，即<a href="https://adblockplus.org/en/filter-cheatsheet" target="_blank" rel="noopener">adblock</a>   </p>
+<p>下面我引用 <code>adblock</code>的示例来做说明。</p>
+<h4 id="1-匹配地址中的一部分内容-通配符匹配"><a href="#1-匹配地址中的一部分内容-通配符匹配" class="headerlink" title="1. 匹配地址中的一部分内容(通配符匹配)"></a>1. 匹配地址中的一部分内容(通配符匹配)</h4><p>比如我们想匹配以下地址:</p>
+<ul>
+<li><a href="http://example.com/banner/foo/img" target="_blank" rel="noopener">http://example.com/banner/foo/img</a></li>
+</ul>
+<ul>
+<li><a href="http://example.com/banner/foo/bar/img?param" target="_blank" rel="noopener">http://example.com/banner/foo/bar/img?param</a></li>
+</ul>
+<ul>
+<li><a href="http://example.com/banner//img/foo" target="_blank" rel="noopener">http://example.com/banner//img/foo</a></li>
+</ul>
+<p>但是不想匹配这些地址:</p>
+<ul>
+<li><a href="http://example.com/banner/img" target="_blank" rel="noopener">http://example.com/banner/img</a></li>
+<li><a href="http://example.com/banner/foo/imgraph" target="_blank" rel="noopener">http://example.com/banner/foo/imgraph</a></li>
+<li><a href="http://example.com/banner/foo/img.gif" target="_blank" rel="noopener">http://example.com/banner/foo/img.gif</a></li>
+</ul>
+<p>那么我们可以写这样的匹配规则:  </p>
+<p><strong><code>/banner/*/img^</code></strong>  </p>
+<p>通配符<code>*</code> 表明中间可以是任意路径或字符，但是必须要有,如果没有，就必须出现两个<code>/</code> 如<code>http://example.com/banner//img/foo</code>  </p>
+<p>符合 <code>^</code>  表明 地址必须在这里结束，或者后面跟着的是 <code>/</code>，或是参数字符，例如<code>?</code>。  </p>
+<h4 id="2-匹配绝对地址"><a href="#2-匹配绝对地址" class="headerlink" title="2. 匹配绝对地址"></a>2. 匹配绝对地址</h4><p>比如我就像匹配地址:  </p>
+<ul>
+<li><a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a></li>
+</ul>
+<p>那么匹配规则可以这样:  </p>
+<p><strong><code>|http://www.baidu.com|</code></strong>  </p>
+<p>在该规则下 以下地址就无法匹配:  </p>
+<ul>
+<li><a href="http://www.baidu.com/logo.jpg" target="_blank" rel="noopener">http://www.baidu.com/logo.jpg</a></li>
+</ul>
+<h4 id="3-匹配开头或结尾"><a href="#3-匹配开头或结尾" class="headerlink" title="3. 匹配开头或结尾"></a>3. 匹配开头或结尾</h4><p>比如我想匹配以 <code>http://example.com</code> 开头的网址,例如:  </p>
+<ul>
+<li><a href="http://example.com/index.html" target="_blank" rel="noopener">http://example.com/index.html</a></li>
+<li><a href="http://example.com/us/index.html" target="_blank" rel="noopener">http://example.com/us/index.html</a></li>
+</ul>
+<p>那么匹配规则为:   </p>
+<p><strong><code>|http://example.com</code></strong>  </p>
+<p>如果匹配以 <code>example.com</code>结尾的网址,例如:  </p>
+<ul>
+<li><a href="http://sandbox.example.com" target="_blank" rel="noopener">http://sandbox.example.com</a></li>
+<li><a href="http://www.example.com" target="_blank" rel="noopener">http://www.example.com</a></li>
+<li><a href="http://www.beta.example.com" target="_blank" rel="noopener">http://www.beta.example.com</a></li>
+</ul>
+<p>那么匹配规则为:<br><strong><code>example.com|</code></strong>  </p>
+<h4 id="4-通过域名匹配"><a href="#4-通过域名匹配" class="headerlink" title="4. 通过域名匹配"></a>4. 通过域名匹配</h4><p>比如我想匹配所有来自 <code>ads.example.com</code> 这个域名的网址  </p>
+<ul>
+<li><a href="http://ads.example.com/foo.gif" target="_blank" rel="noopener">http://ads.example.com/foo.gif</a></li>
+<li><a href="http://server1.ads.example.com/foo.gif" target="_blank" rel="noopener">http://server1.ads.example.com/foo.gif</a></li>
+<li><a href="https://ads.example.com:8000/" target="_blank" rel="noopener">https://ads.example.com:8000/</a></li>
+</ul>
+<p>而不想匹配:  </p>
+<ul>
+<li><a href="http://ads.example.com.ua/foo.gif" target="_blank" rel="noopener">http://ads.example.com.ua/foo.gif</a></li>
+<li><a href="http://example.com/redirect/http://ads.example.com/" target="_blank" rel="noopener">http://example.com/redirect/http://ads.example.com/</a></li>
+</ul>
+<p>那么匹配规则为: <strong><code>||ads.example.com^</code></strong> </p>
+<h4 id="5-高级匹配规则"><a href="#5-高级匹配规则" class="headerlink" title="5. 高级匹配规则"></a>5. 高级匹配规则</h4><p>假如我有这样的需求:</p>
+<ol>
+<li>我只匹配来自 example.com 这个域名或其子域名的地址;</li>
+<li>但不匹配 foo.example.com 这个子域名已经它的子域名</li>
+<li>只匹配 图片或js文件的请求地址</li>
+</ol>
+<p>那么这个匹配规则为:</p>
+<p><strong><code>||example.com^$script,image,domain=example.com|~foo.example.com</code></strong>  </p>
+<p>那么 地址 <code>http://ads.example.com/foo.gif</code> 就能被匹配上。</p>
+<h4 id="6-排除在规则之外"><a href="#6-排除在规则之外" class="headerlink" title="6. 排除在规则之外"></a>6. 排除在规则之外</h4><p>比如我不想让 <code>http://ads.example.com/notbanner/1.png</code>通过匹配<br>但是希望 <code>http://ads.example.com/notbanner/</code>下的所有 js 文件通过匹配</p>
+<p>那么匹配规则:  </p>
+<p><strong><code>@@||ads.example.com/notbanner^$~script</code></strong></p>
+<h5 id="排除整个网站的网址"><a href="#排除整个网站的网址" class="headerlink" title="排除整个网站的网址"></a>排除整个网站的网址</h5><p>比如要排除 所有 域名<code>example.com</code>的网站</p>
+<p>那么匹配规则如下:  </p>
+<p><strong><code>@@||example.com^$document</code></strong></p>
+<p>假如我们想注释掉一个规则是否支持呢？<br>答案是<strong>肯定的</strong>。  </p>
+<p>例如: <code>!|http://example.com</code>  </p>
+<h3 id="SS-中编辑"><a href="#SS-中编辑" class="headerlink" title="SS 中编辑"></a>SS 中编辑</h3><p>下面 我以 <code>ShadowsocksX-NG</code>-1.8.2 版本为例来说明一下如何编辑自定义<code>PAC规则</code></p>
+<p><img src="/img/ss/ss_1.jpg" alt=""></p>
+<p><img src="/img/ss/ss_2.jpg" alt=""></p>
+<p>配置完之后最好点击一下 <code>从GFW List 更新PAC</code> 按钮。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/KMP-算法及模式匹配/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/KMP-算法及模式匹配/" itemprop="url">KMP 算法及模式匹配</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-31T18:39:25+08:00">
+                2018-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/KMP-算法及模式匹配/" class="leancloud_visitors" data-flag-title="KMP 算法及模式匹配">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="字符串的模式匹配"><a href="#字符串的模式匹配" class="headerlink" title="字符串的模式匹配"></a>字符串的模式匹配</h2><p>字符串的模式匹配 通常是 定位一个子串在一个字符串中的位置。例如 <code>String.indexOf()</code>方法。  </p>
+<h4 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h4><p>子串称为 <code>模式串</code></p>
+<h3 id="常规实现"><a href="#常规实现" class="headerlink" title="常规实现"></a>常规实现</h3><p>思想:从左往右一个字符一个字符的匹配，如果匹配的过程中有某一个字符不匹配，主串回退到本次匹配开始位置的下一个位置，模式串回退到第一位，然后重新开始匹配。<br>过程如下:<br><img src="/img/kmp/kmp_1.jpg" alt=""><br>指针 i 指向主串第一个位置，j指向模式串第一个位置<br><img src="/img/kmp/kmp_2.jpg" alt=""><br>当出现不一致情况时:<br><img src="/img/kmp/kmp_3.jpg" alt="">  </p>
+<p>将指针 <code>i</code> 回到 <code>B</code> 的位置 ;将指针 <code>j</code> 回退到 <code>A</code>的位置。<br><img src="/img/kmp/kmp_4.jpg" alt=""> </p>
+<p><code>Java JDK</code> 中 <code>String.indexOf</code>实现就是该思想。该匹配过程易于理解，且在某些应用场合，如文本编辑等，效率也较高。但是时间复杂度比较高，达到了 <code>O(n^2)</code>。</p>
+<p><strong>JDK实现</strong>:<br><strong>实现1:</strong>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(<span class="keyword">char</span>[] source, <span class="keyword">int</span> sourceOffset, <span class="keyword">int</span> sourceCount, <span class="keyword">char</span>[] target, <span class="keyword">int</span> targetOffset, <span class="keyword">int</span> targetCount, <span class="keyword">int</span> fromIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (fromIndex &gt;= sourceCount) &#123;</span><br><span class="line">            <span class="keyword">return</span> targetCount == <span class="number">0</span> ? sourceCount : -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (fromIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            fromIndex = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (targetCount == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> fromIndex;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> first = target[targetOffset];</span><br><span class="line">        <span class="keyword">int</span> max = sourceOffset + (sourceCount - targetCount);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = sourceOffset + fromIndex; i &lt;= max; i++) &#123;</span><br><span class="line">            <span class="comment">//查找第一个字母</span></span><br><span class="line">            <span class="keyword">if</span> (source[i] != first) &#123;</span><br><span class="line">                <span class="keyword">while</span> (++i &lt;= max &amp;&amp; source[i] != first) ;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i &lt;= max) &#123;</span><br><span class="line">                <span class="comment">//找到第一个字母匹配的 i,开始 匹配第2个字符，并以此循环匹配剩余字符</span></span><br><span class="line">                <span class="keyword">int</span> j = i + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">int</span> end = j + targetCount - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = targetOffset + <span class="number">1</span>; j &lt; end &amp;&amp; source[j] == target[k]; j++, k++) ;</span><br><span class="line">                <span class="keyword">if</span> (j == end) &#123;</span><br><span class="line">                    <span class="keyword">return</span> i - sourceOffset;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>相同思想的其他方式:<br><strong>实现2:</strong>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(<span class="keyword">char</span>[] source, <span class="keyword">int</span> sourceOffset, <span class="keyword">int</span> sourceCount, <span class="keyword">char</span>[] target, <span class="keyword">int</span> targetOffset, <span class="keyword">int</span> targetCount, <span class="keyword">int</span> fromIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (fromIndex &gt;= sourceCount) &#123;</span><br><span class="line">            <span class="keyword">return</span> targetCount == <span class="number">0</span> ? sourceCount : -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (fromIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            fromIndex = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (targetCount == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> fromIndex;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = sourceOffset + fromIndex;</span><br><span class="line">        <span class="keyword">int</span> j = targetOffset;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; sourceCount &amp;&amp; j &lt; targetCount) &#123;</span><br><span class="line">            <span class="keyword">if</span> (source[i] == target[j]) &#123;<span class="comment">//继续比较后续字符</span></span><br><span class="line">                ++i;</span><br><span class="line">                ++j;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;<span class="comment">//指针回溯，重新开始匹配</span></span><br><span class="line">                i = i - j + <span class="number">1</span>;</span><br><span class="line">                j = targetOffset;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (j &gt;= targetCount) &#123;<span class="comment">//匹配完成</span></span><br><span class="line">            <span class="keyword">return</span> i - j;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>分析:</strong><br>按照上图中的示例，主串 A <strong>B</strong> <strong>C</strong> D E F A B D J K。 模式串 A B D<br>常规算法中 除了 主串中 粗体字母 B 和 C 比较了两次以外，其他字母均只和模式串比较一次。在这种情况下，此算法的时间复杂度为O(n+m)。其中n 和m 分别是主串和模式串的长度。  </p>
+<p>然而，在有些情况下，该算法的效率却很低。例如，当模式串为 ‘00000001’，主串为‘0000 0000 0000 0000 0001’时，由于模式中前7个字符均为‘0’，，又，主串中前 19 个字符均为 ‘0’，每趟比较都在模式的最后一个字符出现不等，此时需将指针 i 回溯到 i -6 的位置上，并从模式的第一个字符开始重新比较，整个匹配过程中指针i 需要回溯 12次,则在算法 ——<strong>实现2</strong> 中 while 循环的次数为 13 <em> 8 _(index </em> m)_。<br>    可见，算法实现2 在最坏情况下时间复杂度为O(n*m)。这种情况在只有 0，1 两种字符的文本处理中经常出现，因为在主串中可能存在多个和模式串“部分匹配”的子串，因为引起指针 <code>i</code>的多次回溯。 <code>01</code>串可以用在许多应用之中。比如，一些计算机的图形显示就是把画面表示为一个01串，一页书就是一个几百万个0和1组成的串。在二进制计算机上实际上处理的都是01串。一个字符的ASCII码也可以看成是8位二进制的01串。  </p>
+<h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><p><code>D.E.Knuth</code>、<code>J.H.Morris</code>和<code>V.R.Pratt</code> 发明了<code>KMP</code>，该算法主要解决的问题就是 前面提到的<code>常规算法</code>需要多次回溯指针。<br><img src="/img/kmp/kmp_5.jpg" alt=""><br>如图所示，当 <code>i=2；j=2</code>模式匹配失败时,会经历 <code>i = 1,i = 2...</code>直到 指针 <code>i</code>指向<code>i = 6;</code>而<code>j</code>需要由<code>j = 2</code>回溯到<code>j = 0</code>。示例中这种情况还是比较理想的，我们也就是多比较了几次而已。但 对与模式串为 ‘00000001’，主串是‘0000 0000 0000 0000 0001’，每次 <code>i</code>指针更新一次，<code>j</code>指针都是到最后一个位置才知道不匹配，然后 <code>i和j</code>回溯，这个效率显然很低。那么<code>KMP</code>的思想呢?  </p>
+<p><strong><code>KMP</code></strong>希望利用 <strong>前面已经匹配的信息，来避免 <code>i</code>指针的回溯，即<code>i</code>指针不回溯，修改<code>j</code>指针，让模式串尽量地移动到有效的位置</strong>  </p>
+<p><strong><code>KMP</code></strong>想解决的问题是 <strong>当某个字符与主串不匹配时，我们应该知道<code>j</code>指针要移动到哪？</strong>   </p>
+<p>我们看下规律:<br>当出现不匹配时:<br><img src="/img/kmp/kmp_6.jpg" alt=""><br>如图，C 和D 不匹配了，我们要把 <code>j</code>移动到哪？显然是 第 0 个位置，因为前面 i = 2 的位置是一个A，模式串的第一个字符也是A。<br><img src="/img/kmp/kmp_7.jpg" alt="">  </p>
+<p>再看看另外一个示例:<br><img src="/img/kmp/kmp_8.jpg" alt=""><br>把指针 j 移到 j = 2的位置，因为前面两个字母一样的:<br><img src="/img/kmp/kmp_9.jpg" alt=""></p>
+<p>我们可以大概看出一些规律，<strong>当匹配失败的时候，<code>j</code>要移动的下一个位置 <code>k</code>，它前面的<code>k</code>个字符和<code>i</code>之前的最后k个字符是一样的。</strong><br>有:<br><strong>‘p(0)p(1) …p(k-1)’ = ‘s(i-k)s(i-k+1)…s(i-1)’</strong><br><em>p 是模式串，s是主串</em><br>而已经得到的“部分匹配”的结果是:<br><strong>‘p(j-k)p(j-k+1)…p(j-1)’ = ‘s(i-k)s(i-k+1)…s(i-1)’</strong><br> ==&gt;<br><strong>‘p(0)p(1) …p(k-1)’ = ‘p(j-k)p(j-k+1)…p(j-1)’</strong>  </p>
+<p>即 <strong>P[0 ~ k-1] = P[j-k ~ j-1]</strong></p>
+<p> 那么如何求解 <code>k</code>就是 <code>KMP算法</code>的核心问题了。也即是计算每一个位置 <code>j</code>对应的<code>k</code>。所以用一个<code>数组next</code> 保持 <code>k</code>。  </p>
+<pre><code>next[j] = k
+</code></pre><p>表示当S(i) != P(j)时，<code>j指针</code>需要回溯的位置。<br>算法表示:   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getNext(<span class="keyword">char</span>[] target) &#123;</span><br><span class="line">        <span class="keyword">char</span>[] p = target;</span><br><span class="line">        <span class="keyword">int</span>[] next = <span class="keyword">new</span> <span class="keyword">int</span>[p.length];</span><br><span class="line">        next[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> k = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &lt; p.length - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (k == -<span class="number">1</span> || p[j] == p[k]) &#123;</span><br><span class="line">                next[++j] = ++k;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                k = next[k];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码在数据结构中直接给出来，那么为什么这样处理呢？<br>当<code>j =0</code>时 如果出现不匹配:  </p>
+<p> <img src="/img/kmp/kmp_11.jpg" alt=""><br> 这种情况下 j 已经在最左边了，不能再移动了，这时候需要i指针后移，所以代码中有 </p>
+<pre><code>next[0] = -1;初始化。  
+</code></pre><p> 当j = 1时:<br>  <img src="/img/kmp/kmp_12.jpg" alt=""><br>  指针 j 一定会回溯到 0 的位置，因为它前面也只有这个位置了。<br>  再看看非边界情况:<br>  <img src="/img/kmp/kmp_13.jpg" alt=""></p>
+<p>  出现匹配不通过的位置 j和 下一个回溯位置 k 的字符相同时， j+1 位置对应的k 和 j 位置对应的k 的关系是  <code>next[j+1] = next[j]+1</code><br>即<strong>当 <code>P[k] = P[j]</code></strong>时有:<br>  <code>next[j+1] = next[j]+1</code>  </p>
+<p>  这个结论也可以通过数学证明:<br>  因为 <code>p(j)</code>之前已经有 <code>P[0 ~ k-1] = P[j-k ~ j-1]</code>。<br>  如果 <code>P[k] = P[j]</code> 则 <code>P[0 ~ k-1] +P[k] = P[j-k ~ j-1] + P[j]</code><br>即有<code>P[0 ~ k] = P[j-k ~ j]</code> =&gt; <code>next[j+1] = k+1 = next[j]+1</code></p>
+<p><strong>当 <code>P[k] != P[j]</code>时:</strong><br>如图:<br><img src="/img/kmp/kmp_14.jpg" alt=""><br>代码中 对于 不相等的情况 <code>k = next[k];</code><br><img src="/img/kmp/kmp_15.jpg" alt="">  </p>
+<p>所以有 <code>k = next[k];</code> </p>
+<p>至此，我们获得了 <code>next数组</code>  </p>
+<p>以下是<code>KMP</code>算法的实现:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">indexOf_KMP</span><span class="params">(<span class="keyword">char</span>[] source, <span class="keyword">int</span> sourceOffset, <span class="keyword">int</span> sourceCount, <span class="keyword">char</span>[] target, <span class="keyword">int</span> targetOffset, <span class="keyword">int</span> targetCount, <span class="keyword">int</span> fromIndex)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> i = sourceOffset + fromIndex;</span><br><span class="line">       <span class="keyword">int</span> j = targetOffset;</span><br><span class="line">       <span class="keyword">int</span>[] next = getNext_old(target);</span><br><span class="line">       <span class="keyword">while</span> (i &lt; sourceCount &amp;&amp; j &lt; targetCount) &#123;</span><br><span class="line">           <span class="keyword">if</span> (j == -<span class="number">1</span> || source[i] == target[j]) &#123;</span><br><span class="line">               ++i;</span><br><span class="line">               ++j;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               j = next[j];</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (j &gt;= targetCount) &#123;</span><br><span class="line">           <span class="keyword">return</span> i - j;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出相对于 <code>常规算法</code> <code>i</code>就不需要回溯了。</p>
+<p>该算法还可以进一步优化:<br><img src="/img/kmp/kmp_16.jpg" alt=""><br>显然，当通过 next算法获取 到的next 数组为[-1,0,0,1]<br>所以可以把j 移动到第1个元素:<br><img src="/img/kmp/kmp_17.jpg" alt=""><br>其实这一步是完全没有意义的，因为 后面的B 已经不匹配了，那前面的B 也一定不匹配了，同样的情况还发生在第 2 个元素A上。<br>显然当<code>p[j] = P[next[j]]</code>时，我们可以进一步处理:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getNext(<span class="keyword">char</span>[] target) &#123;</span><br><span class="line">        <span class="keyword">char</span>[] p = target;</span><br><span class="line">        <span class="keyword">int</span>[] next = <span class="keyword">new</span> <span class="keyword">int</span>[p.length];</span><br><span class="line">        next[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> k = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &lt; p.length - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (k == -<span class="number">1</span> || p[j] == p[k]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (p[++j] == p[++k]) &#123; <span class="comment">// 当两个字符相等时要跳过</span></span><br><span class="line">                    next[j] = next[k];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    next[j] = k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                k = next[k];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>即当 两个字符相等时，跳过比较。</p>
+<p>以上就是 KMP 算法的分析。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/git删除远程branch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/git删除远程branch/" itemprop="url">git删除远程branch</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T17:44:08+08:00">
+                2018-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/git删除远程branch/" class="leancloud_visitors" data-flag-title="git删除远程branch">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h5 id="删除远端分支"><a href="#删除远端分支" class="headerlink" title="删除远端分支"></a>删除远端分支</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete &lt;branch&gt;	<span class="comment"># Git version 1.7.0 or newser</span></span><br><span class="line">git push origin :&lt;branch&gt;		<span class="comment"># Git versions older than 1.7.0</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/git删除远程branch/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Neural_Networks01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Neural_Networks01/" itemprop="url">神经网络01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T13:42:56+08:00">
+                2018-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Neural_Networks01/" class="leancloud_visitors" data-flag-title="神经网络01">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是神经网络"><a href="#什么是神经网络" class="headerlink" title="什么是神经网络?"></a>什么是神经网络?</h2><p>关于这个问题 最好的解释是阅读 Michael Nielsen 的开源教材 <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener">《Neural Networks and Deep Learning》</a><br>在本文中介绍什么是神经网络也依托于这教材。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/深入理解Android属性动画的实现-动画启动-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/深入理解Android属性动画的实现-动画启动-2/" itemprop="url">深入理解Android属性动画的实现(动画启动)-2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T21:46:13+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/深入理解Android属性动画的实现-动画启动-2/" class="leancloud_visitors" data-flag-title="深入理解Android属性动画的实现(动画启动)-2">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="属性动画的启动分析"><a href="#属性动画的启动分析" class="headerlink" title="属性动画的启动分析"></a>属性动画的启动分析</h3><p>在本文中,我们会分析属性动画如何启动的而且和Andoid <code>黄油计划</code>有什么关系</p>
+<p>我们看看 <code>ObjectAnimator.start()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AnimationHandler.getInstance().autoCancelBasedOn(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (DBG) &#123;</span><br><span class="line">            Log.d(LOG_TAG, <span class="string">"Anim target, duration: "</span> + getTarget() + <span class="string">", "</span> + getDuration());</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mValues.length; ++i) &#123;</span><br><span class="line">                PropertyValuesHolder pvh = mValues[i];</span><br><span class="line">                Log.d(LOG_TAG, <span class="string">"   Values["</span> + i + <span class="string">"]: "</span> +</span><br><span class="line">                    pvh.getPropertyName() + <span class="string">", "</span> + pvh.mKeyframes.getValue(<span class="number">0</span>) + <span class="string">", "</span> +</span><br><span class="line">                    pvh.mKeyframes.getValue(<span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">super</span>.start();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>AnimationHandler.getInstance().autoCancelBasedOn(this)</code> cancel 相同Target和相同属性的动画<br>AnimationHandler 实例在线程局部单例。<code>autoCancelBasedOn(this)</code>会遍历 <code>AnimationHandler</code>实例持有的所有未完成的 <code>ValueAnimator</code>实例，cancel 掉符合条件的动画。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/深入理解Android属性动画的实现-动画启动-2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'page/2/index.html';
+        var commenthub_url = '';
+        var commenthub_title = '';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Binder," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="什么是智能指针?Android 上层APP 基本都是基于Java 语言进行来发的，对于Java 语言来说是没有指针概念的，因为在 JVM层，Java 就将指针隐藏起来了，基于Java 开发不需要涉及对象的手动内存分配和释放。那Android 为什么搞一个 智能指针呢？ 这主要是因为 Android 的Framework">
+<meta name="keywords" content="Android,Binder">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-智能指针">
+<meta property="og:url" content="http://aicodeing.github.io/Android-智能指针/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="什么是智能指针?Android 上层APP 基本都是基于Java 语言进行来发的，对于Java 语言来说是没有指针概念的，因为在 JVM层，Java 就将指针隐藏起来了，基于Java 开发不需要涉及对象的手动内存分配和释放。那Android 为什么搞一个 智能指针呢？ 这主要是因为 Android 的Framework 相当一部分还是 C/C++来实现的，C/C++是有指针概念的，但是对于一个庞大">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-智能指针">
+<meta name="twitter:description" content="什么是智能指针?Android 上层APP 基本都是基于Java 语言进行来发的，对于Java 语言来说是没有指针概念的，因为在 JVM层，Java 就将指针隐藏起来了，基于Java 开发不需要涉及对象的手动内存分配和释放。那Android 为什么搞一个 智能指针呢？ 这主要是因为 Android 的Framework 相当一部分还是 C/C++来实现的，C/C++是有指针概念的，但是对于一个庞大">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/Android-智能指针/"/>
+
+
+
+
+
+  <title>Android-智能指针 | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Android-智能指针/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-智能指针</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T22:12:49+08:00">
+                2019-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Android-智能指针/" class="leancloud_visitors" data-flag-title="Android-智能指针">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是智能指针"><a href="#什么是智能指针" class="headerlink" title="什么是智能指针?"></a>什么是智能指针?</h3><p>Android 上层APP 基本都是基于Java 语言进行来发的，对于Java 语言来说是没有<code>指针</code>概念的，因为在 JVM层，Java 就将指针隐藏起来了，基于Java 开发不需要涉及对象的手动内存分配和释放。那Android 为什么搞一个 <code>智能指针</code>呢？ 这主要是因为 Android 的Framework 相当一部分还是 <code>C/C++</code>来实现的，<code>C/C++</code>是有指针概念的，但是对于一个庞大的操作系统而言，智能肯定是满天飞的，这中间很容易就出现指针相关的错误，为了减少在指针方面的关注，Android 封装了自己的<code>智能指针</code>用于管理<code>C/C++</code>层的对象引用问题，期望能像 Java一样，忘记指针的概念。  </p>
+<p>但事实上，<code>智能指针</code>并不是真正的指针，它只是对<code>C++</code>对象自动回收机制的封装。</p>
+<p>我们来看看智能指针如何实现的?  </p>
+<h4 id="常见的指针问题"><a href="#常见的指针问题" class="headerlink" title="常见的指针问题"></a>常见的指针问题</h4><p>在 C/C++项目中，常见的指针问题大致有:  </p>
+<ul>
+<li>指针未初始化</li>
+<li>new 操作和delete 操作未配套操作</li>
+<li>野指针</li>
+</ul>
+<p>Android的智能指针主要也是为了解决这三个问题  </p>
+<p><strong>指针未初始化:</strong> 解决这个问题 只需要在创建智能指针的时候，将 指针置空<br><strong>new 和 delete不配套:</strong> 在C++中，<code>构造函数</code>和<code>析构函数</code>是在对象new出来和delete的时候调用的,可以在这两个地方做相应的处理<br><strong>野指针:</strong> 解决这个问题其实就是让智能指针自动能判断对象是否可以被回收。这也是三个问题中的核心问题。</p>
+<p>智能指针采用的是<code>引用计数器</code>方式来比较一个对象是否需要被回收。  </p>
+<p><em>那么引用计数器是应该智能指针拥有呢还是被对象Object拥有呢？</em>  </p>
+<p>如果计数器由智能指针拥有，假如 智能指针<code>SmartPointer1</code>和智能指针<code>SmartPointer2</code>都引用 object对象，当 <code>SmartPointer1</code>不再引用object时，计数器为0，删除了对象object，但是 <code>SmartPoint2</code>还在引用着object。回收object 肯定是不合理的。所以 引用计数器只能是 object 拥有。</p>
+<h3 id="智能指针的实现"><a href="#智能指针的实现" class="headerlink" title="智能指针的实现"></a>智能指针的实现</h3><p>智能指针在Android上有三个比较重要的实现，分别是<code>轻量级指针</code>,<code>强指针</code>,<code>弱指针</code>。它们的实现原理都是一致的，即由对象本身来提供引用计数器，但是它不会去维护这个引用计数器的值，而是由智能指针来维护</p>
+<h4 id="轻量级智能指针-LightRefBase"><a href="#轻量级智能指针-LightRefBase" class="headerlink" title="轻量级智能指针 LightRefBase"></a>轻量级智能指针 LightRefBase</h4><p>这里所说的轻量级指针不是说 <code>LightRefBase</code> 是一个指针的定义，它是 配合智能指针的object对象的最简单，最轻量级的实现。  </p>
+<p>源码位置 <code>frameworks/native/include/utils/RefBase.h</code>  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">LightRefBase</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    inline LightRefBase() : mCount(0) &#123; &#125; //mCount 就是引用计数器,初始化值为0</span><br><span class="line">    inline void incStrong(__attribute__((unused)) const void* id) const &#123;</span><br><span class="line">        android_atomic_inc(&amp;mCount);</span><br><span class="line">    &#125;</span><br><span class="line">    inline void decStrong(__attribute__((unused)) const void* id) const &#123;</span><br><span class="line">        <span class="keyword">if</span> (android_atomic_dec(&amp;mCount) == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">delete</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> T*&gt;(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">inline</span> ~LightRefBase() &#123; &#125;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">mutable</span> <span class="keyword">volatile</span> <span class="keyword">int32_t</span> mCount;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>给类有一个成员变量<code>mCount</code>，这就是<code>引用计数器</code>，它的初始化值为<code>0</code>，另外，这个类还提供两个成员函数<code>incStrong</code>和<code>decStrong</code>,分别是用来增加引用和减少引用计数的，这两个函数提供给智能指针来调用，在decStrong函数中，如果当前引用计数值为1，那么当减1后就会变成0，于是就会delete这个对象。</p>
+<p>轻量级智能指针 LightRefBase 是需要和 智能指针搭配使用的，只有继承 <code>LightRefBase</code>的类型对象才能使用智能指针(先不考虑RefBase)。  </p>
+<h4 id="强指针-sp"><a href="#强指针-sp" class="headerlink" title="强指针 sp"></a>强指针 sp</h4><p>前面说的 <code>LightRefBase</code>的计数器是由智能指针来修改的，那就是 <code>sp</code>了。  </p>
+<p>源码定义位置：<code>frameworks/native/include/utils/StrongPointer.h</code>  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sp</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    inline sp() : m_ptr(0) &#123; &#125;//首先将引用置空，解决指针为初始化问题</span><br><span class="line"></span><br><span class="line">    sp(T* other);</span><br><span class="line">    sp(<span class="keyword">const</span> sp&lt;T&gt;&amp; other);</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> U&gt; sp(U* other);</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> U&gt; sp(<span class="keyword">const</span> sp&lt;U&gt;&amp; other);</span><br><span class="line"></span><br><span class="line">    ~sp();<span class="comment">//析构函数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Assignment</span></span><br><span class="line"></span><br><span class="line">    sp&amp; <span class="keyword">operator</span> = (T* other);</span><br><span class="line">    sp&amp; <span class="keyword">operator</span> = (<span class="keyword">const</span> sp&lt;T&gt;&amp; other);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> U&gt; sp&amp; <span class="keyword">operator</span> = (<span class="keyword">const</span> sp&lt;U&gt;&amp; other);</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> U&gt; sp&amp; <span class="keyword">operator</span> = (U* other);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//! Special optimization for use by ProcessState (and nobody else).</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">force_set</span><span class="params">(T* other)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Reset</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Accessors</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">inline</span>  T&amp;      <span class="keyword">operator</span>* () <span class="keyword">const</span>  &#123; <span class="keyword">return</span> *m_ptr; &#125;</span><br><span class="line">    <span class="keyword">inline</span>  T*      <span class="keyword">operator</span>-&gt; () <span class="keyword">const</span> &#123; <span class="keyword">return</span> m_ptr;  &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span>  T*      <span class="title">get</span><span class="params">()</span> <span class="keyword">const</span>         </span>&#123; <span class="keyword">return</span> m_ptr; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Operators</span></span><br><span class="line"></span><br><span class="line">    COMPARE(==)</span><br><span class="line">    COMPARE(!=)</span><br><span class="line">    COMPARE(&gt;)</span><br><span class="line">    COMPARE(&lt;)</span><br><span class="line">    COMPARE(&lt;=)</span><br><span class="line">    COMPARE(&gt;=)</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Y&gt; <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">sp</span>;</span></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Y&gt; <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">wp</span>;</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_pointer</span><span class="params">(T* ptr)</span></span>;</span><br><span class="line">    T* m_ptr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>强指针sp 初始化的时候 首先将 引用 <code>m_ptr</code>置空，<code>m_ptr</code>指向的就是<code>LightRefBase</code>,当然也可以是<code>RefBase</code>,只不过 <code>RefBase</code>还支持弱指针访问，比较复杂，后面会再详细介绍。  </p>
+<p>先看看 sp 构造函数做了什么事情  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">sp&lt;T&gt;::sp(T* other)</span><br><span class="line">: m_ptr(other)</span><br><span class="line">  &#123;</span><br><span class="line">    if (other) other-&gt;incStrong(this);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>sp的构造函数有多个，这里只分析了其中一个，其他的类似。通过构造方法与引用对象关联时，首先调用了<code>LightRefBase</code>或<code>RefBase</code>的<code>incStrong</code>增加引用数量。  </p>
+<p>sp 还重载了运算符<code>=</code>,当使用 <code>=</code>将一个对象与智能指针sp关联时，会操作object对象的引用数。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">sp&lt;T&gt;&amp; sp&lt;T&gt;::<span class="keyword">operator</span> = (T* other)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (other) other-&gt;incStrong(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">if</span> (m_ptr) m_ptr-&gt;decStrong(<span class="keyword">this</span>);</span><br><span class="line">    m_ptr = other;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当使用<code>=</code>运算符时，将判断该指针之前是否引用过别的对象，即 <code>m_ptr</code>是否不为空，如果有引用，<code>m_ptr</code>不为空，需要先将原引用对象的引用计数器减小，在将新引用的对象计数器增加，并和 <code>m_ptr</code>关联。  </p>
+<p>sp的析构函数  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">sp&lt;T&gt;::~sp()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (m_ptr) m_ptr-&gt;decStrong(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当执行析构函数的时候，将减小引用对象的引用计数器。  </p>
+<p>回顾上面提及的<code>LightRefBase</code>和<code>sp</code>好像无法避免循环引用的问题。而<code>弱指针wp</code>就是专门解决该问题的。  </p>
+<p><code>LightRefBase</code>之所以称之为 <code>轻量级的</code>，是与<code>RefBase</code>相比而言的。<code>RefBase</code>的实现比<code>LightRefBase</code>复杂许多，其内部包含了 弱指针wp的定义和实现。  </p>
+<h4 id="弱指针wp"><a href="#弱指针wp" class="headerlink" title="弱指针wp"></a>弱指针wp</h4><p>如前面所说，弱指针的主要使命就是解决循环引用的问题，我们看看它和 强指针sp的区别  </p>
+<p>弱指针wp源码定义在 <code>frameworks/native/include/utils/RefBase.h</code>中  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class wp</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    typedef typename RefBase::weakref_type weakref_type;</span><br><span class="line">    //约定 弱指针执行的对象类型必须是 RefBase 类型，而不能是 LightRefBase</span><br><span class="line">    </span><br><span class="line">    inline wp() : m_ptr(0) &#123; &#125;</span><br><span class="line"></span><br><span class="line">    wp(T* other);//构造函数</span><br><span class="line">    wp(const wp&lt;T&gt;&amp; other);</span><br><span class="line">    wp(const sp&lt;T&gt;&amp; other);</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    ~wp();</span><br><span class="line">    </span><br><span class="line">    wp&amp; operator = (T* other);//运算符重载</span><br><span class="line">    wp&amp; operator = (const wp&lt;T&gt;&amp; other);</span><br><span class="line">    wp&amp; operator = (const sp&lt;T&gt;&amp; other);</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    void set_object_and_refs(T* other, weakref_type* refs);</span><br><span class="line"></span><br><span class="line">    // promotion to sp</span><br><span class="line">    </span><br><span class="line">    sp&lt;T&gt; promote() const; // 将弱指针升级为强指针sp</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">    // Operators</span><br><span class="line">    //以下是重载一些逻辑运算符</span><br><span class="line"></span><br><span class="line">    COMPARE_WEAK(==)</span><br><span class="line">    COMPARE_WEAK(!=)</span><br><span class="line">    COMPARE_WEAK(&gt;)</span><br><span class="line">    COMPARE_WEAK(&lt;)</span><br><span class="line">    COMPARE_WEAK(&lt;=)</span><br><span class="line">    COMPARE_WEAK(&gt;=)</span><br><span class="line"></span><br><span class="line">    inline bool operator == (const wp&lt;T&gt;&amp; o) const &#123;</span><br><span class="line">        return (m_ptr == o.m_ptr) &amp;&amp; (m_refs == o.m_refs);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    template&lt;typename Y&gt; friend class sp;</span><br><span class="line">    template&lt;typename Y&gt; friend class wp;</span><br><span class="line"></span><br><span class="line">    T*              m_ptr; //指向目标对象的指针</span><br><span class="line">    weakref_type*   m_refs;//指向weakref_type类型的弱引用</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>和 强指针sp相比，wp有以下重要区别:  </p>
+<ul>
+<li>除了指向目标对象的 m_ptr 外，wp另外还有一个 m_refs 指针，类型为 weakref_type</li>
+<li>没有重载 -&gt;, * 等运算符</li>
+<li>有一个 promote()方法用来将wp提升为sp</li>
+<li>弱指针的目标对象类型不是<code>LightRefBase</code>，而是 <code>RefBase</code></li>
+</ul>
+<p>惯例，我们看看 wp的构造函数实现:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">wp&lt;T&gt;::wp(T* other)</span><br><span class="line">    : m_ptr(other)</span><br><span class="line">&#123;</span><br><span class="line">    if (other) m_refs = other-&gt;createWeak(this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出和 sp的构造方法不同，没有直接调用 目标对象的 <code>incStrong</code>方法，而是调用了<code>createWeak</code>方法。可见wp并没有直接增加目标对象的引用计数器，因为 <code>createWeak</code>方法是 <code>RefBase</code>中定义的，我们稍后会详细分析 <code>RefBase</code>  </p>
+<p>析构函数:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">wp&lt;T&gt;::~wp()</span><br><span class="line">&#123;</span><br><span class="line">    if (m_ptr) m_refs-&gt;decWeak(this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>析构函数也没有直接操作 引用计数器。</p>
+<p>我们再看看运算符<code>=</code>的重载  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">wp&lt;T&gt;&amp; wp&lt;T&gt;::operator = (T* other)</span><br><span class="line">&#123;</span><br><span class="line">    weakref_type* newRefs =</span><br><span class="line">        other ? other-&gt;createWeak(this) : 0;</span><br><span class="line">    if (m_ptr) m_refs-&gt;decWeak(this);</span><br><span class="line">    m_ptr = other;</span><br><span class="line">    m_refs = newRefs;</span><br><span class="line">    return *this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，运算符<code>=</code>同样也没有直接操作引用计数器，而是操作 <code>weakref_type</code></p>
+<p>综上，wp主要操作的是 <code>weakref_type</code>。并不直接影响引用计数器，所以称之为弱指针，不会改变引用关系。</p>
+<h4 id="RefBase"><a href="#RefBase" class="headerlink" title="RefBase"></a>RefBase</h4><p>前面多处提到<code>RefBase</code>，我们可以认为 <code>RefBase</code>是既支持强指针sp的也支持弱指针wp的对象类型，如果你定义的对象需要用到弱指针，请务必继承<code>RefBase</code>,而如果只使用强指针，你可以选择轻量级的<code>LightRefBase</code>也可以选择适应大多数情况的<code>RefBase</code></p>
+<p>即<code>RefBase</code>不仅支持强指针还支持弱指针，它的源码定义位置: <code>frameworks/native/include/utils/RefBase.h</code><br>源码实现位置: <code>frameworks/native/libs/utils/RefBase.cpp</code>  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RefBase</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">            <span class="function"><span class="keyword">void</span>            <span class="title">incStrong</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span> <span class="keyword">const</span></span>;<span class="comment">//增加强引用计数器，强指针sp专用</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span>            <span class="title">decStrong</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span> <span class="keyword">const</span></span>;<span class="comment">//减少强引用计数器，强指针sp专用</span></span><br><span class="line">    			....</span><br><span class="line">    		<span class="comment">//嵌套在 RefBase 内部，wp 中会操作该类型对象</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">weakref_type</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function">RefBase*            <span class="title">refBase</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">void</span>                <span class="title">incWeak</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span></span>;<span class="comment">//增加弱引用计数器</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span>                <span class="title">decWeak</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span></span>;<span class="comment">//减少弱引用计数器</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;;</span><br><span class="line">    			<span class="comment">// 用于创建一个weakref_type类型的对象，来处理弱引用关系</span></span><br><span class="line">            <span class="function">weakref_type*   <span class="title">createWeak</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span> <span class="keyword">const</span></span>;</span><br><span class="line">            </span><br><span class="line">            <span class="function">weakref_type*   <span class="title">getWeakRefs</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">				...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> RefBase basetype;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">                            RefBase();<span class="comment">//RefBase的构造函数</span></span><br><span class="line">    <span class="keyword">virtual</span>                 ~RefBase(); <span class="comment">//RefBase的析构函数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//! Flags for extendObjectLifetime()</span></span><br><span class="line">    <span class="comment">// 这些 Flag 参数 用来标记object的生命周期的，在 extendObjectLifetime 方法使用</span></span><br><span class="line">    <span class="keyword">enum</span> &#123;</span><br><span class="line">        OBJECT_LIFETIME_STRONG  = <span class="number">0x0000</span>,</span><br><span class="line">        OBJECT_LIFETIME_WEAK    = <span class="number">0x0001</span>,</span><br><span class="line">        OBJECT_LIFETIME_MASK    = <span class="number">0x0001</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">            <span class="function"><span class="keyword">void</span>            <span class="title">extendObjectLifetime</span><span class="params">(<span class="keyword">int32_t</span> mode)</span></span>;</span><br><span class="line">            </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">weakref_type</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">weakref_impl</span>;</span></span><br><span class="line">    </span><br><span class="line">                            RefBase(<span class="keyword">const</span> RefBase&amp; o);</span><br><span class="line">            RefBase&amp;        <span class="keyword">operator</span>=(<span class="keyword">const</span> RefBase&amp; o);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">		...</span><br><span class="line">        weakref_impl* <span class="keyword">const</span> mRefs;<span class="comment">//真实的处理引用关系的成员变量，不同于LightRefBase 的 Int类型的 mCount</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>通过分析 <code>RefBase</code>以及 <code>weakref_type</code> 的定义,发现 <code>RefBase</code>和<code>LightRefBase</code>的区别，虽然 <code>RefBase</code>和<code>LightRefBase</code>都提供了<code>incStrong</code>和<code>decStrong</code>成员函数来操作它的引用计数器,但 <code>RefBase</code>它不像<code>LightRefBase</code>类一样直接提供一个整型值（mutable volatile int32_t mCount）来维护对象的引用计数，前面我们说过，复杂的引用计数技术同时支持强引用计数和弱引用计数，在<code>RefBase</code>类中，这两种计数功能是通过其成员变量<code>mRefs</code>来提供的。  </p>
+<p><code>mRefs</code>是<code>weakref_impl</code> 类型的,在<code>RefBase.h</code>文件中只定义了<code>weakref_impl</code>,具体实现在 <code>frameworks/native/libs/utils/RefBase.cpp</code> 中，在 RefBase.cpp 文件中还具体实现了<code>incStrong</code>,<code>decStrong</code>等方法，让我们一起来看看。   </p>
+<p>首先我们分段分析一下 <code>mRefs</code>的<code>weakref_impl</code>类型实现。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RefBase</span>:</span>:weakref_impl : <span class="keyword">public</span> RefBase::weakref_type</span><br><span class="line">&#123;<span class="comment">//继承 weakref_type</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int32_t</span>    mStrong;<span class="comment">//强引用计数器</span></span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int32_t</span>    mWeak;<span class="comment">//弱引用计数器</span></span><br><span class="line">    RefBase* <span class="keyword">const</span>      mBase;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int32_t</span>    mFlags;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !DEBUG_REFS <span class="comment">//宏DEBUG_REFS来区分DEBUG环境和正式环境</span></span></span><br><span class="line"></span><br><span class="line">    weakref_impl(RefBase* base)</span><br><span class="line">        : mStrong(INITIAL_STRONG_VALUE)</span><br><span class="line">        , mWeak(<span class="number">0</span>)</span><br><span class="line">        , mBase(base)</span><br><span class="line">        , mFlags(<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addStrongRef</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* <span class="comment">/*id*/</span>)</span> </span>&#123; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">removeStrongRef</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* <span class="comment">/*id*/</span>)</span> </span>&#123; &#125;</span><br><span class="line">    ...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span> <span class="comment">// DEBUG环境下</span></span></span><br><span class="line"></span><br><span class="line">    weakref_impl(RefBase* base)</span><br><span class="line">        : mStrong(INITIAL_STRONG_VALUE)</span><br><span class="line">        , mWeak(<span class="number">0</span>)</span><br><span class="line">        , mBase(base)</span><br><span class="line">        , mFlags(<span class="number">0</span>)</span><br><span class="line">        , mStrongRefs(<span class="literal">NULL</span>)</span><br><span class="line">        , mWeakRefs(<span class="literal">NULL</span>)</span><br><span class="line">        , mTrackEnabled(!!DEBUG_REFS_ENABLED_BY_DEFAULT)</span><br><span class="line">        , mRetain(<span class="literal">false</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~weakref_impl()<span class="comment">//weakref_impl析构函数</span></span><br><span class="line">    &#123;</span><br><span class="line">    ... 省略...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addStrongRef</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//增加强引用计数器，这里使用了 mStrongRefs指针</span></span><br><span class="line">        addRef(&amp;mStrongRefs, id, mStrong);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addWeakRef</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span> </span>&#123;</span><br><span class="line">        addRef(&amp;mWeakRefs, id, mWeak);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ref_entry</span> //结构体 <span class="title">ref_entry</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        ref_entry* next;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">void</span>* id;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> DEBUG_REFS_CALLSTACK_ENABLED</span></span><br><span class="line">        CallStack <span class="built_in">stack</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">        <span class="keyword">int32_t</span> ref;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addRef</span><span class="params">(ref_entry** refs, <span class="keyword">const</span> <span class="keyword">void</span>* id, <span class="keyword">int32_t</span> mRef)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">		...<span class="comment">//省略</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">removeRef</span><span class="params">(ref_entry** refs, <span class="keyword">const</span> <span class="keyword">void</span>* id)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">       ...<span class="comment">//省略</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">mutable</span> Mutex mMutex;</span><br><span class="line">    ref_entry* mStrongRefs;<span class="comment">//用来做强引用记录</span></span><br><span class="line">    ref_entry* mWeakRefs; <span class="comment">//弱引用记录</span></span><br><span class="line">		...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>通过查看源码实现，我们知道 <code>RefBase</code>不同于<code>LightRefBase</code>,它使用结构体<code>ref_entry</code>来记录引用关系。成员变量<code>mStrong</code>做强引用计数器，<code>mWeak</code>做弱引用计数器。  </p>
+<p>回到 前面 wp 构造函数和 <code>=</code>运算符重载中，都调用了<code>RefBase.createWeak()</code>方法用来生成一个 <code>weakref_type</code> 实例，其实就是 <code>weakref_impl</code>。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RefBase::weakref_type* RefBase::createWeak(const void* id) const</span><br><span class="line">&#123;</span><br><span class="line">    mRefs-&gt;incWeak(id);</span><br><span class="line">    return mRefs;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>RefBase.h</code>定义中，<code>mRefs</code>定义为 <code>weakref_impl</code> 类型,所以这里调用的是<code>weakref_impl中的incWeak()</code>方法  </p>
+<p>mRefs 是在 RefBase对象初始化的时候就在构造方法中完成了赋值  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RefBase::RefBase()</span><br><span class="line">    : mRefs(new weakref_impl(this))</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以 <code>mRefs</code>就是一个<code>weakref_impl</code> 实例。  当弱指针wp需要第一次初始化弱引用时，会直接返回 <code>mRefs</code>对象，并且 操作<code>mRefs</code>对象执行<code>incWeak()</code>方法，增加一次弱引用计数。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void RefBase::weakref_type::incWeak(const void* id)</span><br><span class="line">&#123;</span><br><span class="line">    weakref_impl* const impl = static_cast&lt;weakref_impl*&gt;(this);</span><br><span class="line">    impl-&gt;addWeakRef(id);</span><br><span class="line">    const int32_t c = android_atomic_inc(&amp;impl-&gt;mWeak);</span><br><span class="line">    ALOG_ASSERT(c &gt;= 0, &quot;incWeak called on %p after last weak ref&quot;, this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>果然，在<code>incWeak</code>方法中，调用了<code>weakref_impl</code>的<code>addWeakRef</code>，而 <code>addWeakRef</code>最终通过<code>addRef</code>实现:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void addRef(ref_entry** refs, const void* id, int32_t mRef)</span><br><span class="line">    &#123;</span><br><span class="line">        if (mTrackEnabled) &#123;</span><br><span class="line">            AutoMutex _l(mMutex);</span><br><span class="line"></span><br><span class="line">            ref_entry* ref = new ref_entry;</span><br><span class="line">            // Reference count at the time of the snapshot, but before the</span><br><span class="line">            // update.  Positive value means we increment, negative--we</span><br><span class="line">            // decrement the reference count.</span><br><span class="line">            ref-&gt;ref = mRef;</span><br><span class="line">            ref-&gt;id = id;</span><br><span class="line">#if DEBUG_REFS_CALLSTACK_ENABLED</span><br><span class="line">            ref-&gt;stack.update(2);</span><br><span class="line">#endif</span><br><span class="line">            ref-&gt;next = *refs;</span><br><span class="line">            *refs = ref;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>其实就是新创建一个ref_entry，把 弱引用指针 wp本身 包装在 一个 ref_entry 中，添加到单链表的ref_entry 数据结构中，建立弱引用链表。<br>将wp添加到弱引用链表之后，<code>incWeak</code>方法还通过<code>android_atomic_inc</code>增加了弱引用计数器<code>mWeak</code>的值。  </p>
+<p>到目前为止，wp如何实现弱引用计数已经分析完成，总结一下:  </p>
+<ol>
+<li>wp 通过构造方法或重载运算符= 会调用 RefBase的createWeak方法，来创建一个weakref_type 也就是weakref_impl实例</li>
+<li>weakref_impl 在RefBase对象构造的时候就已经创建好了，将 weakref_impl 对象返回给 wp</li>
+<li>触发weakref_impl的incWeak 方法，将wp指针添加到弱引用链表中，并使用Android的原子操作方法，增加弱引用计数器 mWeak的值。</li>
+</ol>
+<p>前面说了，RefBase 不仅支持wp还像 LightRefBase 一样支持 强指针sp。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> RefBase::incStrong(<span class="keyword">const</span> <span class="keyword">void</span>* id) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">    weakref_impl* <span class="keyword">const</span> refs = mRefs;</span><br><span class="line">    refs-&gt;incWeak(id);<span class="comment">//增加弱引用计数器</span></span><br><span class="line">    </span><br><span class="line">    refs-&gt;addStrongRef(id);</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int32_t</span> c = android_atomic_inc(&amp;refs-&gt;mStrong);<span class="comment">//增加强引用计数器，返回的是增加之前的值</span></span><br><span class="line">	... 省略<span class="built_in">log</span></span><br><span class="line">    <span class="keyword">if</span> (c != INITIAL_STRONG_VALUE)  &#123;<span class="comment">//判断是不是第一次被引用</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//如果是第一次被引用，需要调整一下 mStrong的值</span></span><br><span class="line">    android_atomic_add(-INITIAL_STRONG_VALUE, &amp;refs-&gt;mStrong);</span><br><span class="line">    refs-&gt;mBase-&gt;onFirstRef();<span class="comment">//是第一次被引用时，会回调 RefBase的onFirstRef()方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过源码看出，RefBase的强引用增加引用时，会同时增加弱引用计数器。还会判断是否是第一次被引用。如果是第一次被引用需要修改强引用计数器<code>weakref_impl</code>中<code>mStrong</code>的值；<br>因为<code>weakref_impl</code>初始化的时候，<code>mStrong</code>被赋值为<code>INITIAL_STRONG_VALUE</code>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define INITIAL_STRONG_VALUE (1&lt;&lt;28)</span><br></pre></td></tr></table></figure>
+<p><code>android_atomic_inc</code>方法是在 原 mStrong 的基础上加一，需要再减去 原始值<code>INITIAL_STRONG_VALUE</code>。  </p>
+<p>下面我们在分析一下 RefBase对象什么时候被释放  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> RefBase::decStrong(<span class="keyword">const</span> <span class="keyword">void</span>* id) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">    weakref_impl* <span class="keyword">const</span> refs = mRefs;</span><br><span class="line">    refs-&gt;removeStrongRef(id);</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int32_t</span> c = android_atomic_dec(&amp;refs-&gt;mStrong);</span><br><span class="line">    ... <span class="comment">//省略 log</span></span><br><span class="line">    <span class="keyword">if</span> (c == <span class="number">1</span>) &#123;<span class="comment">//当引用数字当前是1时，会回调 RefBase的onLastStrongRef 方法</span></span><br><span class="line">        refs-&gt;mBase-&gt;onLastStrongRef(id);</span><br><span class="line">        <span class="keyword">if</span> ((refs-&gt;mFlags&amp;OBJECT_LIFETIME_MASK) == OBJECT_LIFETIME_STRONG) &#123;<span class="comment">//判断当前引用输入强引用关系时，会释放 对象</span></span><br><span class="line">            <span class="keyword">delete</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    refs-&gt;decWeak(id);<span class="comment">//正常执行减小弱引用计数器</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先减少强引用计数器mStrong,如果减少到0了(c ==1 ，因为c 返回的是上一次计数器的值)就执行 RefBase对象的 onLastStrongRef 方法，并且，如果当前引用类型是强引用，就释放引用的对象。  </p>
+<p>因为<code>incStrong</code>中同步增加了弱引用计数器，同样，为了对称，<code>decStrong</code>时也应该调用<code>decWeak</code>。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> RefBase::weakref_type::decWeak(<span class="keyword">const</span> <span class="keyword">void</span>* id)</span><br><span class="line">&#123;</span><br><span class="line">    weakref_impl* <span class="keyword">const</span> impl = <span class="keyword">static_cast</span>&lt;weakref_impl*&gt;(<span class="keyword">this</span>);</span><br><span class="line">    impl-&gt;removeWeakRef(id);<span class="comment">//将弱引用指针wp从 弱引用链表中移除</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int32_t</span> c = android_atomic_dec(&amp;impl-&gt;mWeak);<span class="comment">//减小弱引用计数器</span></span><br><span class="line">    ALOG_ASSERT(c &gt;= <span class="number">1</span>, <span class="string">"decWeak called on %p too many times"</span>, <span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">if</span> (c != <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((impl-&gt;mFlags&amp;OBJECT_LIFETIME_WEAK) == OBJECT_LIFETIME_STRONG) &#123;<span class="comment">//该引用类型是强引用类型</span></span><br><span class="line">        <span class="keyword">if</span> (impl-&gt;mStrong == INITIAL_STRONG_VALUE) &#123;</span><br><span class="line">            <span class="comment">//该对象从没有被强引用指针引用过，如果 弱引用都没有了，当然释放对象</span></span><br><span class="line">            <span class="keyword">delete</span> impl-&gt;mBase;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">// 最后一个强引用也消失的时候，这里释放 weakref_impl 对象</span></span><br><span class="line">            <span class="keyword">delete</span> impl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;<span class="comment">//该引用类型是弱引用</span></span><br><span class="line">        <span class="comment">// less common case: lifetime is OBJECT_LIFETIME_&#123;WEAK|FOREVER&#125;</span></span><br><span class="line">        impl-&gt;mBase-&gt;onLastWeakRef(id);</span><br><span class="line">        <span class="keyword">if</span> ((impl-&gt;mFlags&amp;OBJECT_LIFETIME_MASK) == OBJECT_LIFETIME_WEAK) &#123;<span class="comment">//最后一个弱引用消失时，释放对象</span></span><br><span class="line">            <span class="keyword">delete</span> impl-&gt;mBase;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将弱引用指针wp从弱引用链表中移除，减小 <code>mWeak</code> 计数器; 如果当时是最后一个弱引用执行dec操作，会根据 <code>LIFETIME</code> 做不同的处理，具体看上述源码注释。 </p>
+<p>前面多次提到，前引用增加时会同步的增加弱引用计数器，但是弱引用增加时肯定不会增加强引用计数器，所以弱引用计数器的值一定会大于强引用计数器，让程序走到这里的时候，弱引用计数器一定为0，而强引用计数器值有两种可能，一种就是  <code>INITIAL_STRONG_VALUE</code>即从来没有强引用指针引用，这种情况当然要释放对象；第二种就是在有强引用的情况下，强引用的<code>decStrong</code> 方法会释放<code>RefBase</code>对象，在这里只需要释放<code>weakref_impl</code>对象就行了，不需要再重复释放 <code>RefBase</code>对象。</p>
+<p>总结:  </p>
+<ol>
+<li>Android中的智能指针分为<code>强指针sp</code>和<code>弱指针wp</code></li>
+<li>有一个配合sp使用的<code>LightRefBase</code>，我们称之为<code>轻量级指针</code></li>
+<li>通常和智能指针搭配使用的对象必须是 <code>RefBase</code> 类型，如果不需要 <code>弱指针wp</code>，可以使用轻量级的 <code>LightRefBase</code> 实现轻量级指针</li>
+<li>对于 <code>RefBase</code> 对象而言，增加强引用也会同步的增加一个弱引用，反之不会。</li>
+<li>弱指针要想访问对象，必须升级为强指针，通过弱指针wp的<code>promote</code>方法，最终调用<code>weakref_impl</code>的<code>attemptIncStrong</code>。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Binder/" rel="tag"># Binder</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android进程间通信-Binder/" rel="next" title="Android进程间通信-Binder之初印象">
+                <i class="fa fa-chevron-left"></i> Android进程间通信-Binder之初印象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android-Binder通信的数据传输载体-Parcel/" rel="prev" title="Android-Binder通信的数据传输载体-Parcel">
+                Android-Binder通信的数据传输载体-Parcel <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是智能指针"><span class="nav-number">1.</span> <span class="nav-text">什么是智能指针?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的指针问题"><span class="nav-number">1.1.</span> <span class="nav-text">常见的指针问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针的实现"><span class="nav-number">2.</span> <span class="nav-text">智能指针的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#轻量级智能指针-LightRefBase"><span class="nav-number">2.1.</span> <span class="nav-text">轻量级智能指针 LightRefBase</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强指针-sp"><span class="nav-number">2.2.</span> <span class="nav-text">强指针 sp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#弱指针wp"><span class="nav-number">2.3.</span> <span class="nav-text">弱指针wp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RefBase"><span class="nav-number">2.4.</span> <span class="nav-text">RefBase</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'Android-智能指针/';
+        var commenthub_url = 'http://aicodeing.github.io/Android-智能指针/';
+        var commenthub_title = 'Android-智能指针';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

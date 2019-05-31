@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Dalvik,Dex," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="文章Android-Dalvik And ART中介绍了，ART和Dalvik两种虚拟机，这次介绍以下 他们的可执行文件 .dex。 Dex 文件的生成Android开发，通常是使用 Java语言进行开发 (即使是 Kotlin最终也是编译成 Java 字节码)。而     Java文件的编译产物就是 .class字节">
+<meta name="keywords" content="Android,Dalvik,Dex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-Dex File">
+<meta property="og:url" content="http://aicodeing.github.io/Android-Dex-File/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="文章Android-Dalvik And ART中介绍了，ART和Dalvik两种虚拟机，这次介绍以下 他们的可执行文件 .dex。 Dex 文件的生成Android开发，通常是使用 Java语言进行开发 (即使是 Kotlin最终也是编译成 Java 字节码)。而     Java文件的编译产物就是 .class字节码文件，而 Android的Dalvik虚拟机或 ART是不能直接运行 .cla">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://aicodeing.github.io/img/dex/dex_struct.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/dex/leb128_art.jpg">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-Dex File">
+<meta name="twitter:description" content="文章Android-Dalvik And ART中介绍了，ART和Dalvik两种虚拟机，这次介绍以下 他们的可执行文件 .dex。 Dex 文件的生成Android开发，通常是使用 Java语言进行开发 (即使是 Kotlin最终也是编译成 Java 字节码)。而     Java文件的编译产物就是 .class字节码文件，而 Android的Dalvik虚拟机或 ART是不能直接运行 .cla">
+<meta name="twitter:image" content="http://aicodeing.github.io/img/dex/dex_struct.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/Android-Dex-File/"/>
+
+
+
+
+
+  <title>Android-Dex File | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Android-Dex-File/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-Dex File</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T14:35:48+08:00">
+                2019-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Android-Dex-File/" class="leancloud_visitors" data-flag-title="Android-Dex File">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章<a href="/Android-Dalvik-And-ART/">Android-Dalvik And ART</a>中介绍了，<code>ART</code>和<code>Dalvik</code>两种虚拟机，这次介绍以下 他们的可执行文件 <code>.dex</code>。</p>
+<h3 id="Dex-文件的生成"><a href="#Dex-文件的生成" class="headerlink" title="Dex 文件的生成"></a>Dex 文件的生成</h3><p><code>Android</code>开发，通常是使用 <code>Java</code>语言进行开发 (即使是 <code>Kotlin</code>最终也是编译成 Java 字节码)。而     <code>Java</code>文件的编译产物就是 <code>.class</code>字节码文件，而 Android的<code>Dalvik</code>虚拟机或 <code>ART</code>是不能直接运行 <code>.class</code> 文件的，需要将 <code>.class</code>文件转成 <code>.dex</code>文件。目前 Android 官方提供两种方式，一种是 <code>dx</code>工具，另一种是<code>d8</code>工具。<br>这两种编译工具在 Android SDK Platform 的 build-tools目录；<br>如: <code>your_sdk_path/build-tools/28.0.3</code>, <code>28.0.3</code>是 version，如果你有其他 version的编译工具，替换 version 即可。  在 该目录下，存在 <code>dx</code>和 <code>d8</code>两个可执行文件。    </p>
+<h4 id="生成-class-文件"><a href="#生成-class-文件" class="headerlink" title="生成 class 文件"></a>生成 class 文件</h4><p>例如 我编写了一个Hi.java 文件  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hi</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> String text = <span class="string">"Hi Class"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"main --&gt;"</span>);</span><br><span class="line">		Hi hi = <span class="keyword">new</span> Hi();</span><br><span class="line">		hi.print(text);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String text)</span></span>&#123;</span><br><span class="line">		System.out.println(text);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过执行 <code>javac</code>命令把 <code>Hi.java</code> 文件编译换成 <code>Java</code> 字节码 <code>.class</code> 文件  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ javac Hi.java</span><br></pre></td></tr></table></figure>
+<p>在当前目录生成文件 <code>Hi.class</code>，由于 class文件是 Java虚拟机的可执行文件，所以可以直接使用 <code>java</code> 命令执行  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ java Hi</span><br><span class="line">main --&gt;</span><br><span class="line">Hi Class</span><br></pre></td></tr></table></figure>
+<h4 id="生成-dex-文件"><a href="#生成-dex-文件" class="headerlink" title="生成 dex 文件"></a>生成 dex 文件</h4><p>有了 <code>.class</code>文件之后，利用 <code>dx</code>或 <code>d8</code>工具生成 <code>.dex</code>文件  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ dx --dex  --output=Hi.dex Hi.class</span><br></pre></td></tr></table></figure>
+<p>生成 <code>Hi.dex</code>文件</p>
+<p>或 使用 <code>d8</code>编译器:  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ d8 Hi.class</span><br></pre></td></tr></table></figure>
+<p>在当前目录生成了 <code>classes.dex</code>文件</p>
+<p>这个 <code>.dex</code>文件就可以在Android 运行时环境直接执行。  </p>
+<h3 id="Dex-文件"><a href="#Dex-文件" class="headerlink" title="Dex 文件"></a>Dex 文件</h3><p>现在分析一下 <code>Dex</code>的格式, <code>Dex</code>文件的定义在 <code>dalvik/libdex/DexFile.h</code>中</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Structure representing a DEX file.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Code should regard DexFile as opaque, using the API calls provided here</span></span><br><span class="line"><span class="comment"> * to access specific structures.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DexFile</span> &#123;</span></span><br><span class="line">    <span class="comment">/* directly-mapped "opt" header */</span></span><br><span class="line">    <span class="keyword">const</span> DexOptHeader* pOptHeader;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* pointers to directly-mapped structs and arrays in base DEX */</span></span><br><span class="line">    <span class="keyword">const</span> DexHeader*    pHeader;</span><br><span class="line">    <span class="keyword">const</span> DexStringId*  pStringIds;</span><br><span class="line">    <span class="keyword">const</span> DexTypeId*    pTypeIds;</span><br><span class="line">    <span class="keyword">const</span> DexFieldId*   pFieldIds;</span><br><span class="line">    <span class="keyword">const</span> DexMethodId*  pMethodIds;</span><br><span class="line">    <span class="keyword">const</span> DexProtoId*   pProtoIds;</span><br><span class="line">    <span class="keyword">const</span> DexClassDef*  pClassDefs;</span><br><span class="line">    <span class="keyword">const</span> DexLink*      pLinkData;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * These are mapped out of the "auxillary" section, and may not be</span></span><br><span class="line"><span class="comment">     * included in the file.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">const</span> DexClassLookup* pClassLookup;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">void</span>*         pRegisterMapPool;       <span class="comment">// RegisterMapClassPool</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* points to start of DEX file data */</span></span><br><span class="line">    <span class="keyword">const</span> u1*           baseAddr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* track memory overhead for auxillary structures */</span></span><br><span class="line">    <span class="keyword">int</span>                 overhead;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* additional app-specific data structures associated with the DEX */</span></span><br><span class="line">    <span class="comment">//void*               auxData;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>图形化表示:  </p>
+<p><img src="/img/dex/dex_struct.jpg" alt=""></p>
+<p>在介绍之前，先铺垫一些符号的定义  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte</td>
+<td>8位的有符号数</td>
+</tr>
+<tr>
+<td>ubyte</td>
+<td>8位的无符号数</td>
+</tr>
+<tr>
+<td>short</td>
+<td>16位的有符号数</td>
+</tr>
+<tr>
+<td>ushort</td>
+<td>16位的无符号数</td>
+</tr>
+<tr>
+<td>int</td>
+<td>32位的有符号数</td>
+</tr>
+<tr>
+<td>uint</td>
+<td>32位的无符号数</td>
+</tr>
+<tr>
+<td>long</td>
+<td>64位的有符号数</td>
+</tr>
+<tr>
+<td>ulong</td>
+<td>64位的无符号数</td>
+</tr>
+<tr>
+<td>sleb128</td>
+<td>有符号的 LEB128格式,可变长度</td>
+</tr>
+<tr>
+<td>uleb128</td>
+<td>无符号的 LEB128格式，可变长度</td>
+</tr>
+<tr>
+<td>uleb128p1</td>
+<td>无符号的 LEB128格式 +1，可变长的</td>
+</tr>
+</tbody>
+</table>
+<p>什么是 <code>LEB128</code> 呢？ LEB128是小端数据格式，它用于任意有符号或无符号整数量的可变长度编码。在 dex 文件中，<code>LEB128</code>仅用于编码32位数量。<br>每个LEB128编码值由一到五个字节组成，它们一起代表一个32位值。除了最后一个字节之外，每个字节都有一个符号位，位于每个字节的最高位，其余的7位是 有效数据。这样的一个字节或多个字节就形成了 <code>LEB128数值</code>。  </p>
+<p>对于一个LEB128的有符号数据(<code>sleb128</code>)，最后一个字节的最高位被拓展成为这个LEB128数值的最终有符号信息，1表示负数，0表示正数。对于一个无符号的LEB128数值(<code>uleb128</code>)，最后一个字节的最高位，无论是1还是0，始终看做0，以此表示无符号。</p>
+<p><code>uleb128p1</code> 是 <code>uleb128</code>的变种，规则是：uleb128p1 + 1 = uleb128</p>
+<p>既然是 小端数据格式，以 2字节举例: </p>
+<p><img src="/img/dex/leb128_art.jpg" alt=""></p>
+<p>回到Dex 文件的布局</p>
+<h4 id="DexHeader"><a href="#DexHeader" class="headerlink" title="DexHeader"></a>DexHeader</h4><p>在 <code>DexFile</code> 中 第一块数据结构就是 <code>DexHeader</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Direct-mapped "header_item" struct.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DexHeader</span> &#123;</span></span><br><span class="line">    u1  magic[<span class="number">8</span>];           <span class="comment">/* includes version number */</span></span><br><span class="line">    u4  checksum;           <span class="comment">/* adler32 checksum */</span></span><br><span class="line">    u1  signature[kSHA1DigestLen]; <span class="comment">/* SHA-1 hash */</span></span><br><span class="line">    u4  fileSize;           <span class="comment">/* length of entire file */</span></span><br><span class="line">    u4  headerSize;         <span class="comment">/* offset to start of next section */</span></span><br><span class="line">    u4  endianTag;</span><br><span class="line">    u4  linkSize;</span><br><span class="line">    u4  linkOff;</span><br><span class="line">    u4  mapOff;</span><br><span class="line">    u4  stringIdsSize;</span><br><span class="line">    u4  stringIdsOff;</span><br><span class="line">    u4  typeIdsSize;</span><br><span class="line">    u4  typeIdsOff;</span><br><span class="line">    u4  protoIdsSize;</span><br><span class="line">    u4  protoIdsOff;</span><br><span class="line">    u4  fieldIdsSize;</span><br><span class="line">    u4  fieldIdsOff;</span><br><span class="line">    u4  methodIdsSize;</span><br><span class="line">    u4  methodIdsOff;</span><br><span class="line">    u4  classDefsSize;</span><br><span class="line">    u4  classDefsOff;</span><br><span class="line">    u4  dataSize;</span><br><span class="line">    u4  dataOff;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong><code>magic[8]</code></strong> 存储8字节的magic，用来标记 这是一个 Dex 文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubyte[8] DEX_FILE_MAGIC = &#123; 0x64 0x65 0x78 0x0a 0x30 0x33 0x38 0x00 &#125;</span><br><span class="line">                        = &quot;dex\n038\0&quot;</span><br></pre></td></tr></table></figure>
+<p><code>038</code>就是 Dex的版本号  添加的 <code>\n</code>和<code>\0</code>就是来区分 字符串 dex 和版本号的,<code>038</code>版本是Android 8.0 开始支持的。</p>
+<p><strong>checksum</strong> 用于校验Dex 文件的，参与计算的数据是除了 magic 和checksum 两个字段外的所有数据  </p>
+<p><strong>signature</strong> 除了 magic和 checksum 和 signature 外的部分的 SHA-1签名，用于唯一标识文件</p>
+<p><strong>file_size</strong> 整个文件的大小</p>
+<p><strong>header_size</strong> Header 部分的大小</p>
+<p><strong>endian_tag</strong> 字节序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uint ENDIAN_CONSTANT = 0x12345678; //大端序</span><br><span class="line">uint REVERSE_ENDIAN_CONSTANT = 0x78563412;//小端序，如果是小断序，需要反转成正常的大端序</span><br></pre></td></tr></table></figure>
+<p><strong>link_size</strong> 链接部分的大小，如果此文件未静态链接，则为0</p>
+<p><strong>link_off</strong> 从文件的开头到链接部分的偏移量，或者如果link_size == 0则为0.偏移量（如果非零）应该是link_data部分的偏移量</p>
+<p><strong>map_off</strong> 从文件的开头到 map item 的偏移量。偏移量必须为非零，应该是数据部分的偏移量，data 应采用下面“map_list”指定的格式。</p>
+<p><strong>string_ids_size</strong> 字符串标识符列表中的字符串数<br><strong>string_ids_off</strong> 从文件的开头到字符串标识符列表的偏移量，如果string_ids_size == 0，则为0（无可否认是一个奇怪的边缘情况）。偏移量（如果非零）应该是string_ids部分的开头。</p>
+<p><strong>type_ids_size</strong> 类型标识符列表中的元素数，最多为65535</p>
+<p><strong>type_ids_off</strong> 从文件开头到类型标识符列表的偏移量，如果type_ids_size == 0，则为0（无可否认是一个奇怪的边缘情况）。偏移量（如果非零）应该是type_ids部分的开头。</p>
+<p><strong>proto_ids_size</strong> 原型标识符列表中的元素数，最多为65535<br><strong>proto_ids_off</strong> 从文件的开头到原型标识符列表的偏移量，如果proto_ids_size == 0，则为0（无可否认是一个奇怪的边缘情况）。偏移量（如果非零）应该是proto_ids部分的开头。</p>
+<p>类似的 <code>field_ids_size</code>,<code>method_ids_size</code>,<code>class_defs_size</code>,<code>data_size</code> 分别对应着Dex File 不同的区域的大小。相应的<code>*_off</code>对应着从文件头到各自区域的偏移量</p>
+<p>_提一句，Android上常见的 方法数 超过 65535 问题就是因为 <code>method_ids_size</code>使用无符号int来标识，而无符号int的最大范围是 65535。所以就限制了一个 Dex 文件中最多只能索引 65535 个方法。所以 后期的版本，Google 采用了分割 Dex 的方式解决这个问题。_</p>
+<h4 id="DexStringId-Section"><a href="#DexStringId-Section" class="headerlink" title="DexStringId Section"></a>DexStringId Section</h4><p>该区域存储 字符串标识符列表。存储着使用的所有字符串的标识符，如代码引用的常量对象。</p>
+<h4 id="DexTypeId-Section"><a href="#DexTypeId-Section" class="headerlink" title="DexTypeId Section"></a>DexTypeId Section</h4><p>存储着 类型标识符列表。<br>这些是此文件引用的所有类型（类，数组或基本类型）的标识符，无论是否在文件中定义。<br>此列表必须按字符串索引排序，并且不得包含任何重复的条目</p>
+<h4 id="DexFieldId-Section"><a href="#DexFieldId-Section" class="headerlink" title="DexFieldId Section"></a>DexFieldId Section</h4><p>存储字段标识符列表。<br>这些是此文件引用的所有字段的标识符，无论是否在文件中定义。<br>必须对此列表进行排序，其中定义类型（通过type_id索引）是主要顺序，字段名称（通过string_id索引）是中间顺序，类型（通过type_id索引）是次要顺序。<br>该列表不得包含任何重复的条目。</p>
+<h4 id="DexMethodId-Section"><a href="#DexMethodId-Section" class="headerlink" title="DexMethodId Section"></a>DexMethodId Section</h4><p>方法标识符列表。<br>这些是此文件引用的所有方法的标识符，无论是否在文件中定义。<br>必须对此列表进行排序，其中定义类型（通过type_id索引）是主要顺序，方法名称（通过string_id索引）是中间顺序，方法原型（通过proto_id索引）是次要顺序。<br>该列表不得包含任何重复的条目。</p>
+<h4 id="DexProtoId-Section"><a href="#DexProtoId-Section" class="headerlink" title="DexProtoId Section"></a>DexProtoId Section</h4><p>方法原型标识符列表。<br>这些是此文件引用的所有原型的标识符。<br>此列表必须按返回类型（按type_id索引）主要顺序排序，然后按参数列表排序（词典排序，按type_id索引排序的各个参数）。<br>该列表不得包含任何重复的条目。</p>
+<p>proto 的意思是 method prototype 代表 java 语言里的一个 method 的原型 。proto_ids 里的元素为 proto_id_item，结构如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Direct-mapped &quot;proto_id_item&quot;.</span><br><span class="line"> */</span><br><span class="line">struct DexProtoId &#123;</span><br><span class="line">    u4  shortyIdx;          /* index into stringIds for shorty descriptor */</span><br><span class="line">    u4  returnTypeIdx;      /* index into typeIds list for return type */</span><br><span class="line">    u4  parametersOff;      /* file offset to type_list for parameter types */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>包含 方法名称，方法的返回值，参数。</p>
+<h4 id="DexClassDef-Section"><a href="#DexClassDef-Section" class="headerlink" title="DexClassDef Section"></a>DexClassDef Section</h4><p>类定义列表。<br>必须对类进行排序，使得给定类的超类和实现的接口在引用类之前出现在列表中。</p>
+<h4 id="Data-Section"><a href="#Data-Section" class="headerlink" title="Data Section"></a>Data Section</h4><p>数据区，包含上面列出的表的所有支持数据。</p>
+<h4 id="Link-Data"><a href="#Link-Data" class="headerlink" title="Link Data"></a>Link Data</h4><p>静态链接文件中使用的数据。</p>
+<h3 id="分析-Hi-dex"><a href="#分析-Hi-dex" class="headerlink" title="分析 Hi.dex"></a>分析 Hi.dex</h3><p>使用编辑器打开 <code>Hi.dex</code>文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">6465 780a 3033 3500 *(magic) 4e7d 2ba4 *(checksum) b499 ca35</span><br><span class="line">ee34 b9d6 94de 96e8 a865 9759 ae06 7dee *(signature)</span><br><span class="line">bc03 0000 *(file_size) 7000 0000 *(header_size) 7856 3412 *(endian_tag) 0000 0000 *(link_size)</span><br><span class="line">0000 0000 *(link_off) 1003 0000 *(map_off) 1300 0000 *(string_ids_size) 7000 0000 *(string_ids_off)</span><br><span class="line">0700 0000 *(type_ids_size) bc00 0000 *(type_ids_off) 0300 0000 d800 0000</span><br><span class="line">0200 0000 fc00 0000 0600 0000 0c01 0000</span><br><span class="line">0100 0000 3c01 0000 6002 0000 5c01 0000</span><br><span class="line">0602 0000 1002 0000 1802 0000 2202 0000</span><br><span class="line">2b02 0000 3102 0000 4802 0000 5c02 0000</span><br><span class="line">7002 0000 8402 0000 8702 0000 8b02 0000</span><br><span class="line">a002 0000 a602 0000 b002 0000 b502 0000</span><br><span class="line">bc02 0000 c502 0000 cb02 0000 0400 0000</span><br><span class="line">0500 0000 0600 0000 0700 0000 0800 0000</span><br><span class="line">0900 0000 0b00 0000 0900 0000 0500 0000</span><br><span class="line">0000 0000 0a00 0000 0500 0000 f801 0000</span><br><span class="line">0a00 0000 0500 0000 0002 0000 0000 0300</span><br><span class="line">1100 0000 0400 0100 0e00 0000 0000 0000</span><br><span class="line">0000 0000 0000 0000 0100 0000 0000 0200</span><br><span class="line">0c00 0000 0000 0100 0f00 0000 0100 0100</span><br><span class="line">1000 0000 0200 0000 0100 0000 0000 0000</span><br><span class="line">0100 0000 0200 0000 0000 0000 0300 0000</span><br><span class="line">0000 0000 f202 0000 0000 0000 0100 0000</span><br><span class="line">0000 0000 ec01 0000 0500 0000 1a00 0200</span><br><span class="line">6900 0000 0e00 0000 0100 0100 0100 0000</span><br><span class="line">e001 0000 0400 0000 7010 0500 0000 0e00</span><br><span class="line">0200 0100 0200 0000 e401 0000 1200 0000</span><br><span class="line">6201 0100 1a00 0d00 6e20 0400 0100 2201</span><br><span class="line">0000 7010 0100 0100 6200 0000 6e20 0300</span><br><span class="line">0100 0e00 0300 0200 0200 0000 f001 0000</span><br><span class="line">0600 0000 6200 0100 6e20 0400 2000 0e00</span><br><span class="line">0100 0e00 0601 000e 785a 5a00 0300 0e00</span><br><span class="line">0c01 000e 5a00 0000 0100 0000 0300 0000</span><br><span class="line">0100 0000 0600 083c 636c 696e 6974 3e00</span><br><span class="line">063c 696e 6974 3e00 0848 6920 436c 6173</span><br><span class="line">7300 0748 692e 6a61 7661 0004 4c48 693b</span><br><span class="line">0015 4c6a 6176 612f 696f 2f50 7269 6e74</span><br><span class="line">5374 7265 616d 3b00 124c 6a61 7661 2f6c</span><br><span class="line">616e 672f 4f62 6a65 6374 3b00 124c 6a61</span><br><span class="line">7661 2f6c 616e 672f 5374 7269 6e67 3b00</span><br><span class="line">124c 6a61 7661 2f6c 616e 672f 5379 7374</span><br><span class="line">656d 3b00 0156 0002 564c 0013 5b4c 6a61</span><br><span class="line">7661 2f6c 616e 672f 5374 7269 6e67 3b00</span><br><span class="line">046d 6169 6e00 086d 6169 6e20 2d2d 3e00</span><br><span class="line">036f 7574 0005 7072 696e 7400 0770 7269</span><br><span class="line">6e74 6c6e 0004 7465 7874 0025 7e7e 4438</span><br><span class="line">7b22 6d69 6e2d 6170 6922 3a31 2c22 7665</span><br><span class="line">7273 696f 6e22 3a22 7631 2e30 2e33 3522</span><br><span class="line">7d00 0100 0301 000a 0088 8004 dc02 0181</span><br><span class="line">8004 f802 0109 9003 0301 c403 0000 0000</span><br><span class="line">0e00 0000 0000 0000 0100 0000 0000 0000</span><br><span class="line">0100 0000 1300 0000 7000 0000 0200 0000</span><br><span class="line">0700 0000 bc00 0000 0300 0000 0300 0000</span><br><span class="line">d800 0000 0400 0000 0200 0000 fc00 0000</span><br><span class="line">0500 0000 0600 0000 0c01 0000 0600 0000</span><br><span class="line">0100 0000 3c01 0000 0120 0000 0400 0000</span><br><span class="line">5c01 0000 0320 0000 0400 0000 e001 0000</span><br><span class="line">0110 0000 0200 0000 f801 0000 0220 0000</span><br><span class="line">1300 0000 0602 0000 0020 0000 0100 0000</span><br><span class="line">f202 0000 0310 0000 0100 0000 0c03 0000</span><br><span class="line">0010 0000 0100 0000 1003 0000</span><br></pre></td></tr></table></figure>
+<p><code>6465 780a 3033 3500</code> 对应的 <code>0x64 0x65 0x78 0x0a 0x30 0x33 0x35 0x00</code><br> = <code>&quot;dex\n035\0&quot;</code> 说明 我使用 的 <code>dx</code> 编译器 使用的Dex 版本是 <code>035</code></p>
+<p>在 以上数据中，我使用*(name)做了部分分割，只有明确 Dex 文件的结构，读懂 Dex 文件也不是那么的难了，有了 这个基础之后，以后就可以明白 各种热修复框架的实现思路了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Dalvik/" rel="tag"># Dalvik</a>
+          
+            <a href="/tags/Dex/" rel="tag"># Dex</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android-Dalvik-And-ART/" rel="next" title="Android-Dalvik And ART">
+                <i class="fa fa-chevron-left"></i> Android-Dalvik And ART
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Java-Stack-Impl/" rel="prev" title="Java-Stack Impl">
+                Java-Stack Impl <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dex-文件的生成"><span class="nav-number">1.</span> <span class="nav-text">Dex 文件的生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生成-class-文件"><span class="nav-number">1.1.</span> <span class="nav-text">生成 class 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成-dex-文件"><span class="nav-number">1.2.</span> <span class="nav-text">生成 dex 文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dex-文件"><span class="nav-number">2.</span> <span class="nav-text">Dex 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DexHeader"><span class="nav-number">2.1.</span> <span class="nav-text">DexHeader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DexStringId-Section"><span class="nav-number">2.2.</span> <span class="nav-text">DexStringId Section</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DexTypeId-Section"><span class="nav-number">2.3.</span> <span class="nav-text">DexTypeId Section</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DexFieldId-Section"><span class="nav-number">2.4.</span> <span class="nav-text">DexFieldId Section</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DexMethodId-Section"><span class="nav-number">2.5.</span> <span class="nav-text">DexMethodId Section</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DexProtoId-Section"><span class="nav-number">2.6.</span> <span class="nav-text">DexProtoId Section</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DexClassDef-Section"><span class="nav-number">2.7.</span> <span class="nav-text">DexClassDef Section</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-Section"><span class="nav-number">2.8.</span> <span class="nav-text">Data Section</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Link-Data"><span class="nav-number">2.9.</span> <span class="nav-text">Link Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析-Hi-dex"><span class="nav-number">3.</span> <span class="nav-text">分析 Hi.dex</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'Android-Dex-File/';
+        var commenthub_url = 'http://aicodeing.github.io/Android-Dex-File/';
+        var commenthub_title = 'Android-Dex File';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

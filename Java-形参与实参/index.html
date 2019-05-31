@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,形参,实参," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AICoding Technical Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前几天在头条上看到一道经典面试题,引发了一些思考。也是写这篇文章的导火索。 背景请看题:12345678910111213public	class Main &amp;#123;    public static void main(String[] args) &amp;#123;        Integer a ">
+<meta name="keywords" content="Java,形参,实参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 形参与实参">
+<meta property="og:url" content="http://aicodeing.github.io/Java-形参与实参/index.html">
+<meta property="og:site_name" content="AICoding Technical Blog">
+<meta property="og:description" content="前几天在头条上看到一道经典面试题,引发了一些思考。也是写这篇文章的导火索。 背景请看题:12345678910111213public	class Main &amp;#123;    public static void main(String[] args) &amp;#123;        Integer a = 1;        Integer b = 2;        System.out.pri">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://aicodeing.github.io/img/java_before_change.jpg">
+<meta property="og:image" content="http://aicodeing.github.io/img/java_after_chang.jpg">
+<meta property="og:updated_time" content="2019-05-29T11:19:08.291Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 形参与实参">
+<meta name="twitter:description" content="前几天在头条上看到一道经典面试题,引发了一些思考。也是写这篇文章的导火索。 背景请看题:12345678910111213public	class Main &amp;#123;    public static void main(String[] args) &amp;#123;        Integer a = 1;        Integer b = 2;        System.out.pri">
+<meta name="twitter:image" content="http://aicodeing.github.io/img/java_before_change.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aicodeing.github.io/Java-形参与实参/"/>
+
+
+
+
+
+  <title>Java 形参与实参 | AICoding Technical Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?67f1e533d19b5b095ebcd8f0cd066001";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AICoding Technical Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">AICoding team</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aicodeing.github.io/Java-形参与实参/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AICoding Team">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AICoding Technical Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 形参与实参</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T13:41:28+08:00">
+                2017-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Java-形参与实参/" class="leancloud_visitors" data-flag-title="Java 形参与实参">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前几天在头条上看到一道经典面试题,引发了一些思考。也是写这篇文章的导火索。</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>请看题:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>	<span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>;</span><br><span class="line">        Integer b = <span class="number">2</span>;</span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">        swap(a, b);</span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//请实现</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看到这个题后 瞬间觉得有坑。也觉得为什么要书写一个<code>swap</code>方法呢？如下实现不是更简单:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>; </span><br><span class="line">        Integer b = <span class="number">2</span>;</span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">        Integer tmp = a;</span><br><span class="line">        a = b;</span><br><span class="line">        b = tmp;</span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">1</span>,b=<span class="number">2</span></span><br><span class="line">a=<span class="number">2</span>,b=<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>完美实现交换。但是请注意，这是一道面试题，要的就是考验一些知识点。所以还是老老实实的实现<code>swap</code>方法吧。<br>有的同学可能会想，<code>Integer</code> 是一个包装类型,是对Int的装箱和拆箱操作。其实也是一个对象。既然是对象，直接更改对象的引用不就行了？<br>思路没问题，我们首先看看实现:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">       Integer tmp = numa;</span><br><span class="line">       numa = numb;</span><br><span class="line">       numb = tmp;</span><br><span class="line">       System.out.println(<span class="string">"numa="</span> + numa + <span class="string">",numb="</span> + numb);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">1</span>,b=<span class="number">2</span></span><br><span class="line">numa=<span class="number">2</span>,numb=<span class="number">1</span></span><br><span class="line">a=<span class="number">1</span>,b=<span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<p>不出意外,没有成功<br>这是什么原因呢？<br>技术老手一看就知道问题出在<a href="https://www.baidu.com/s?wd=java%E5%BD%A2%E5%8F%82%E5%92%8C%E5%AE%9E%E5%8F%82%E7%9A%84%E5%8C%BA%E5%88%AB" target="_blank" rel="noopener">形参和实参</a><br>混淆了</p>
+<h3 id="JAVA的形参和实参的区别"><a href="#JAVA的形参和实参的区别" class="headerlink" title="JAVA的形参和实参的区别:"></a>JAVA的形参和实参的区别:</h3><p><strong>形参</strong> 顾名思义:就是形式参数，用于定义方法的时候使用的参数，是用来接收调用者传递的参数的。<br>    形参只有在方法被调用的时候，虚拟机才会分配内存单元，在方法调用结束之后便会释放所分配的内存单元。<br>    因此,形参只在方法内部有效，所以针对引用对象的改动也无法影响到方法外。</p>
+<p><strong>实参</strong> 顾名思义:就是实际参数，用于调用时传递给方法的参数。实参在传递给别的方法之前是要被预先赋值的。<br>    在本例中 swap 方法 的numa, numb 就是形参，传递给 swap 方法的 a,b 就是实参</p>
+<p>注意:<br>在<code>值传递</code>调用过程中，只能把实参传递给形参，而不能把形参的值反向作用到实参上。在函数调用过程中，形参的值发生改变，而实参的值不会发生改变。<br>而在<code>引用传递</code>调用的机制中，实际上是将实参引用的地址传递给了形参，所以任何发生在形参上的改变也会发生在实参变量上。<br>那么问题来了，什么是<code>值传递</code>和<code>引用传递</code></p>
+<h3 id="值传递和引用传递"><a href="#值传递和引用传递" class="headerlink" title="值传递和引用传递"></a>值传递和引用传递</h3><p>在谈<code>值传递</code>和<code>引用传递</code>之前先了解下 Java的数据类型有哪些</p>
+<h4 id="JAVA的数据类型"><a href="#JAVA的数据类型" class="headerlink" title="JAVA的数据类型"></a>JAVA的数据类型</h4><p>Java 中的数据类型分为两大类，<code>基本类型</code>和<code>对象类型</code>。相应的，变量也有两种类型：<code>基本类型</code>和<code>引用类型</code><br><code>基本类型</code>的变量保存<code>原始值</code>，即它代表的值就是数值本身,<code>原始值</code>一般对应在内存上的<code>栈区</code><br>而<code>引用类型</code>的变量保存<code>引用值</code>，<code>引用值</code>指向内存空间的地址。代表了某个对象的引用，而不是对象本身。对象本身存放在这个引用值所表示的地址的位置。<code>被引用的对象</code>对应内存上的<code>堆内存区</code>。<br>基本类型包括：<code>byte</code>,<code>short</code>,<code>int</code>,<code>long</code>,<code>char</code>,<code>float</code>,<code>double</code>,<code>boolean</code> 这八大基本数据类型<br>引用类型包括：<code>类类型</code>，<code>接口类型</code>和<code>数组</code>  </p>
+<h4 id="变量的基本类型和引用类型的区别"><a href="#变量的基本类型和引用类型的区别" class="headerlink" title="变量的基本类型和引用类型的区别"></a>变量的基本类型和引用类型的区别</h4><p>基本数据类型在声明时系统就给它分配空间<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;<span class="comment">//虽然没有赋值，但声明的时候虚拟机就会 分配 4字节 的内存区域,而引用数据类型不同，它声明时只给变量分配了引用空间，而不分配数据空间:	</span></span><br><span class="line">String str;<span class="comment">//声明的时候没有分配数据空间，只有 4byte 的引用大小，在栈区，而在堆内存区域没有任何分配</span></span><br><span class="line">str.length(); <span class="comment">//这个操作就会报错，因为堆内存上还没有分配内存区域，而 a = 1; 这个操作就不会报错。</span></span><br></pre></td></tr></table></figure></p>
+<p>好了，Java的数据类型说完了，继续我们的<code>值传递</code>和<code>引用传递</code>的话题。<br>先背住一个概念:<code>基本类型</code>的变量是<code>值传递</code>；<code>引用类型</code>的变量<br>结合前面说的 <code>形参</code>和<code>实参</code>。</p>
+<h4 id="值传递"><a href="#值传递" class="headerlink" title="值传递"></a>值传递</h4><p>方法调用时，实际参数把它的值传递给对应的形式参数，函数接收的是原始值的一个copy，<br>此时内存中存在两个相等的基本类型，即实际参数和形式参数，后面方法中的操作都是对形参这个值的修改，不影响实际参数的值</p>
+<h4 id="引用传递"><a href="#引用传递" class="headerlink" title="引用传递"></a>引用传递</h4><p>也称为<code>地址传递</code>，<code>址传递</code>。方法调用时，实际参数的引用(地址，而不是参数的值)被传递给方法中相对应的形式参数，函数接收的是原始值的内存地址<br>在方法执行中，形参和实参内容相同，指向同一块内存地址，方法执行中对引用的操作将会影响到实际对象<br>通过例子来说话:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> age;</span><br><span class="line">       Person(<span class="keyword">int</span> age) &#123;</span><br><span class="line">           <span class="keyword">this</span>.age = age;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">       testValueT(a);</span><br><span class="line">       System.out.println(<span class="string">"a="</span> + a);</span><br><span class="line">       Person person = <span class="keyword">new</span> Person(<span class="number">20</span>);</span><br><span class="line">       testReference(person);</span><br><span class="line">       System.out.println(<span class="string">"person.age="</span> + person.age);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testValueT</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">       a = <span class="number">200</span>;</span><br><span class="line">       System.out.println(<span class="string">"int testValueT a="</span> + a);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testReference</span><span class="params">(Person person)</span> </span>&#123;</span><br><span class="line">       person.age = <span class="number">10</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> testValueT a=<span class="number">200</span></span><br><span class="line">a=<span class="number">100</span></span><br><span class="line">person.age=<span class="number">10</span></span><br></pre></td></tr></table></figure></p>
+<p>看见 <code>值传递</code> a的值并没有改变，而 <code>引用传递</code>的 persion.age已经改变了<br>有人说<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testReference</span><span class="params">(Person person)</span> </span>&#123;</span><br><span class="line">        person = <span class="keyword">new</span> Person(<span class="number">100</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为什么 输出的 person.age 还是20呢？<br>我想说 了解一下什么是<code>引用类型</code>吧？ 方法内把 <code>形参</code>的地址引用换成了另一个对象，并没有改变这个对象,并不能影响 外边<code>实参</code>还引用原来的对象，因为 形参只在方法内有效哦。</p>
+<p>有人或许还有疑问，按照文章开头的例子，<code>Integer</code>也是 <code>引用类型</code>该当如何呢？<br>其实 类似的 <code>String</code>,<code>Integer</code>,<code>Float</code>,<code>Double</code>,<code>Short</code>,<code>Byte</code>,<code>Long</code>,<code>Character</code>等等基本包装类型类。因为他们本身没有提供方法去改变内部的值，例如<code>Integer</code> 内部有一个<code>value</code> 来记录<code>int</code>基本类型的值，但是没有提供修改它的方法，而且 也是<code>final</code>类型的，无法通过<code>常规手段</code>更改。<br>所以虽然他们是<code>引用类型</code>的，但是我们可以认为它是<code>值传递</code>,这个也只是<code>认为</code>,事实上还是<code>引用传递</code>,<code>址传递</code>。</p>
+<hr>
+<p>好了，基础知识补充完毕，然我们回到面试题吧</p>
+<hr>
+<p><strong>回归正题</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">        Integer tmp = numa;</span><br><span class="line">        numa = numb;</span><br><span class="line">        numb = tmp;</span><br><span class="line">        System.out.println(<span class="string">"numa="</span> + numa + <span class="string">",numb="</span> + numb);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>通过补习基础知识，我们很明显知道 上面这个方法实现替换 是不可行的。因为<code>Interger</code>虽然是<code>引用类型</code><br>但是上述操作只是改变了<code>形参</code>的引用，而没有改变<code>实参</code>对应的<code>对象</code>。</p>
+<p>那么思路来了，我们<code>通过特殊手段</code>改变 <code>Integer</code>内部的<code>value</code>属性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">        Integer tmp = numa;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field field = Integer.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            field.set(numa, numb);<span class="comment">//成功的将numa 引用的 1的对象 值改为 2</span></span><br><span class="line">            field.set(numb, tmp); <span class="comment">//由于 tmp 也是指向 numa 未改变前指向的堆 即对象1 ，经过前一步，已经将对象1的值改为了2，自然 numb 也是2，所以改动失效</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果:<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">1</span>,b=<span class="number">2</span></span><br><span class="line">a=<span class="number">2</span>,b=<span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<p><a href="">又来疑问了</a>？为何 <code>a</code>的值改变成功，而<code>b</code>的改变失败呢？</p>
+<p><em>见代码注释</em><br>所以其实 <code>field.set(numb, tmp);</code> 是更改成功的，只是 tmp 经过前一行代码的执行，已经变成了 2。<br>那么如何破呢？<br>我们有了一个思路，既然是 <code>tmp</code>的引用的对象值变量，那么我让<code>tmp</code>不引用 <code>numa</code>了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> tmp = numa.intValue();<span class="comment">//tmp 定义为基本数据类型</span></span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           Field field = Integer.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">           field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">           field.set(numa, numb);<span class="comment">//这个时候并不改变 tmp 的值</span></span><br><span class="line">           field.set(numb, tmp);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这种情况下 对 <code>numa</code> 这个对象的修改就不会导致 <code>tmp</code> 的值变化了,看一下运行结果</p>
+<pre><code>a=1,b=2
+a=2,b=2
+</code></pre><p>这是为啥？有没有<code>快疯</code>啦？<br>难道我们的思路错了？<br>先别着急，我们看看这个例子：<br>仅仅是将前面的例子 <code>a</code>的值改为 129，<code>b</code>的值改为130</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">129</span>;</span><br><span class="line">        Integer b = <span class="number">130</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">        swap(a, b);</span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = numa.intValue();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field field = Integer.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            field.set(numa, numb);</span><br><span class="line">            field.set(numb, tmp);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">129</span>,b=<span class="number">130</span></span><br><span class="line">a=<span class="number">130</span>,b=<span class="number">129</span></span><br></pre></td></tr></table></figure></p>
+<p>有没有<code>怀疑人生</code>？我们的思路没有问题啊?为什么 换个数值就行了呢？<br>我们稍微修改一下程序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line">        Integer b = <span class="keyword">new</span> Integer(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">        swap(a, b);</span><br><span class="line">        System.out.println(<span class="string">"a="</span> + a + <span class="string">",b="</span> + b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = numa.intValue();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field field = Integer.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            field.set(numa, numb);</span><br><span class="line">            field.set(numb, tmp);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p> 运行结果:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">1</span>,b=<span class="number">2</span></span><br><span class="line">a=<span class="number">2</span>,b=<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p><em>哎？为啥 1 和 2 也可以了?</em><br><em>我们这时肯定猜想和<code>Integer</code>的装箱 拆箱有关</em></p>
+<h3 id="装箱，拆箱-概念"><a href="#装箱，拆箱-概念" class="headerlink" title="装箱，拆箱 概念"></a>装箱，拆箱 概念</h3><h4 id="Integer的装箱操作"><a href="#Integer的装箱操作" class="headerlink" title="Integer的装箱操作"></a>Integer的装箱操作</h4><p>为什么 <code>Integer a = 1</code> 和 <code>Integer a = new Integer(1)</code> 效果不一样<br>那就瞅瞅源码吧？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Integer</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns an &#123;<span class="doctag">@code</span> Integer&#125; instance representing the specified</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@code</span> int&#125; value.  If a new &#123;<span class="doctag">@code</span> Integer&#125; instance is not</span></span><br><span class="line"><span class="comment"> * required, this method should generally be used in preference to</span></span><br><span class="line"><span class="comment"> * the constructor &#123;<span class="doctag">@link</span> #Integer(int)&#125;, as this method is likely</span></span><br><span class="line"><span class="comment"> * to yield significantly better space and time performance by</span></span><br><span class="line"><span class="comment"> * caching frequently requested values.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This method will always cache values in the range -128 to 127,</span></span><br><span class="line"><span class="comment"> * inclusive, and may cache other values outside of this range.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  i an &#123;<span class="doctag">@code</span> int&#125; value.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> an &#123;<span class="doctag">@code</span> Integer&#125; instance representing &#123;<span class="doctag">@code</span> i&#125;.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span>  1.5</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过注释知道，java推荐 <code>Integer.valueOf</code> 方式初始化一个<code>Interger</code>因为有 缓存了<code>-128 - 127</code>的数字<br>我们直接定义 <code>Integer a = 1</code> 具有这个功能，所以 Jvm 底层实现 是通过 <code>Integer.valueOf</code>这个方法<br>再看 <code>field.set(numb, tmp);</code><br>我们打断点，发现通过反射设置 <code>value</code>时 竟然走了 <code>Integer.valueOf</code> 方法<br>下面是 我们调用 <code>swap</code>前后的 <code>IntegerCache.cache</code> 值得变化</p>
+<h5 id="反射修改前"><a href="#反射修改前" class="headerlink" title="反射修改前:"></a>反射修改前:</h5><p><img src="/img/java_before_change.jpg" alt="">  </p>
+<h5 id="反射修改后"><a href="#反射修改后" class="headerlink" title="反射修改后"></a>反射修改后</h5><p><img src="/img/java_after_chang.jpg" alt=""><br>在反射修改前</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IntegerCache.cache[<span class="number">128</span>]=<span class="number">0</span></span><br><span class="line">IntegerCache.cache[<span class="number">129</span>]=<span class="number">1</span></span><br><span class="line">IntegerCache.cache[<span class="number">130</span>]=<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>通过反射修改后</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IntegerCache.cache[<span class="number">128</span>]=<span class="number">0</span></span><br><span class="line">IntegerCache.cache[<span class="number">129</span>]=<span class="number">2</span></span><br><span class="line">IntegerCache.cache[<span class="number">130</span>]=<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>再调用 <code>field.set(numb, tmp)</code> tmp这时等于1 对应的 角标 129 ,但是这个值已经变成了2<br>所以出现了刚才 <code>奇怪的结果</code><br>原来都是<code>缓存的锅</code><br>下面趁机再看个例子 加深理解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Integer testA = <span class="number">1</span>;</span><br><span class="line">Integer testB = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">Integer testC = <span class="number">128</span>;</span><br><span class="line">Integer testD = <span class="number">128</span>;</span><br><span class="line">System.out.println(<span class="string">"testA=testB "</span> + (testA == testB) + <span class="string">",\ntestC=testD "</span> + (testC == testD));</span><br></pre></td></tr></table></figure>
+<p> 输出结果:</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">testA=testB <span class="keyword">true</span>,</span><br><span class="line">testC=testD <span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+<p>通过这小示例，在 -128 到 127的数字都走了缓存，这样 <code>testA</code> 和 <code>testB</code>引用的是同一片内存区域的同一个对象。<br>而 <code>testC</code> <code>testD</code> 数值大于127 所以 没有走缓存，相当于两个<code>Integer</code>对象，在堆内存区域有两个对象。<br>两个对象自如不相等。<br>在前面的示例中 我们 通过<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer a = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line">Integer b = <span class="keyword">new</span> Integer(<span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
+<p>方式初始化 <code>a</code>,<code>b</code> 我们的交换算法没有问题，也是这个原因。</p>
+<h5 id="那么到目前为止我们的swap-方法可以完善啦"><a href="#那么到目前为止我们的swap-方法可以完善啦" class="headerlink" title="那么到目前为止我们的swap 方法可以完善啦"></a>那么到目前为止我们的<code>swap</code> 方法可以完善啦</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer numa, Integer numb)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = numa.intValue();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field field = Integer.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            field.set(numa, numb);</span><br><span class="line">            field.set(numb, <span class="keyword">new</span> Integer(tmp));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>只需将之前的 <code>field.set(numb, tmp)</code> 改为 <code>field.set(numb, new Integer(tmp))</code></p>
+<p>到此, 这个面试我们已经通过了，还有一个疑问我没有解答。<br>为什么 <code>field.set(numb, tmp)</code> 会执行 <code>Integer.valueOf()</code> 而 <code>field.set(numb, new Integer(tmp))</code> 不会执行。<br>这就是<code>Integer的装箱</code>操作，当 给 <code>Integer.value</code> 赋值 <code>int</code>时，JVM 检测到 <code>int不是Integer类型</code>,需要装箱，才执行了<code>Integer.valueOf()</code>方法。而<code>field.set(numb, new Integer(tmp))</code> 设置的 是Integer类型了，就不会再拆箱后再装箱。</p>
+<h3 id="Over-Thanks"><a href="#Over-Thanks" class="headerlink" title="Over Thanks"></a>Over Thanks</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/形参/" rel="tag"># 形参</a>
+          
+            <a href="/tags/实参/" rel="tag"># 实参</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Markdown-常用语法/" rel="next" title="Markdown-常用语法">
+                <i class="fa fa-chevron-left"></i> Markdown-常用语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android属性动画分析/" rel="prev" title="Android属性动画分析">
+                Android属性动画分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="commenthub_thread"></div>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.png"
+                alt="AICoding Team" />
+            
+              <p class="site-author-name" itemprop="name">AICoding Team</p>
+              <p class="site-description motion-element" itemprop="description">As a blog, included a variety of technical articles</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aicodeing" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:gerenvip@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-email"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                优秀Blog
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dailycast.github.io" title="DailycastTeam" target="_blank">DailycastTeam</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://codedrinker.github.io" title="麻酱" target="_blank">麻酱</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JAVA的形参和实参的区别"><span class="nav-number">2.</span> <span class="nav-text">JAVA的形参和实参的区别:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#值传递和引用传递"><span class="nav-number">3.</span> <span class="nav-text">值传递和引用传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JAVA的数据类型"><span class="nav-number">3.1.</span> <span class="nav-text">JAVA的数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的基本类型和引用类型的区别"><span class="nav-number">3.2.</span> <span class="nav-text">变量的基本类型和引用类型的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#值传递"><span class="nav-number">3.3.</span> <span class="nav-text">值传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用传递"><span class="nav-number">3.4.</span> <span class="nav-text">引用传递</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装箱，拆箱-概念"><span class="nav-number">4.</span> <span class="nav-text">装箱，拆箱 概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Integer的装箱操作"><span class="nav-number">4.1.</span> <span class="nav-text">Integer的装箱操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#反射修改前"><span class="nav-number">4.1.1.</span> <span class="nav-text">反射修改前:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反射修改后"><span class="nav-number">4.1.2.</span> <span class="nav-text">反射修改后</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#那么到目前为止我们的swap-方法可以完善啦"><span class="nav-number">4.1.3.</span> <span class="nav-text">那么到目前为止我们的swap 方法可以完善啦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Over-Thanks"><span class="nav-number">5.</span> <span class="nav-text">Over Thanks</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AiCoding Team</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+      <script type="text/javascript">
+        var commenthub_id = '5436710';
+        var commenthub_website = 'https://aicodeing.github.io';
+        var commenthub_identifier = 'Java-形参与实参/';
+        var commenthub_url = 'http://aicodeing.github.io/Java-形参与实参/';
+        var commenthub_title = 'Java 形参与实参';
+        var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://commenthub.herokuapp.com/js/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </script>
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hsAB629SmVs7VBe0HfQbUPaR-gzGzoHsz", "rcCMRRhPb29Rps6qC6WAW7Wg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
